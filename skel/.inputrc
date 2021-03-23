@@ -1,0 +1,9 @@
+set completion-ignore-case on
+set show-all-if-ambiguous on
+set completion-map-case on
+set completion-prefix-display-length 1
+set skip-completed-text on
+set bell-style none
+set mark-symlinked-directories on
+set editing-mode vi
+#TAB: menu-complete

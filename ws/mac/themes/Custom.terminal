@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Bell</key>
+	<false/>
+	<key>BellBadge</key>
+	<false/>
+	<key>BellBounce</key>
+	<false/>
+	<key>ProfileCurrentVersion</key>
+	<real>2.0699999999999998</real>
+	<key>ShowCommandKeyInTitle</key>
+	<true/>
+	<key>ShowDimensionsInTitle</key>
+	<false/>
+	<key>ShowShellCommandInTitle</key>
+	<true/>
+	<key>VisualBell</key>
+	<false/>
+	<key>name</key>
+	<string>My Settings</string>
+	<key>shellExitAction</key>
+	<integer>0</integer>
+	<key>type</key>
+	<string>Window Settings</string>
+</dict>
+</plist>

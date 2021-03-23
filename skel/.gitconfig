@@ -1,0 +1,45 @@
+[user]
+    name = Lucas Wilson
+    email = lkwilson96@gmail.com
+
+[alias]
+    ; helpers
+    list-aliases = "!git config -l | grep alias | cut -c 7-"
+    root = rev-parse --show-toplevel
+    branch-name = rev-parse --abbrev-ref HEAD
+
+    ; git everything
+    st = status -sb
+    f = fetch --tags --all --prune
+    s = !git f && git st
+    sn = show --name-status
+
+    ; log
+    l = log --decorate --oneline --graph
+    lh = !git l --color=always | head
+    la = log --decorate --oneline --graph --all
+    ld = log --decorate --graph
+    lda = log --decorate --graph --all
+    last = log -1 HEAD --decorate
+
+    ; branch
+    co = checkout
+    cob = checkout -b
+    b = branch -vv
+    br = branch -r
+
+    ; commits
+    a = add -A
+    cm = commit -m
+    ca = commit --amend
+
+    ; diff
+    d = diff
+    dc = diff --cached
+    ds = diff --stat
+
+[core]
+    excludesfile = ~/.gitignore
+
+[pull]
+    ff = only

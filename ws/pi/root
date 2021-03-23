@@ -1,0 +1,18 @@
+#!/bin/bash
+
+echo "Set root password:"
+passwd root
+
+echo "Set op password:"
+passwd op
+
+# Extend Filesystem
+parted /dev/mmcblk0 resizepart 2 100%
+
+# Run rasp-config
+#raspi-config
+
+#usermod -l op pi
+#usermod -m -d /home/op op
+
+wpa_passphrase the-ssid the-passwd > /etc/wpa_supplicant/wpa_supplicant.conf

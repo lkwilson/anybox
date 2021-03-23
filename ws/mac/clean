@@ -1,0 +1,14 @@
+#!/bin/bash
+
+echo "Be sure to read this script before running it."
+echo "It's not really meant to just be run freely."
+exit 1
+
+# Daemons to delete
+# /Library/LaunchAgents
+# /Library/LaunchDaemons
+
+rm -rf /var/root/Library/Caches/*
+rm -rf /Users/op/Library/Caches/*
+rm -rf /Library/Caches/*
+rm -rf /System/Library/Caches/*

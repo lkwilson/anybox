@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Update source list
+apt-get update
+
+# Reconfigure potentially broken packages
+dpkg --configure -a
+
+# Update packages
+apt-get dist-upgrade -y
+
+# Install specific packages
+apt-get install -y vim git
+
+#apt-get install -y build-essential
+
+# Only when needing flash drive ex fat support
+#apt-get install -y exfat-fuse exfat-utils
+
+# Install python packages
+#apt-get install -y python3-dev python3-pip virtualenv
+
+# Setup autoupdates
+#apt-get install unattended-upgrades
+#dpkg-reconfigure unattended-upgrades
+
+# Cleanup
+apt-get autoremove -y
+apt-get clean -y
+apt-get autoclean -y
+
+# Fix sudoers
+EDITOR=vi visudo

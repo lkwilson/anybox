@@ -1,0 +1,9 @@
+#!/bin/bash
+
+ls themes
+echo "Import theme in themes/ into profiles."
+echo "Change font to Menio 10"
+
+brew install git bash-completion coreutils fzf
+
+yes | $(brew --prefix)/opt/fzf/install

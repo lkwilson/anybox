@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+git config --global user.excludesfile '~/.gitignore'
+git config --global user.name "Lucas Wilson"
+git config --global user.email "lkwilson96@gmail.com"

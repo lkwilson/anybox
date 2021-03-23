@@ -1,0 +1,21 @@
+#!/bin/bash
+
+apt-get update
+apt-get install -y exfat-fuse exfat-utils
+
+# You have to set the local with raspi-config sometimes
+# This has caused the system to not boot
+#echo 'UUID="339c53b4-441f-4471-95c9-524655ddd58c"  /drive       ext4  defaults  0       1' >> /etc/fstab
+
+ln -s /drive/f /home/op/f
+ln -s /drive/a /home/op/a
+ln -s /drive/w /home/op/w
+
+hostname core
+echo core > /etc/hostname
+sed -i -e 's/raspberrypi/core/g' /etc/hosts
+
+# raspi-config
+
+# Setup crontab as well
+*/5 * * * * ~root/duck &>/dev/null

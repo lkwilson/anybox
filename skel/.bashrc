@@ -191,6 +191,7 @@ function pd() {
 
 # env jump points
 # functions so that env vars are resolved when run
+function se() { . ~/.bashrc.d/env; }
 function j() { cd "$ENV0"; }
 function j1() { cd "$ENV1"; }
 function j2() { cd "$ENV2"; }
@@ -199,10 +200,10 @@ function p() { pd "$ENV0"; }
 function p1() { pd "$ENV1"; }
 function p2() { pd "$ENV2"; }
 function p3() { pd "$ENV3"; }
-function sj() { echo "export ENV0='$(pwd)'" >> ~/.bashrc.d/env; }
-function sj1() { echo "export ENV1='$(pwd)'" >> ~/.bashrc.d/env; }
-function sj2() { echo "export ENV2='$(pwd)'" >> ~/.bashrc.d/env; }
-function sj3() { echo "export ENV3='$(pwd)'" >> ~/.bashrc.d/env; }
+function sj() { echo "export ENV0='$(pwd)'" >> ~/.bashrc.d/env; se; }
+function sj1() { echo "export ENV1='$(pwd)'" >> ~/.bashrc.d/env; se; }
+function sj2() { echo "export ENV2='$(pwd)'" >> ~/.bashrc.d/env; se; }
+function sj3() { echo "export ENV3='$(pwd)'" >> ~/.bashrc.d/env; se; }
 
 bashrc_d_loc="$HOME/.bashrc.d"
 if [ -d "$bashrc_d_loc" ]; then

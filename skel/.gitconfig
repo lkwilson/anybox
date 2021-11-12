@@ -40,6 +40,9 @@
     dsr = ds @{u}
     drs = dsr
 
+    ; remote
+    rv = remote -v
+
 [core]
     excludesfile = ~/.gitignore
 

@@ -4,10 +4,6 @@ if [ -d "$usr_bin" ]; then
     PATH="$usr_bin:$PATH"
 fi
 
-if [ "$interactive" != yes ]; then
-  return 0
-fi
-
 # bash completion
 if ! shopt -oq posix; then
     if [ -f /usr/share/bash-completion/bash_completion ]; then
@@ -43,7 +39,7 @@ if which git &>/dev/null; then
             alias g$al="git $al"
 
             complete_func=_git_$(__git_aliased_command $al)
-            function_exists $complete_fnc && __git_complete g$al $complete_func
+            function_exists $complete_func && __git_complete g$al $complete_func
         done
     else
         # fallback without completion
@@ -54,8 +50,6 @@ if which git &>/dev/null; then
 
     # Other git related aliases
     alias is_git='git rev-parse &>/dev/null'
-    alias gk='gitk &>/dev/null&'
-    alias gka='gitk --all &>/dev/null&'
 
     # Set git branch PS1
     git_prefix='$(

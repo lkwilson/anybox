@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-export ENV1=
-export ENV2=
-export ENV3=

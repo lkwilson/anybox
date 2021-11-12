@@ -1,0 +1,6 @@
+# Set colored PS1 for bash but not sh. However, if sh is called from bash, it
+# will inherit the colored PS1 and not work. You will have to resource .bashrc.
+case "$0" in
+    *bash*) PS1="$PS1" ;;
+    *) PS1="\u@\h:\w\\$ " ;;
+esac

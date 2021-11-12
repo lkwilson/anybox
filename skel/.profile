@@ -28,7 +28,3 @@ if [ -n "$BASH_VERSION" ]; then
         PATH="$HOME/.local/bin:$PATH"
     fi
 fi
-
-if [ -r ~/.profile_ext ]; then
-    . ~/.profile_ext
-fi

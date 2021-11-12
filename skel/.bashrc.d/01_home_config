@@ -1,0 +1,61 @@
+# Have ctrl c clear current line
+which tput &>/dev/null && {
+    trap 'tput dl1; tput cuu1' INT
+}
+
+# Set ls color
+if uname -a | grep -q Microsoft; then
+    LS_COLORS='ow=01;36;40'
+    export LS_COLORS
+    alias ls="ls --color=auto -F"
+elif [ "$(uname)" = Darwin ]; then
+    # ls color
+    alias ls="ls -GF"
+elif [ "$(uname)" = Linux ]; then
+    # ls color
+    alias ls="ls --color=auto -F"
+fi
+# Set grep colors
+alias grep="grep --color=auto"
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# HISTORY Configuration
+# Don't put duplicate lines or lines starting with space in the history.
+HISTCONTROL=ignoreboth
+# append to the history file, don't overwrite it
+shopt -s histappend
+# for setting history length see HISTSIZE and HISTFILESIZE
+HISTSIZE=
+HISTFILESIZE=
+
+# OTHER Configurations
+# Check the window size after each command and, if necessary, update the values
+# of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# Some ls aliases
+alias ll='ls -al'
+
+# Use vi on the cmd line
+set -o vi
+
+# Use vim instead of vi
+if which vim &>/dev/null; then
+    export EDITOR=vim
+    alias vi=vim
+elif which vi &>/dev/null; then
+    export EDITOR=vi
+    alias vim=vi
+else
+    export EDITOR=nano
+fi
+export VIEWER=less
+
+# Change directory aliases
+alias cdp='cd "$(pwd -P)"'
+alias cdh='cd "$(pwd)"'
+alias ..='cd ..'
+alias ...='..; ..'
+alias ....='...; ..'
+alias .....='....; ..'

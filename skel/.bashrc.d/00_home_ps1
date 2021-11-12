@@ -1,0 +1,52 @@
+shorten() {
+    if [ $# -ne 2 ]; then
+        echo "Invalid args"
+        echo "Usage: $0 {some value} {max length >= 2}" >&2
+        exit 1
+    fi
+    value="${1}"
+    target_length="$2"
+    if ! [ $target_length -gt 2 ]; then
+        target_length=2
+    fi
+    max_length=$(( $target_length / 2 * 2 ))
+    sub_length=$(( $max_length / 2 - 1 ))
+    if [ ${#value} -le $max_length ]; then
+        echo "$value"
+    elif [ $sub_length -le 0 ]; then
+        echo ".."
+    else
+        echo "${value:0:$sub_length}..${value: -$sub_length}"
+    fi
+}
+
+# COLOR Configuration
+# On OS X (maybe others), need to escape colors or they are
+# included in the width of the terminal
+sesc='\['
+eesc='\]'
+black=$sesc'\033[m'$eesc
+bold_black=$sesc'\033[1m'$eesc
+bold_cyan=$sesc'\033[1;36m'$eesc
+usr='$(
+    [ $COLUMNS -lt 15 ] && exit 0
+    usr=${USER//[aeiou]}
+    shorten "$usr" $(( COLUMNS / 7 ))
+)'
+host='$(
+    [ $COLUMNS -lt 20 ] && exit 0
+    hn="$(hostname -s)"
+    hn="${hn//[aeiou-]}"
+    shorten "$hn" $(( COLUMNS / 10 ))
+)'
+cwd='$(
+    wd="${PWD/#${HOME}/$(echo "~")}"
+    [ $COLUMNS -lt 15 ] && exit 0
+    shorten "$wd" $(( $COLUMNS / 3 ))
+)'
+# Note we don't export it because we don't want someone like sh to use it
+PS1="$bold_black$usr@$host$black:$bold_cyan$cwd$black\\$ "
+
+unset usr host sesc eesc \
+    black bold_black bold_cyan \
+    usr_host cwd

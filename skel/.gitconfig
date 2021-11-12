@@ -18,9 +18,6 @@
     l = log --decorate --oneline --graph
     lh = !git l --color=always | head
     la = log --decorate --oneline --graph --all
-    ld = log --decorate --graph
-    lda = log --decorate --graph --all
-    last = log -1 HEAD --decorate
 
     ; branch
     co = checkout

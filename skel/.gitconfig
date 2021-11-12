@@ -12,7 +12,6 @@
     st = status -sb
     f = fetch --tags --all --prune
     s = !git f && git st
-    sn = show --name-status
 
     ; log
     l = log --decorate --oneline --graph
@@ -30,10 +29,16 @@
     cm = commit -m
     ca = commit --amend
 
+    ; show
+    ss = show --stat
+
     ; diff
     d = diff
-    dc = diff --cached
-    ds = diff --stat
+    dc = d --cached
+    ds = d --stat
+    dr = d @{u}
+    dsr = ds @{u}
+    drs = dsr
 
 [core]
     excludesfile = ~/.gitignore

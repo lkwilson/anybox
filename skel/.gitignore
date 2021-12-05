@@ -26,3 +26,4 @@ cpp.hint
 
 .syn
 .mypy_cache/
+.auto_project

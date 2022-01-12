@@ -30,7 +30,7 @@ let g:netrw_list_hide=',\(^\|\s\s)\zs\.\S\+'
 
 " plugins
 "Plugin 'valloric/youcompleteme'
-color one
+"color one
 "colorscheme one
 "color dracula
 "colorscheme dracula

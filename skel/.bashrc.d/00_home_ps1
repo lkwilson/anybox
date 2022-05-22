@@ -29,13 +29,18 @@ black=$sesc'\033[m'$eesc
 bold_black=$sesc'\033[1m'$eesc
 bold_cyan=$sesc'\033[1;36m'$eesc
 usr='$(
+    if [ "$USER" == "" ]; then
+      BASH_USER="$(whoami)"
+    else
+      BASH_USER="$USER"
+    fi
     [ $COLUMNS -lt 15 ] && exit 0
-    usr=${USER//[aeiou]}
+    usr=${BASH_USER//[aeiou]}
     shorten "$usr" $(( COLUMNS / 7 ))
 )'
 host='$(
     [ $COLUMNS -lt 20 ] && exit 0
-    hn="$(hostname -s)"
+    hn="$(hostname -s 2>/dev/null || hostname 2>/dev/null)"
     hn="${hn//[aeiou-]}"
     shorten "$hn" $(( COLUMNS / 10 ))
 )'

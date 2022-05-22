@@ -15,7 +15,7 @@ fi
 
 echo "*** Installing $dryrun ***"
 echo
-rsync -rav $dryrun skel/ ~/
+rsync -acv $dryrun skel/ ~/
 echo
 
 if [ $# = 0 ]; then
@@ -34,9 +34,9 @@ for ws in "$@"; do
         else
             echo "Creating $HOME/.ws/$ws/"
         fi
-        rsync -rav $dryrun "ws/$ws/" "$HOME/.ws/$ws/"
+        rsync -acv $dryrun "ws/$ws/" "$HOME/.ws/$ws/"
         if [ -d "ws/$ws/.bashrc.d" ]; then
-            rsync -rav $dryrun "ws/$ws/.bashrc.d/" "$HOME/.bashrc.d/"
+            rsync -acv $dryrun "ws/$ws/.bashrc.d/" "$HOME/.bashrc.d/"
         fi
 
         setup_file="$HOME/.ws/$ws/setup"

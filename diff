@@ -7,4 +7,3 @@ for i in .??*; do
     diff -r $i ~/$i
   }
 done
-

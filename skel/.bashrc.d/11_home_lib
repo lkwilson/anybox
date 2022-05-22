@@ -17,39 +17,22 @@ fi
 
 # git
 if which git &>/dev/null; then
-    if ! shopt -oq posix; then
-        if [ -f /usr/share/bash-completion/completions/git ]; then
-            . /usr/share/bash-completion/completions/git
-        elif [ -f ~/.bash_completion.d/git ]; then
-            # This allows you to copy the git completions file and load it without
-            # sudo
-            . ~/.bash_completion.d/git
-        fi
-    fi
+    function_exists() {
+      declare -f -F $1 > /dev/null
+      return $?
+    }
 
-    # If git st is a git alias, then gst is an alias to git st, and it supports
-    # tab completion
-    if __git_aliases &>/dev/null; then
-        function_exists() {
-            declare -f -F $1 > /dev/null
-            return $?
-        }
-
-        for al in $(__git_aliases); do
-            alias g$al="git $al"
-
-            complete_func=_git_$(__git_aliased_command $al)
-            function_exists $complete_func && __git_complete g$al $complete_func
-        done
-    else
-        # fallback without completion
-        for al in $(git list-aliases | cut -f1 -d"="); do
-            alias g$al="git $al"
-        done
-    fi
+    for al in $(git config --get-regexp '^alias\.' | cut -f 1 -d ' ' | cut -f 2 -d '.'); do
+      alias g$al="git $al"
+      complete_func=_git_$(__git_aliased_command $al)
+      function_exists $complete_func && __git_complete g$al $complete_func
+    done
+    unset al
 
     # Other git related aliases
     alias is_git='git rev-parse &>/dev/null'
+    alias gk='gitk &>/dev/null&'
+    alias gka='gitk --all &>/dev/null&'
 
     # Set git branch PS1
     git_prefix='$(

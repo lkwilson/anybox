@@ -7,3 +7,7 @@ echo "Change font to Menio 10"
 brew install git bash-completion coreutils fzf
 
 yes | $(brew --prefix)/opt/fzf/install
+
+
+
+defaults write .GlobalPreferences com.apple.mouse.scaling -1

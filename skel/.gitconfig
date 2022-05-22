@@ -34,17 +34,18 @@
 
     ; diff
     d = diff
-    dc = d --cached
-    ds = d --stat
-    dr = d @{u}
-    dsr = ds @{u}
-    drs = dsr
+    dc = diff --cached
+    ds = diff --stat
+    dr = diff @{u}
+    dsr = diff --stat @{u}
+    drs = diff --stat @{u}
 
     ; remote
     rv = remote -v
 
 [core]
     excludesfile = ~/.gitignore
+    autocrlf = input
 
 [pull]
     ff = only

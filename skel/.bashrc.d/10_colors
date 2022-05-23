@@ -1,0 +1,81 @@
+# COLOR Configuration
+# On OS X (maybe others), need to escape colors or they are
+# included in the width of the terminal
+# font size
+bc_start='\[\e['
+bc_end='m\]'
+
+# ansi mutators
+bc_reset=0
+bc_bold=1
+bc_light=2
+bc_italic=3 # low support
+bc_underline=4 # low support
+bc_swap=7 # swap bg and fg, inconsistent
+
+# 3-bit fg
+bc_fg_black=30
+bc_fg_red=31
+bc_fg_green=32
+bc_fg_yellow=33
+bc_fg_blue=34
+bc_fg_magenta=35
+bc_fg_cyan=36
+bc_fg_white=37
+
+# 3-bit bg
+bc_bg_black=40
+bc_bg_red=41
+bc_bg_green=42
+bc_bg_yellow=43
+bc_bg_blue=44
+bc_bg_magenta=45
+bc_bg_cyan=46
+bc_bg_white=47
+
+# 4-bit fg
+bc_fg_bright_black=90
+bc_fg_bright_red=91
+bc_fg_bright_green=92
+bc_fg_bright_yellow=93
+bc_fg_bright_blue=94
+bc_fg_bright_magenta=95
+bc_fg_bright_cyan=96
+bc_fg_bright_white=97
+
+# 4-bit bg
+bc_bg_bright_black=100
+bc_bg_bright_red=101
+bc_bg_bright_green=102
+bc_bg_bright_yellow=103
+bc_bg_bright_blue=104
+bc_bg_bright_magenta=105
+bc_bg_bright_cyan=106
+bc_bg_bright_white=107
+
+# 8-bit
+bc_fg_8bit_custom='38;5;' # usage: "${bc_fg_8bit_custom}${n};", where n in [0..255]
+bc_bg_8bit_custom='48;5;' # usage: "${bc_bg_8bit_custom}${n};", where n in [0..255]
+
+# 24-bit / truecolor
+bc_fg_24bit_custom='38;2;' # usage: "${bc_fg_24bit_custom}${r};${g};${b};", where r, g, b in [0..255]
+bc_bg_24bit_custom='48;2;' # usage: "${bc_bg_24bit_custom}${r};${g};${b};", where r, g, b in [0..255]
+
+# implementation defined
+bc_fg_default=39
+bc_bg_default=49
+
+if [ "$COLORTERM" == "truecolor" ]; then
+  bc_bits=24
+elif [ "$TERM" == "xterm-256color" ]; then
+  bc_bits=8
+else
+  bc_bits=3
+fi
+export bc_bits
+
+# PS1=u@h is bold, \w is bold cyan, all else default
+bc_black=$bc_start''$bc_end
+bc_bold_black=$bc_start'1'$bc_end
+bc_bold_cyan=$bc_start'1;36'$bc_end
+

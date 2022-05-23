@@ -37,17 +37,14 @@ if which git &>/dev/null; then
     alias gka='gitk --all &>/dev/null&'
 
     # Set git branch PS1
-    git_prefix='$(
-        is_git || exit 0
-        if [ $COLUMNS -lt 40 ]; then
-            exit 0
+    ps1_git_prefix() {
+        if is_git; then
+            ps1_git=$(git branch-name 2>/dev/null)
+        else
+            ps1_git=''
         fi
-        branch=$(git branch-name 2>/dev/null)
-        branch="$(shorten "$branch" $(( $COLUMNS / 4 )))"
-        echo "($branch) "
-    )'
-    PS1="$git_prefix$PS1"
-    unset git_prefix
+    }
+    PROMPT_COMMAND="ps1_git_prefix;$PROMPT_COMMAND"
 fi
 
 # fzf

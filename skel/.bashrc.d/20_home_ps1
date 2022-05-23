@@ -1,0 +1,143 @@
+# Shorten a value to be a specific length. Output is stored in shortened env var
+shorten() {
+    if [ $# -ne 2 ]; then
+        echo "Invalid args"
+        echo "Usage: $0 {some value} {max length >= 2}" >&2
+        exit 1
+    fi
+    value="${1}"
+    target_length="$2"
+    if [ $target_length -leq 2 ]; then
+        target_length=2
+    fi
+    max_length=$(( $target_length / 2 * 2 ))
+    sub_length=$(( $max_length / 2 - 1 ))
+    if [ ${#value} -le $max_length ]; then
+        shortened="$value"
+    elif [ $sub_length -le 0 ]; then
+        shortened=".."
+    else
+        shortened="${value:0:$sub_length}..${value: -$sub_length}"
+    fi
+}
+
+# if ps1 is broken, call this
+ps1_init() {
+    if [ $bc_bits -eq 24 ]; then
+        ps1_bold_cyan="${bc_start}${bc_bold};${bc_fg_24bit_custom}17;168;205${bc_end}"
+    else
+        ps1_bold_cyan="${bc_start}${bc_bold};${bc_cyan}${bc_end}"
+    fi
+    ps1_bold="${bc_start}${bc_bold}${bc_end}"
+    ps1_reset="${bc_start}${bc_reset}${bc_end}"
+
+    if [ "$USER" == "" ]; then
+      ps1_user="$(whoami)"
+    else
+      ps1_user="$USER"
+    fi
+    ps1_user=${ps1_user//[aeiou]}
+
+    ps1_host="$(hostname -s 2>/dev/null || hostname 2>/dev/null)"
+    ps1_host="${ps1_host//[aeiou-]}"
+}
+_ps1_length() {
+    _ps1_length_res=0
+    if [ $this_ps1_git != '' ]; then
+        _ps1_length_res=$(( $_ps1_length_res + 3 + ${#ps1_git_length} ))
+    fi
+    if [ $this_ps1_user != '' ]; then 
+        _ps1_length_res=$(( $_ps1_length_res + 1 + ${#this_ps1_user} ))
+    fi
+    if [ $this_ps1_host != '' ]; then
+        _ps1_length_res=$(( $_ps1_length_res + 1 + ${#this_ps1_host} ))
+    fi
+    _ps1_length_res=$(( $_ps1_length_res + 2 + ${#this_ps1_cwd} ))
+}
+ps1_shorten() {
+    local space=$(( $COLUMNS / 3 ))
+
+    # shorten host
+    _ps1_length
+    if [ $_ps1_length_res -le $space  ]; then return; fi
+    shorten "$this_ps1_host" 8
+    this_ps1_host="$shortened"
+
+    # shorten user
+    _ps1_length
+    if [ $_ps1_length_res -le $space  ]; then return; fi
+    shorten "$this_ps1_user" 8
+    this_ps1_user="$shortened"
+
+    # shorten git
+    _ps1_length
+    if [ $_ps1_length_res -le $space  ]; then return; fi
+    shorten "$this_ps1_git" 10
+    this_ps1_git="$shortened"
+
+    # shorten cwd
+    _ps1_length
+    if [ $_ps1_length_res -le $space  ]; then return; fi
+    shorten "$this_ps1_cwd" 16
+    full_ps1_cwd="$this_ps1_cwd"
+    this_ps1_cwd="$shortened"
+
+    # 
+    _ps1_length
+    if [ $_ps1_length_res -le $space  ]; then return; fi
+    this_ps1_git=".."
+    this_ps1_cwd="$full_ps1_cwd"
+
+    _ps1_length
+    if [ $_ps1_length_res -le $space  ]; then return; fi
+    shorten "$this_ps1_cwd" 16
+    this_ps1_cwd="$shortened"
+
+    _ps1_length
+    if [ $_ps1_length_res -le $space  ]; then return; fi
+    shorten "$this_ps1_cwd" 16
+    this_ps1_cwd="$shortened"
+
+
+
+    #shorten "$this_ps1_git" $(( $COLUMNS / 4 ))
+
+    #if [ $cols -lt 15 ]; then
+        #ps1_user=${BASH_USER//[aeiou]}
+        #shorten "$this_ps1_user" $(( cols / 7 ))
+        #this_ps1_user="$shortened"
+    #fi
+
+    #if [ $cols -lt 20 ]; then
+        #shorten "$this_ps1_host" $(( cols / 10 ))
+        #this_ps1_host="$shortened"
+    #fi
+
+    #[ $cols -lt 15 ] && exit 0
+    #shorten "$this_ps1_cwd" $(( cols / 3 ))
+    #this_ps1_cwd="$shortened"
+}
+ps1_setup() {
+    # prefix some other function to PROMPT_COMMAND that sets the current ps1_git branch
+    local this_ps1_git="$ps1_git"
+    local this_ps1_user="$ps1_user"
+    local this_ps1_host="$ps1_host"
+    local this_ps1_cwd="${PWD/#${HOME}/'~'}"
+    if [ "$COLUMNS" != "" ]; then
+        ps1_shorten
+    fi
+    if [ $this_ps1_git != '' ]; then
+        this_ps1_git="($this_ps1_git) "
+    fi
+    if [ $this_ps1_user != '' ]; then
+        this_ps1_user="$this_ps1_user@"
+    fi
+    if [ $this_ps1_host != '' ]; then
+        this_ps1_host="$this_ps1_host$ps1_reset:"
+    fi
+    # Note we don't export it because we don't want someone like sh to use it
+    PS1="$ps1_reset$this_ps1_git$ps1_bold$this_ps1_user$this_ps1_host$ps1_bold_cyan$this_ps1_cwd$ps1_reset\\$ "
+}
+
+ps1_init
+PROMPT_COMMAND=ps1_setup

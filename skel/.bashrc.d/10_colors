@@ -2,8 +2,8 @@
 # On OS X (maybe others), need to escape colors or they are
 # included in the width of the terminal
 # font size
-bc_start='\[\e['
-bc_end='m\]'
+bc_start='\e['
+bc_end='m'
 
 # ansi mutators
 bc_reset=0
@@ -73,9 +73,3 @@ else
   bc_bits=3
 fi
 export bc_bits
-
-# PS1=u@h is bold, \w is bold cyan, all else default
-bc_black=$bc_start''$bc_end
-bc_bold_black=$bc_start'1'$bc_end
-bc_bold_cyan=$bc_start'1;36'$bc_end
-

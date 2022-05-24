@@ -1,11 +1,28 @@
+_set_var() {
+    unset $1
+    true ${!1="$2"}
+}
+
+_min_val() {
+    if [ $1 -lt $2 ]; then
+        _min_val_res=$1
+    else
+        _min_val_res=$2
+    fi
+}
+
+_max_val() {
+    if [ $1 -gt $2 ]; then
+        _max_val_res=$1
+    else
+        _max_val_res=$2
+    fi
+}
+
 _shorten() {
     local variable"${1}"
     local value="${!variable}"
     local target_length="$2" # rounds down to the nearest even value
-    local min_length="${3:-0}" # pre: min_length >= 0
-    if [ $target_length -lt $min_length ]; then
-        target_length=$min_length
-    fi
     if [ $target_length -lt 2 ]; then
         new_value=""
     else
@@ -19,7 +36,7 @@ _shorten() {
             new_value="${value:0:$sub_length}..${value: -$sub_length}"
         fi
     fi
-    let $variable="$new_value"
+    _set_var $variable "$new_value"
 }
 
 # if ps1 is broken, call this
@@ -44,6 +61,7 @@ ps1_init() {
     ps1_host="$(hostname -s 2>/dev/null || hostname 2>/dev/null)"
     ps1_host="${ps1_host//[aeiou-]}"
 }
+
 _ps1_length() {
     _ps1_length_res=0
     if [ "$this_ps1_git" != '' ]; then
@@ -60,6 +78,7 @@ _ps1_length() {
 
     _ps1_length_res=$(( $_ps1_length_res + 2 + ${#this_ps1_cwd} ))
 }
+
 _shorten_if() {
     local variable=$1
     local value="${!variable}"
@@ -67,42 +86,40 @@ _shorten_if() {
     local max_length=$2
 
     _ps1_length
-    if [ $_ps1_length_res -le $space  ]; then
+    if [ $_ps1_length_res -le $_ps1_space  ]; then
         return 0
     elif [ $value_length -gt $max_length ]; then
-        local new_length=$(( $value_length - $_ps1_length_res + $space ))
-        _shorten $variable $new_length $max_length
+        local new_length=$(( $value_length - $_ps1_length_res + $_ps1_space ))
+        _max_val $new_length $max_length
+        new_length=$_max_val_res 
+        _shorten $variable $new_length
     fi
     return 1
 }
+
 _shorten_ps1_pass() {
-    if _shorten_if this_ps1_host $1; then return 0; fi
     if _shorten_if this_ps1_user $2; then return 0; fi
+    if _shorten_if this_ps1_host $1; then return 0; fi
     if _shorten_if this_ps1_git $3; then return 0; fi
     if _shorten_if this_ps1_cwd $4; then return 0; fi
     return 1
 }
+
 _shorten_ps1() {
-    local space
-    local width_space=$(( $COLUMNS - 30 ))
-    local half_space=$(( $COLUMNS / 2 ))
-    if [ $width_space -lt $half_space ]; then
-        space=$width_space
-    else
-        space=$half_space
-    fi
+    _min_val $(( $COLUMNS - 30 )) $(( $COLUMNS / 2 ))
+    _ps1_space=$_min_val_res
     if _shorten_ps1_pass 8 8 16 16; then return; fi
     if _shorten_ps1_pass 2 2 6 8; then return; fi
     if _shorten_ps1_pass 0 0 2 8; then return; fi
     if _shorten_ps1_pass 0 0 0 0; then return; fi
-    this_ps1_cwd=""
 }
+
 ps1_setup() {
     # prefix some other function to PROMPT_COMMAND that sets the current ps1_git branch
-    local this_ps1_git="$ps1_git"
-    local this_ps1_user="$ps1_user"
-    local this_ps1_host="$ps1_host"
-    local this_ps1_cwd="${PWD/#${HOME}/'~'}"
+    this_ps1_git="$ps1_git"
+    this_ps1_user="$ps1_user"
+    this_ps1_host="$ps1_host"
+    this_ps1_cwd="${PWD/#${HOME}/'~'}"
     if [ "$COLUMNS" != "" ]; then
         _shorten_ps1
     fi

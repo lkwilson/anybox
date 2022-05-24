@@ -130,7 +130,7 @@ ps1_setup() {
     fi
 
     if [ "$_ps1_next_git" != '' ]; then
-        _ps1_next_git="($_ps1_bold_red$_ps1_next_git$_ps1_reset) "
+        _ps1_next_git="($_ps1_bold_green$_ps1_next_git$_ps1_reset) "
     fi
 
     local _ps1_next_user_host=''
@@ -148,7 +148,7 @@ ps1_setup() {
 
     # Note we don't export it because we don't want someone like sh to use it
     PS1="$_ps1_reset$_ps1_next_git$_ps1_next_user_host$_ps1_next_cwd\\$ "
-    #PS1="$PS1$_ps1_bold_green"
+    #PS1="$PS1$_ps1_bold"
     #PS0="$_ps1_reset"
 }
 

@@ -1,0 +1,156 @@
+_set_var() {
+    unset $1
+    true ${!1="$2"}
+}
+
+_min_val() {
+    if [ $1 -lt $2 ]; then
+        _min_val_res=$1
+    else
+        _min_val_res=$2
+    fi
+}
+
+_max_val() {
+    if [ $1 -gt $2 ]; then
+        _max_val_res=$1
+    else
+        _max_val_res=$2
+    fi
+}
+
+_shorten() {
+    local variable"${1}"
+    local value="${!variable}"
+    local target_length="$2" # rounds down to the nearest even value
+    local new_value
+    if [ $target_length -lt 2 ]; then
+        new_value=""
+    else
+        max_length=$(( $target_length / 2 * 2 ))
+        sub_length=$(( $max_length / 2 - 1 ))
+        if [ ${#value} -le $max_length ]; then
+            new_value="$value"
+        elif [ $sub_length -le 0 ]; then
+            new_value=".."
+        else
+            new_value="${value:0:$sub_length}..${value: -$sub_length}"
+        fi
+    fi
+    _set_var $variable "$new_value"
+}
+
+# if ps1 is broken, call this
+ps1_init() {
+    _ps1_start="\[${bc_start}"
+    _ps1_end="${bc_end}\]"
+    if [ $bc_bits -eq 24 ]; then
+        _ps1_bold_cyan="${_ps1_start}${bc_bold};${bc_fg_24bit_custom}17;168;205${_ps1_end}"
+        _ps1_bold_red="${_ps1_start}${bc_bold};${bc_fg_24bit_custom}205;49;49${_ps1_end}"
+        _ps1_bold_green="${_ps1_start}${bc_bold};${bc_fg_24bit_custom}13;188;121${_ps1_end}"
+    else
+        _ps1_bold_cyan="${_ps1_start}${bc_bold};${bc_fg_cyan}${_ps1_end}"
+        _ps1_bold_red="${_ps1_start}${bc_bold};${bc_fg_red}${_ps1_end}"
+        _ps1_bold_green="${_ps1_start}${bc_bold};${bc_fg_green}${_ps1_end}"
+    fi
+    _ps1_bold="${_ps1_start}${bc_bold}${_ps1_end}"
+    _ps1_reset="${_ps1_start}${bc_reset}${_ps1_end}"
+
+    if [ "$USER" == "" ]; then
+      _ps1_user="$(whoami)"
+    else
+      _ps1_user="$USER"
+    fi
+    _ps1_user=${_ps1_user//[aeiou]}
+
+    _ps1_host="$(hostname -s 2>/dev/null || hostname 2>/dev/null)"
+    _ps1_host="${_ps1_host//[aeiou-]}"
+}
+
+_ps1_length() {
+    _ps1_length_res=0
+    if [ "$_ps1_next_git" != '' ]; then
+        _ps1_length_res=$(( $_ps1_length_res + 3 + ${#ps1_git_length} ))
+    fi
+
+    if [ "$_ps1_next_user" != '' ] && [ "$_ps1_next_host" != '' ]; then 
+        _ps1_length_res=$(( $_ps1_length_res + 2 + ${#_ps1_next_user} + ${#_ps1_next_host} ))
+    elif [ "$_ps1_next_user" != '' ]; then
+        _ps1_length_res=$(( $_ps1_length_res + 1 + ${#_ps1_next_user} ))
+    elif [ "$_ps1_next_host" != '' ]; then 
+        _ps1_length_res=$(( $_ps1_length_res + 1 + ${#_ps1_next_host} ))
+    fi
+
+    _ps1_length_res=$(( $_ps1_length_res + 2 + ${#_ps1_next_cwd} ))
+}
+
+_shorten_if() {
+    local variable=$1
+    local value="${!variable}"
+    local value_length=${#value}
+    local min_length=$2
+
+    _ps1_length
+    if [ $_ps1_length_res -le $_ps1_space  ]; then
+        return 0
+    elif [ $value_length -gt $min_length ]; then
+        local new_length=$(( $value_length - $_ps1_length_res + $_ps1_space ))
+        _max_val $new_length $min_length
+        new_length=$_max_val_res 
+        _shorten $variable $new_length
+    fi
+    return 1
+}
+
+_shorten_ps1_pass() {
+    if _shorten_if _ps1_next_user $2; then return 0; fi
+    if _shorten_if _ps1_next_host $1; then return 0; fi
+    if _shorten_if _ps1_next_git $3; then return 0; fi
+    if _shorten_if _ps1_next_cwd $4; then return 0; fi
+    return 1
+}
+
+_shorten_ps1() {
+    _min_val $(( $COLUMNS - 30 )) $(( $COLUMNS / 2 ))
+    _ps1_space=$_min_val_res
+    if _shorten_ps1_pass 8 8 16 16; then return; fi
+    if _shorten_ps1_pass 2 2 6 8; then return; fi
+    if _shorten_ps1_pass 0 0 2 8; then return; fi
+    if _shorten_ps1_pass 0 0 0 0; then return; fi
+}
+
+ps1_setup() {
+    # prefix some other function to PROMPT_COMMAND that sets the current _ps1_git branch
+    _ps1_next_git="$_ps1_git"
+    _ps1_next_user="$_ps1_user"
+    _ps1_next_host="$_ps1_host"
+    _ps1_next_cwd="${PWD/#${HOME}/'~'}"
+    if [ "$COLUMNS" != "" ]; then
+        _shorten_ps1
+    fi
+
+    if [ "$_ps1_next_git" != '' ]; then
+        _ps1_next_git="($_ps1_bold_red$_ps1_next_git$_ps1_reset) "
+    fi
+
+    local _ps1_next_user_host=''
+    if [ "$_ps1_next_user" != '' ] && [ "$_ps1_next_host" != '' ]; then 
+        _ps1_next_user_host=$_ps1_bold$_ps1_next_user@$_ps1_next_host$_ps1_reset:
+    elif [ "$_ps1_next_user" != '' ]; then
+        _ps1_next_user_host=$_ps1_bold$_ps1_next_user$_ps1_reset:
+    elif [ "$_ps1_next_host" != '' ]; then 
+        _ps1_next_user_host=$_ps1_bold$_ps1_next_host$_ps1_reset:
+    fi
+
+    if [ "$_ps1_next_cwd" != '' ]; then
+        _ps1_next_cwd="$_ps1_bold_cyan$_ps1_next_cwd$_ps1_reset"
+    fi
+
+    # Note we don't export it because we don't want someone like sh to use it
+    PS1="$_ps1_reset$_ps1_next_git$_ps1_next_user_host$_ps1_next_cwd\\$ "
+    #PS1="$PS1$_ps1_bold_green"
+    #PS0="$_ps1_reset"
+}
+
+ps1_init
+PROMPT_COMMAND=ps1_setup

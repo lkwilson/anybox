@@ -31,23 +31,15 @@ if which git &>/dev/null; then
         unset al
     fi
 
-    # Other git related aliases
-    alias is_git='git rev-parse &>/dev/null'
-    alias gk='gitk &>/dev/null&'
-    alias gka='gitk --all &>/dev/null&'
-
     # Set git branch PS1
-    git_prefix='$(
-        is_git || exit 0
-        if [ $COLUMNS -lt 40 ]; then
-            exit 0
+    _ps1_git_prefix() {
+        if git rev-parse &>/dev/null; then
+            _ps1_git=$(git branch-name 2>/dev/null)
+        else
+            _ps1_git=''
         fi
-        branch=$(git branch-name 2>/dev/null)
-        branch="$(shorten "$branch" $(( $COLUMNS / 4 )))"
-        echo "($branch) "
-    )'
-    PS1="$git_prefix$PS1"
-    unset git_prefix
+    }
+    PROMPT_COMMAND="_ps1_git_prefix;$PROMPT_COMMAND"
 fi
 
 # fzf

@@ -46,8 +46,12 @@ ps1_init() {
     _ps1_end="${bc_end}\]"
     if [ $bc_bits -eq 24 ]; then
         _ps1_bold_cyan="${_ps1_start}${bc_bold};${bc_fg_24bit_custom}17;168;205${_ps1_end}"
+        _ps1_bold_red="${_ps1_start}${bc_bold};${bc_fg_24bit_custom}205;49;49${_ps1_end}"
+        _ps1_bold_green="${_ps1_start}${bc_bold};${bc_fg_24bit_custom}13;188;121${_ps1_end}"
     else
         _ps1_bold_cyan="${_ps1_start}${bc_bold};${bc_fg_cyan}${_ps1_end}"
+        _ps1_bold_red="${_ps1_start}${bc_bold};${bc_fg_red}${_ps1_end}"
+        _ps1_bold_green="${_ps1_start}${bc_bold};${bc_fg_green}${_ps1_end}"
     fi
     _ps1_bold="${_ps1_start}${bc_bold}${_ps1_end}"
     _ps1_reset="${_ps1_start}${bc_reset}${_ps1_end}"
@@ -116,8 +120,8 @@ _shorten_ps1() {
 }
 
 ps1_setup() {
-    # prefix some other function to PROMPT_COMMAND that sets the current ps1_git branch
-    _ps1_next_git="$ps1_git"
+    # prefix some other function to PROMPT_COMMAND that sets the current _ps1_git branch
+    _ps1_next_git="$_ps1_git"
     _ps1_next_user="$_ps1_user"
     _ps1_next_host="$_ps1_host"
     _ps1_next_cwd="${PWD/#${HOME}/'~'}"
@@ -126,7 +130,7 @@ ps1_setup() {
     fi
 
     if [ "$_ps1_next_git" != '' ]; then
-        _ps1_next_git="($_ps1_next_git) "
+        _ps1_next_git="($_ps1_bold_red$_ps1_next_git$_ps1_reset) "
     fi
 
     local _ps1_next_user_host=''
@@ -144,6 +148,8 @@ ps1_setup() {
 
     # Note we don't export it because we don't want someone like sh to use it
     PS1="$_ps1_reset$_ps1_next_git$_ps1_next_user_host$_ps1_next_cwd\\$ "
+    #PS1="$PS1$_ps1_bold_green"
+    #PS0="$_ps1_reset"
 }
 
 ps1_init

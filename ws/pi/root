@@ -16,3 +16,13 @@ parted /dev/mmcblk0 resizepart 2 100%
 #usermod -m -d /home/op op
 
 wpa_passphrase the-ssid the-passwd > /etc/wpa_supplicant/wpa_supplicant.conf
+
+Add the following to `/boot/config.txt` to make fan less sensative on rpi4 poe
+hat
+```
+# PoE Hat Fan Speeds
+dtparam=poe_fan_temp0=80000,poe_fan_temp0_hyst=5000
+dtparam=poe_fan_temp1=82000,poe_fan_temp1_hyst=2000
+dtparam=poe_fan_temp2=84000,poe_fan_temp2_hyst=2000
+dtparam=poe_fan_temp3=86000,poe_fan_temp3_hyst=2000
+```

@@ -26,6 +26,9 @@ HISTFILESIZE=
 # of LINES and COLUMNS.
 shopt -s checkwinsize
 
+# Don't tab complete on empty prompt
+shopt -s no_empty_cmd_completion
+
 # Some ls aliases
 alias ll='ls -al'
 

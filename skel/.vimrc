@@ -3,21 +3,18 @@ set wildmenu " when tabbing, show files
 syntax enable
 set nohlsearch " don't highlight words when searching
 
-set tabstop=8
-set softtabstop=2
-set shiftwidth=2
-set expandtab
+set tabstop=2 " width of tab
+set softtabstop=2 " width of tab while editing
+set shiftwidth=0 " width of shifting (>>), 0=tabstop
+set expandtab " convert tab to spaces
 
+set shiftround " round shifts to tabstop
 set autoindent
 set smarttab
-set shiftround
 set copyindent 
 set backspace=indent,eol,start
 
 set t_Co=256
-
-" paste without yanking
-vnoremap p "_dP
 
 " command! MakeTags !ctags .
 
@@ -40,10 +37,10 @@ map <ScrollWheelUp> <C-Y>
 map <ScrollWheelDown> <C-E>
 
 " enable filetype detection:
-filetype on
-filetype plugin on
-filetype plugin indent on
-filetype indent on " file type based indentation
+" filetype on
+" filetype plugin on
+" filetype plugin indent on
+" filetype indent on " file type based indentation
 
 " in makefiles, don't expand tabs to spaces, since actual tab characters are
 " needed, and have indentation at 8 chars to be sure that all indents are tabs

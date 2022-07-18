@@ -16,7 +16,7 @@ if ! shopt -oq posix; then
 fi
 
 # git
-if which git &>/dev/null; then
+if type git &>/dev/null; then
     function_exists() {
       declare -f -F $1 > /dev/null
       return $?
@@ -45,12 +45,12 @@ fi
 # fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-if which code &>/dev/null; then
+if type code &>/dev/null; then
     alias ch='code .'
 fi
 
 # Remap capslock to ctrl
-which setxkbmap &>/dev/null && {
+type setxkbmap &>/dev/null && {
     setxkbmap -option ctrl:nocaps &>/dev/null
     setxkbmap -o ctrl:nocaps &>/dev/null
 }

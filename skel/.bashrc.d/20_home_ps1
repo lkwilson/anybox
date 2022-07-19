@@ -63,7 +63,11 @@ ps1_init() {
     fi
     _ps1_user=${_ps1_user//[aeiou]}
 
-    _ps1_host="$(cat /etc/hostname)"
+    if [ -r /etc/hostname ]; then
+        _ps1_host="$(cat /etc/hostname)"
+    elif type hostname &>/dev/null; then
+        _ps1_host="$(hostname 2>/dev/null)"
+    fi
     _ps1_host="${_ps1_host%%.*}"
     _ps1_host="${_ps1_host//[aeiou-]}"
 }

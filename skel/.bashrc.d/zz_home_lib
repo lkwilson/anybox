@@ -13,7 +13,9 @@ if ! shopt -oq posix; then
     elif [ -f /opt/homebrew/etc/bash_completion ]; then
         bash_completion_base=/opt/homebrew/etc
     fi
-    . $bash_completion_base/bash_completion
+    if [ -f $bash_completion_base/bash_completion ]; then
+        . $bash_completion_base/bash_completion
+    fi
 fi
 
 setup_git() {

@@ -15,6 +15,7 @@
 
     ; log
     l = log --decorate --oneline --graph
+    lr = log --decorate --oneline --graph HEAD @{u}
     lh = !git l --color=always | head
     la = log --decorate --oneline --graph --all
 

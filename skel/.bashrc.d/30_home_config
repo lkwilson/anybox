@@ -1,6 +1,7 @@
 # Have ctrl c clear current line
 type tput &>/dev/null && {
-    trap 'tput dl1; tput cuu1' INT
+    # trap 'tput dl1; tput cuu1' INT
+    trap "tput -S <<< 'dl1 cuu1'" SIGINT
 }
 
 # Set ls color

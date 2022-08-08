@@ -1,0 +1,107 @@
+#!/bin/bash
+
+usage() {
+  echo 'boot [-asoh] [<boot option>]'
+  echo '  List or boot into other grub boot options'
+  echo
+  echo 'OPTS'
+  echo '  No options lists boot options'
+  echo '  -h    Display this help screen'
+  echo '  -a    Include sub menus as boot options'
+  echo '  -s    Boot into selection and save as new default'
+  echo '  -o    Boot into selection just once'
+}
+
+all=no
+save=no
+once=no
+
+while getopts ":asoh" arg; do
+  case $arg in
+    a) # all
+      all=yes
+      ;;
+    s) # save
+      save=yes
+      ;;
+    o) # once
+      once=yes
+      ;;
+    h) # Display help.
+      usage
+      exit 0
+      ;;
+    *) # Error option
+      echo "Error: bad option: $arg"
+      usage
+      exit 1
+  esac
+done
+shift $(($OPTIND - 1))
+if [ $# -gt 1 ]; then
+  echo "Error: too many args: $2"
+  usage
+  exit 1
+fi
+sel="$1"
+
+list=no
+if [ $save == no ] && [ $once == no ]; then
+  list=yes
+elif [ $save == yes ] && [ $once == yes ]; then
+  echo "You cannot boot once and save it"
+  exit 1
+fi
+
+# load entries
+IFS=$'\n' menuentries=($(cat /efi/grub/grub.cfg | grep -oE "^\s*menuentry\ '[^']+'"))
+entries=()
+for entry in "${menuentries[@]}"; do
+  name="$(echo "$entry" | cut -d\' -f2)"
+  if [ "$name" == 'UEFI Firmware Settings' ]; then
+    continue
+  fi
+  if [ "${entry:0:9}" == menuentry ]; then
+    root="$name"
+    entries+=("$root")
+  elif [ $all == yes ]; then
+    entries+=("$root>$name")
+  fi
+done
+
+# if list, then list and exit
+if [ $list == yes ]; then
+  for entry in "${entries[@]}"; do
+    echo "'$entry'"
+  done
+  exit 0
+fi
+
+check_sel() {
+  for entry in "${entries[@]}"; do
+    if [ "$1" == "$entry" ]; then
+      return 0
+    fi
+  done
+  echo "Entry not found: $1"
+  return 1
+}
+
+# get and check selection
+while [ "$sel" == '' ] || ! check_sel "$sel"; do
+  select entry in "${entries[@]}"; do
+    sel="$entry"
+    echo Selected "'$entry'"
+    break
+  done
+done
+
+# reboot
+set -e
+if [ $save == yes ]; then
+  grub-set-default --boot-directory=/efi "$sel"
+else
+  grub-reboot --boot-directory=/efi "$sel"
+fi
+reboot
+

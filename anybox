@@ -6,12 +6,29 @@ cd "$anybox_dir" || {
   exit 1
 }
 
-if [ "$1" != 'force' ]; then
-  echo "NOTE: Add 'force' as FIRST argument to actually install"
-  dryrun='--dry-run'
+source load_skel
+
+see() {
+  for i in "${skel_files[@]}"; do
+    echo diff -q "$HOME/$i" "./skel/$i"
+    if ! diff -q "$HOME/$i" "./skel/$i"; then
+      echo "$i"
+    fi
+  done
+}
+
+if [ "$1" == 'see' ]; then
+  see
+elif [ "$1" == 'diff' ]; then
+  diff
+elif [ "$1" == 'install' ]; then
+  diff
 else
-  shift
+  echo "Usage: $0 {see|diff|install}"
+  exit 1
 fi
+
+exit 1
 
 echo "*** Installing $dryrun ***"
 echo

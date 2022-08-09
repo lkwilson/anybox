@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+anybox_dir="$(dirname "$0")"
+cd "$anybox_dir" || {
+  echo "Failed to cd into anybox dir: $anybox_dir"
+  exit 1
+}
+
+source load_skel
+
+see_cmd() {
+  for i in "${skel_files[@]}"; do
+    diff -q "$HOME/$i" "./skel/$i"
+  done
+}
+
+diff_cmd() {
+  for i in "${skel_files[@]}"; do
+    if diff "$HOME/$i" "./skel/$i" &>/dev/null; then
+      continue
+    fi
+    echo diff "$HOME/$i" "./skel/$i"
+    diff "$HOME/$i" "./skel/$i"
+    echo
+  done
+}
+
+install_cmd() {
+  for i in "${skel_files[@]}"; do
+    if diff "$HOME/$i" "./skel/$i" &>/dev/null; then
+      continue
+    fi
+    target_dir="$(dirname "$i")"
+    if [ ! -d "$HOME/$target_dir" ]; then
+      mkdir -p "$HOME/$target_dir"
+    fi
+    diff "skel/$i" "$HOME/$i"
+    cp -v "skel/$i" "$HOME/$i"
+  done
+}
+
+capture_cmd() {
+  for i in "${skel_files[@]}"; do
+    if [ -r "$HOME/$i" ]; then
+      cp -v "$HOME/$i" "skel/$i"
+    fi
+  done
+}
+
+if [ "$1" == 'see' ]; then
+  see_cmd
+elif [ "$1" == 'diff' ]; then
+  diff_cmd
+elif [ "$1" == 'install' ]; then
+  install_cmd
+elif [ "$1" == 'capture' ]; then
+  capture_cmd
+else
+  echo "Usage: $0 {see|diff|install|capture}"
+  exit 1
+fi

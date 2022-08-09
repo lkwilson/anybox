@@ -1,9 +1,0 @@
-#!/bin/bash
-
-cd skel || exit 1
-for i in .??*; do
-  diff -r $i ~/$i &>/dev/null || {
-    echo "Diff between $i and ~/$i"
-    diff -r $i ~/$i
-  }
-done

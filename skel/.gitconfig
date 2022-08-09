@@ -40,6 +40,12 @@
     dr = diff @{u}
     dsr = diff --stat @{u}
     drs = diff --stat @{u}
+    dsrc = diff --stat --cached @{u}
+    drsc = diff --stat --cached @{u}
+    dscr = diff --stat --cached @{u}
+    drcs = diff --stat --cached @{u}
+    dcsr = diff --stat --cached @{u}
+    dcrs = diff --stat --cached @{u}
 
     ; remote
     rv = remote -v

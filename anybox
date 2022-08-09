@@ -45,6 +45,7 @@ capture_cmd() {
       cp -v "$HOME/$i" "skel/$i"
     fi
   done
+  cp -r ~/.bashrc.d/* skel/.bashrc.d/
 }
 
 if [ "$1" == 'see' ]; then

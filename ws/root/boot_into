@@ -54,7 +54,13 @@ elif [ $save == yes ] && [ $list == yes ]; then
 fi
 
 # load entries
-IFS=$'\n' menuentries=($(cat /efi/grub/grub.cfg | grep -oE "^\s*menuentry\ '[^']+'"))
+grub_cfg=/efi/grub/grub.cfg
+IFS=$'\n' menuentries=($(cat $grub_cfg | grep -oE "^\s*menuentry\ '[^']+'"))
+if [ "${#menuentries[@]}" -eq 0 ]; then
+  echo "Error: No menu entries found in grub file: $grub_cfg"
+  echo "Are you root?"
+  exit 1
+fi
 entries=()
 for entry in "${menuentries[@]}"; do
   name="$(echo "$entry" | cut -d\' -f2)"

@@ -1,22 +1,22 @@
 #!/bin/bash
 
 usage() {
-  echo 'boot [-asoh] [<boot option>]'
+  echo 'boot [-hasl] [<boot option>]'
   echo '  List or boot into other grub boot options'
   echo
   echo 'OPTS'
-  echo '  No options lists boot options'
+  echo '  No options will prompt for what OS to boot into once'
   echo '  -h    Display this help screen'
   echo '  -a    Include sub menus as boot options'
-  echo '  -s    Boot into selection and save as new default'
-  echo '  -o    Boot into selection just once'
+  echo '  -s    Set the new OS default'
+  echo '  -l    List boot options'
 }
 
 all=no
 save=no
-once=no
+list=no
 
-while getopts ":asoh" arg; do
+while getopts ":hasl" arg; do
   case $arg in
     a) # all
       all=yes
@@ -24,8 +24,8 @@ while getopts ":asoh" arg; do
     s) # save
       save=yes
       ;;
-    o) # once
-      once=yes
+    l) # list
+      list=yes
       ;;
     h) # Display help.
       usage
@@ -45,11 +45,11 @@ if [ $# -gt 1 ]; then
 fi
 sel="$1"
 
-list=no
-if [ $save == no ] && [ $once == no ]; then
-  list=yes
-elif [ $save == yes ] && [ $once == yes ]; then
-  echo "You cannot boot once and save it"
+once=no
+if [ $save == no ] && [ $list == no ]; then
+  once=yes
+elif [ $save == yes ] && [ $list == yes ]; then
+  echo "You can't set a new default and list choices"
   exit 1
 fi
 
@@ -58,7 +58,7 @@ IFS=$'\n' menuentries=($(cat /efi/grub/grub.cfg | grep -oE "^\s*menuentry\ '[^']
 entries=()
 for entry in "${menuentries[@]}"; do
   name="$(echo "$entry" | cut -d\' -f2)"
-  if [ "$name" == 'UEFI Firmware Settings' ]; then
+  if [ "$save" == yes ] && [ "$name" == 'UEFI Firmware Settings' ]; then
     continue
   fi
   if [ "${entry:0:9}" == menuentry ]; then
@@ -89,6 +89,11 @@ check_sel() {
 
 # get and check selection
 while [ "$sel" == '' ] || ! check_sel "$sel"; do
+  if [ $save == yes ]; then
+    echo "Select the new DEFAULT OS"
+  else
+    echo "Select OS to boot once into"
+  fi
   select entry in "${entries[@]}"; do
     sel="$entry"
     echo Selected "'$entry'"
@@ -99,9 +104,11 @@ done
 # reboot
 set -e
 if [ $save == yes ]; then
+  echo "Setting default to '$sel'"
   grub-set-default --boot-directory=/efi "$sel"
 else
+  echo "Booting into '$sel'"
   grub-reboot --boot-directory=/efi "$sel"
+  reboot
 fi
-reboot
 

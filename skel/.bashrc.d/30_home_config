@@ -36,8 +36,12 @@ alias ll='ls -al'
 # Use vi on the cmd line
 set -o vi
 
-# Use vim instead of vi
-if type vim &>/dev/null; then
+# Use nvim over vim over vi
+if type nvim &>/dev/null; then
+    export EDITOR=nvim
+    alias vi=nvim
+    alias vim=nvim
+elif type vim &>/dev/null; then
     export EDITOR=vim
     alias vi=vim
 elif type vi &>/dev/null; then

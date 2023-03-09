@@ -1,7 +1,10 @@
 # Have ctrl c clear current line
 type tput &>/dev/null && {
-    # trap 'tput dl1; tput cuu1' INT
+  if [ "$(uname)" == "Darwin" ]; then
+    trap 'tput dl1; tput cuu1' INT
+  else
     trap "tput -S <<< 'dl1 cuu1'" SIGINT
+  fi
 }
 
 # Set ls color
@@ -38,18 +41,19 @@ set -o vi
 
 # Use nvim over vim over vi
 if type nvim &>/dev/null; then
-    export EDITOR=nvim
-    alias vi=nvim
-    alias vim=nvim
+  export EDITOR=nvim
+  alias vi=nvim
+  alias vim=nvim
 elif type vim &>/dev/null; then
-    export EDITOR=vim
-    alias vi=vim
+  export EDITOR=vim
+  alias vi=vim
 elif type vi &>/dev/null; then
-    export EDITOR=vi
-    alias vim=vi
+  export EDITOR=vi
+  alias vim=vi
 elif type nano &>/dev/null; then
-    export EDITOR=nano
+  export EDITOR=nano
 fi
+alias e="$EDITOR"
 export VIEWER=less
 
 # Change directory aliases

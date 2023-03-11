@@ -1,0 +1,22 @@
+# pushd alias
+unset -f pd j sj j1 j2 j3 sj1 sj2 sj3
+
+function pd() {
+  if [ $# -gt 0 ]; then
+    pushd "$@"
+  else
+    popd
+  fi
+}
+
+# env jump points
+# functions so that env vars are resolved when run
+function se() { . ~/.config/bashrc/env; }
+function j() { cd "$ENV0"; "$@"; }
+function j1() { cd "$ENV1"; "$@"; }
+function j2() { cd "$ENV2"; "$@"; }
+function j3() { cd "$ENV3"; "$@"; }
+function sj() { echo "export ENV0='$(pwd)'" >> ~/.config/bashrc/env; se; }
+function sj1() { echo "export ENV1='$(pwd)'" >> ~/.config/bashrc/env; se; }
+function sj2() { echo "export ENV2='$(pwd)'" >> ~/.config/bashrc/env; se; }
+function sj3() { echo "export ENV3='$(pwd)'" >> ~/.config/bashrc/env; se; }

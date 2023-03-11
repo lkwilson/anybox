@@ -6,57 +6,108 @@ cd "$anybox_dir" || {
   exit 1
 }
 
-source load_skel
+load_dir_impl() {
+  base="$1"
+  for i in "$base"/.* "$base"/*; do
+    if [ "${i: -2}" == '/.' ] || [ "${i: -3}" == '/..' ]; then
+      continue
+    fi
+    if [ -d "$i" ]; then
+      load_dir_impl "$i"
+    elif [ -f "$i" ]; then
+      skel_files+=("${i: 2}")
+    fi
+  done
+}
+
+load_dir() {
+  skel_files=()
+  pushd "$1" &>/dev/null
+  load_dir_impl .
+  popd &>/dev/null
+}
 
 see_cmd() {
+  load_dir "$1"
   for i in "${skel_files[@]}"; do
-    diff -q "$HOME/$i" "./skel/$i"
+    diff -q "$HOME/$i" "./$1/$i"
   done
 }
 
 diff_cmd() {
+  load_dir "$1"
   for i in "${skel_files[@]}"; do
-    if diff "$HOME/$i" "./skel/$i" &>/dev/null; then
+    if diff "$HOME/$i" "./$1/$i" &>/dev/null; then
       continue
     fi
-    echo diff "$HOME/$i" "./skel/$i"
-    diff "$HOME/$i" "./skel/$i"
+    echo diff "$HOME/$i" "./$1/$i"
+    diff "$HOME/$i" "./$1/$i"
     echo
   done
 }
 
 install_cmd() {
+  load_dir "$1"
   for i in "${skel_files[@]}"; do
-    if diff "$HOME/$i" "./skel/$i" &>/dev/null; then
+    if diff "$HOME/$i" "./$1/$i" &>/dev/null; then
       continue
     fi
     target_dir="$(dirname "$i")"
     if [ ! -d "$HOME/$target_dir" ]; then
       mkdir -p "$HOME/$target_dir"
     fi
-    diff "skel/$i" "$HOME/$i"
-    cp -v "skel/$i" "$HOME/$i"
+    diff "./$1/$i" "$HOME/$i"
+    cp -v "./$1/$i" "$HOME/$i"
   done
 }
 
 capture_cmd() {
+  load_dir "$1"
   for i in "${skel_files[@]}"; do
     if [ -r "$HOME/$i" ]; then
-      cp -v "$HOME/$i" "skel/$i"
+      cp -v "$HOME/$i" "./$1/$i"
     fi
   done
-  cp -r ~/.config/bashrc/* skel/.config/bashrc/
+  cp -r ~/.config/bashrc/* "$1/.config/bashrc/"
 }
 
-if [ "$1" == 'see' ]; then
-  see_cmd
-elif [ "$1" == 'diff' ]; then
-  diff_cmd
-elif [ "$1" == 'install' ]; then
-  install_cmd
-elif [ "$1" == 'capture' ]; then
-  capture_cmd
+mods=()
+for i in ws/*/skel/; do
+  if [ ! -d "$i" ]; then
+    continue
+  fi
+  mods+=("$(basename "$(dirname "$i")")")
+done
+
+cmd="$1"
+mod="$2"
+
+if [ "$mod" == '' ]; then
+  mod=skel
 else
-  echo "Usage: $0 {see|diff|install|capture}"
+  valid=false
+  for valid_mod in "${mods[@]}"; do
+    if [ "$mod" == "$valid_mod" ]; then
+      mod="ws/$mod/skel"
+      valid=true
+      break
+    fi
+  done
+  if [ "$valid" == "false" ]; then
+    echo "Error: Invalid module: $mod"
+    exit 1
+  fi
+fi
+
+if [ "$cmd" == 'see' ]; then
+  see_cmd "$mod"
+elif [ "$cmd" == 'diff' ]; then
+  diff_cmd "$mod"
+elif [ "$cmd" == 'install' ]; then
+  install_cmd "$mod"
+elif [ "$cmd" == 'capture' ]; then
+  capture_cmd "$mod"
+else
+  echo "Usage: $0 {see|diff|install|capture} [mod]"
   exit 1
 fi

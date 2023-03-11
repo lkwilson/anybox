@@ -69,6 +69,7 @@ else
   valid=false
   for valid_mod in "${mods[@]}"; do
     if [ "$mod" == "$valid_mod" ]; then
+      mod="ws/$mod/skel"
       valid=true
       break
     fi

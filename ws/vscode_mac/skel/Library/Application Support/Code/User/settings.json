@@ -1,0 +1,56 @@
+{
+  "workbench.colorTheme": "Rosé Pine Dawn (no italics)",
+  "workbench.startupEditor": "newUntitledFile",
+  "editor.renderWhitespace": "trailing",
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  // "editor.formatOnSaveMode": "modifications",
+  "editor.autoClosingBrackets": "never",
+  "editor.autoClosingQuotes": "never",
+  // "editor.guides.bracketPairs": true,
+  // "editor.bracketPairColorization.enabled": true,
+  // "editor.guides.bracketPairsHorizontal": true,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/__pycache__": true,
+  },
+  "diffEditor.ignoreTrimWhitespace": false,
+
+  // terminal stuff
+  "terminal.integrated.showExitAlert": false, // hide the annoying "shell exited with non zero" notifications
+  "terminal.integrated.inheritEnv": false,
+  "terminal.integrated.defaultProfile.osx": "bash",
+  "terminal.integrated.tabs.location": "left",
+
+  // cpp
+  "C_Cpp.intelliSenseEngine": "Tag Parser",
+
+  // python stuff
+  "python.linting.flake8Enabled": true,
+  "python.linting.flake8CategorySeverity.E": "Warning",
+  "python.linting.flake8CategorySeverity.F": "Warning",
+  "python.linting.enabled": true,
+  "python.linting.flake8Args": [
+    "--ignore=E111,E305,E302,E121,E124,E125,E128,E501,E251,E226,E114,E126"
+  ],
+  // "python.terminal.activateEnvironment": false,
+
+  // vim stuff
+  "vim.handleKeys": {
+    "<C-d>": false,
+    "<C-k>": false,
+    "<C-w>": false
+  },
+
+  // git stuff
+  "git.enableStatusBarSync": false,
+  "git.showActionButton": {
+    "commit": false,
+    "publish": false,
+    "sync": false
+  },
+  // "git.showUnpublishedCommitsButton": "never",
+
+  // spelling
+  "cSpell.diagnosticLevel": "Hint",
+}

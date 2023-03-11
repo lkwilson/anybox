@@ -23,22 +23,6 @@
     "command": "workbench.action.navigateForward",
     "when": "canNavigateForward"
   },
-  // removal
-  {
-    "key": "ctrl+o",
-    "command": "-extension.vim_ctrl+o",
-    "when": "editorTextFocus && vim.active && vim.use<C-o> && !inDebugRepl"
-  },
-  {
-    "key": "ctrl+o",
-    "command": "-lineBreakInsert",
-    "when": "textInputFocus && !editorReadonly"
-  },
-  {
-    "key": "ctrl+i",
-    "command": "-extension.vim_ctrl+i",
-    "when": "editorTextFocus && vim.active && vim.use<C-i> && !inDebugRepl"
-  },
 
   // editor nav
   {
@@ -51,26 +35,15 @@
     "command": "workbench.action.nextEditorInGroup",
     "when": "editorTextFocus"
   },
-  // removal
   {
-    "key": "ctrl+l",
-    "command": "-extension.vim_navigateCtrlL",
-    "when": "editorTextFocus && vim.active && vim.use<C-l> && !inDebugRepl"
+    "key": "ctrl+j",
+    "command": "workbench.action.focusNextGroup",
+    "when": "editorTextFocus"
   },
   {
-    "key": "ctrl+l",
-    "command": "-notebook.centerActiveCell",
-    "when": "notebookEditorFocused"
-  },
-  {
-    "key": "ctrl+h",
-    "command": "-extension.vim_ctrl+h",
-    "when": "editorTextFocus && vim.active && vim.use<C-h> && !inDebugRepl"
-  },
-  {
-    "key": "ctrl+h",
-    "command": "-deleteLeft",
-    "when": "textInputFocus"
+    "key": "ctrl+k",
+    "command": "workbench.action.focusPreviousGroup",
+    "when": "editorTextFocus"
   },
 
   // terminal nav
@@ -93,5 +66,62 @@
     "key": "ctrl+h",
     "command": "workbench.action.terminal.focusPreviousPane",
     "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+  },
+
+  // delete
+  {
+    "key": "ctrl+j",
+    "command": "-editor.action.joinLines",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "-extension.vim_ctrl+j",
+    "when": "editorTextFocus && vim.active && vim.use<C-j> && !inDebugRepl"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "-extension.vim_ctrl+k",
+    "when": "editorTextFocus && vim.active && vim.use<C-k> && !inDebugRepl"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "-deleteAllRight",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "-extension.vim_navigateCtrlL",
+    "when": "editorTextFocus && vim.active && vim.use<C-l> && !inDebugRepl"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "-notebook.centerActiveCell",
+    "when": "notebookEditorFocused"
+  },
+  {
+    "key": "ctrl+h",
+    "command": "-extension.vim_ctrl+h",
+    "when": "editorTextFocus && vim.active && vim.use<C-h> && !inDebugRepl"
+  },
+  {
+    "key": "ctrl+h",
+    "command": "-deleteLeft",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "ctrl+o",
+    "command": "-extension.vim_ctrl+o",
+    "when": "editorTextFocus && vim.active && vim.use<C-o> && !inDebugRepl"
+  },
+  {
+    "key": "ctrl+o",
+    "command": "-lineBreakInsert",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+i",
+    "command": "-extension.vim_ctrl+i",
+    "when": "editorTextFocus && vim.active && vim.use<C-i> && !inDebugRepl"
   },
 ]

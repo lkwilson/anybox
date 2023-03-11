@@ -18,10 +18,11 @@
     lr = log --decorate --oneline --graph HEAD @{u}
     lh = !git l --color=always | head
     la = log --decorate --oneline --graph --all
+    lref = log --decorate --oneline --graph --reflog
 
     ; branch
-    co = checkout
-    cob = checkout -b
+    c = checkout
+    cb = checkout -b
     b = branch -vv
     br = branch -r
 
@@ -38,14 +39,9 @@
     dc = diff --cached
     ds = diff --stat
     dr = diff @{u}
-    dsr = diff --stat @{u}
+    drc = diff --cached @{u}
     drs = diff --stat @{u}
-    dsrc = diff --stat --cached @{u}
-    drsc = diff --stat --cached @{u}
-    dscr = diff --stat --cached @{u}
     drcs = diff --stat --cached @{u}
-    dcsr = diff --stat --cached @{u}
-    dcrs = diff --stat --cached @{u}
 
     ; remote
     rv = remote -v

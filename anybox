@@ -6,7 +6,8 @@ cd "$anybox_dir" || {
   exit 1
 }
 
-source load_skel
+source loader
+load_dir skel
 
 see_cmd() {
   for i in "${skel_files[@]}"; do

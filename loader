@@ -1,21 +1,20 @@
-# This is sourced by install and diff
-# It creates a bash array containing all files in skel
-
-skel_files=()
-load_dir() {
+load_dir_impl() {
   base="$1"
   for i in "$base"/.* "$base"/*; do
     if [ "${i: -2}" == '/.' ] || [ "${i: -3}" == '/..' ]; then
       continue
     fi
     if [ -d "$i" ]; then
-      load_dir "$i"
+      load_dir_impl "$i"
     elif [ -f "$i" ]; then
       skel_files+=("${i: 2}")
     fi
   done
 }
 
-cd skel
-load_dir .
-cd ..
+load_dir() {
+  skel_files=()
+  pushd "$1" &>/dev/null
+  load_dir_impl .
+  popd &>/dev/null
+}

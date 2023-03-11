@@ -68,7 +68,9 @@ capture_cmd() {
       cp -v "$HOME/$i" "./$1/$i"
     fi
   done
-  cp -r ~/.config/bashrc/* "$1/.config/bashrc/"
+  if [ "$1" == skel ]; then
+    cp -r ~/.config/bashrc/* "$1/.config/bashrc/"
+  fi
 }
 
 mods=()
@@ -95,6 +97,7 @@ else
   done
   if [ "$valid" == "false" ]; then
     echo "Error: Invalid module: $mod"
+    echo "Valid modules: ${mods[@]}"
     exit 1
   fi
 fi

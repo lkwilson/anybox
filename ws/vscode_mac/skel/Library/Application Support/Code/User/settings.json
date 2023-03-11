@@ -1,0 +1,94 @@
+{
+    "terminal.integrated.env.osx": {
+        "PATH": ""
+    },
+    "editor.guides.bracketPairs": true,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairsHorizontal": true,
+    "python.terminal.activateEnvironment": false,
+    "workbench.startupEditor": "newUntitledFile",
+    "C_Cpp.default.cppStandard": "c++11",
+    "C_Cpp.default.intelliSenseMode": "clang-x64",
+    "editor.renderWhitespace": "trailing",
+    "terminal.integrated.showExitAlert": false,
+    "editor.tabSize": 2,
+    "explorer.confirmDragAndDrop": false,
+    "editor.suggestSelection": "first",
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact"
+    },
+    "extensions.ignoreRecommendations": false,
+    "jupyter.sendSelectionToInteractiveWindow": false,
+    "cSpell.diagnosticLevel": "Hint",
+    "liveServer.settings.donotShowInfoMsg": true,
+    "gitlens.codeLens.authors.enabled": false,
+    "gitlens.codeLens.recentChange.enabled": false,
+    "gitlens.codeLens.scopes": [],
+    "C_Cpp.updateChannel": "Insiders",
+    "C_Cpp.intelliSenseEngine": "Tag Parser",
+    "editor.linkedEditing": true,
+    "editor.formatOnSaveMode": "modifications",
+    "files.autoSave": "onWindowChange",
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "editor.autoClosingBrackets": "never",
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    },
+    "jupyter.askForKernelRestart": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8CategorySeverity.E": "Warning",
+    "python.linting.flake8CategorySeverity.F": "Warning",
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/__pycache__": true,
+        "**/bower_components": true,
+        "**/*.code-search": true
+    },
+    "python.linting.enabled": true,
+    "python.linting.flake8Args": [
+        "--ignore=E111,E305,E302,E121,E124,E125,E128,E501,E251,E226,E114,E126"
+    ],
+    "editor.autoClosingQuotes": "never",
+    "cSpell.userWords": [
+        "fout"
+    ],
+	"git.showUnpublishedCommitsButton": "never",
+    "git.enableStatusBarSync": false,
+    "vim.handleKeys": {
+        "<C-d>": false,
+        "<C-k>": false,
+        "<C-w>": false
+    },
+    "terminal.integrated.inheritEnv": false,
+    "tabnine.experimentalAutoImports": true,
+    "workbench.colorTheme": "Rosé Pine Dawn (no italics)",
+    "terminal.integrated.defaultProfile.osx": "bash",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "terminal.integrated.tabs.location": "left",
+	"git.showActionButton": {
+		"commit": false,
+		"publish": false,
+		"sync": false
+    },
+    "window.zoomLevel": 1,
+    "[python]": {
+    },
+}

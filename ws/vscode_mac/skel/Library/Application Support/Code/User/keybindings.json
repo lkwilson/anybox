@@ -1,17 +1,29 @@
 // Place your key bindings in this file to override the defaultsauto[]
 [
+  // terminal
   {
     "key": "ctrl+t",
     "command": "workbench.action.terminal.toggleTerminal"
   },
+
+  // saving
   {
     "key": "cmd+k s",
     "command": "saveAll"
   },
+
+  // cursor nav
   {
-    "key": "alt+cmd+s",
-    "command": "-saveAll"
+    "key": "ctrl+o",
+    "command": "workbench.action.navigateBack",
+    "when": "canNavigateBack"
   },
+  {
+    "key": "ctrl+i",
+    "command": "workbench.action.navigateForward",
+    "when": "canNavigateForward"
+  },
+  // removal
   {
     "key": "ctrl+o",
     "command": "-extension.vim_ctrl+o",
@@ -23,58 +35,27 @@
     "when": "textInputFocus && !editorReadonly"
   },
   {
-    "key": "ctrl+o",
-    "command": "workbench.action.navigateBack",
-    "when": "canNavigateBack"
-  },
-  {
-    "key": "ctrl+-",
-    "command": "-workbench.action.navigateBack",
-    "when": "canNavigateBack"
-  },
-  {
-    "key": "ctrl+i",
-    "command": "workbench.action.navigateForward",
-    "when": "canNavigateForward"
-  },
-  {
-    "key": "ctrl+shift+-",
-    "command": "-workbench.action.navigateForward",
-    "when": "canNavigateForward"
-  },
-  {
     "key": "ctrl+i",
     "command": "-extension.vim_ctrl+i",
     "when": "editorTextFocus && vim.active && vim.use<C-i> && !inDebugRepl"
   },
+
+  // editor nav
   {
-    "key": "cmd+k cmd+i",
-    "command": "-workbench.action.showTreeHover",
-    "when": "customTreeView && listFocus && !inputFocus"
+    "key": "ctrl+h",
+    "command": "workbench.action.previousEditorInGroup",
+    "when": "editorTextFocus"
   },
   {
     "key": "ctrl+l",
     "command": "workbench.action.nextEditorInGroup",
     "when": "editorTextFocus"
   },
-  {
-    "key": "cmd+k alt+cmd+right",
-    "command": "-workbench.action.nextEditorInGroup"
-  },
-  {
-    "key": "ctrl+left",
-    "command": "-extension.vim_ctrl+left",
-    "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode != 'Insert'"
-  },
+  // removal
   {
     "key": "ctrl+l",
     "command": "-extension.vim_navigateCtrlL",
     "when": "editorTextFocus && vim.active && vim.use<C-l> && !inDebugRepl"
-  },
-  {
-    "key": "cmd+left",
-    "command": "-gitlens.key.ctrl+left",
-    "when": "gitlens:key:ctrl+left"
   },
   {
     "key": "ctrl+l",
@@ -87,32 +68,15 @@
     "when": "editorTextFocus && vim.active && vim.use<C-h> && !inDebugRepl"
   },
   {
-    "key": "ctrl+home",
-    "command": "-extension.vim_ctrl+home",
-    "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode != 'Insert'"
-  },
-  {
     "key": "ctrl+h",
     "command": "-deleteLeft",
     "when": "textInputFocus"
   },
-  {
-    "key": "ctrl+h",
-    "command": "workbench.action.previousEditorInGroup",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "cmd+k alt+cmd+left",
-    "command": "-workbench.action.previousEditorInGroup"
-  },
+
+  // terminal nav
   {
     "key": "ctrl+j",
     "command": "workbench.action.terminal.focusNext",
-    "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
-  },
-  {
-    "key": "shift+cmd+]",
-    "command": "-workbench.action.terminal.focusNext",
     "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
   },
   {
@@ -121,18 +85,8 @@
     "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
   },
   {
-    "key": "shift+cmd+[",
-    "command": "-workbench.action.terminal.focusPrevious",
-    "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
-  },
-  {
     "key": "ctrl+l",
     "command": "workbench.action.terminal.focusNextPane",
-    "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
-  },
-  {
-    "key": "alt+cmd+down",
-    "command": "-workbench.action.terminal.focusNextPane",
     "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
   },
   {
@@ -140,14 +94,4 @@
     "command": "workbench.action.terminal.focusPreviousPane",
     "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
   },
-  {
-    "key": "alt+cmd+up",
-    "command": "-workbench.action.terminal.focusPreviousPane",
-    "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
-  },
-  {
-    "key": "ctrl+k",
-    "command": "-deleteAllRight",
-    "when": "textInputFocus && !editorReadonly"
-  }
 ]

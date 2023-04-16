@@ -25,6 +25,7 @@
     cb = checkout -b
     b = branch -vv
     br = branch -r
+    bu = !git branch --set-upstream-to=origin/$(git branch-name)
 
     ; commits
     a = add -A

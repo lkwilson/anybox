@@ -1,10 +1,7 @@
 # Have ctrl c clear current line
 type tput &>/dev/null && {
-  if [ "$(uname)" == "Darwin" ]; then
-    trap 'tput dl1; tput cuu1' INT
-  else
-    trap "tput -S <<< 'dl1 cuu1'" SIGINT
-  fi
+  trap 'tput dl1; tput cuu1' INT
+  # trap "tput -S <<< 'dl1 cuu1'" SIGINT
 }
 
 # Set ls color
@@ -32,6 +29,12 @@ shopt -s checkwinsize
 
 # Don't tab complete on empty prompt
 shopt -s no_empty_cmd_completion
+
+# Auto cd into dirs
+shopt -s autocd
+
+# Glob star
+shopt -s globstar
 
 # Some ls aliases
 alias ll='ls -al'

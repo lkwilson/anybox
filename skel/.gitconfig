@@ -25,7 +25,11 @@
     cb = checkout -b
     b = branch -vv
     br = branch -r
-    bu = !git branch --set-upstream-to=origin/$(git branch-name)
+    bu = !git branch -u origin/$(git branch-name)
+
+    ; pushing
+    p = push
+    po = !git p -u origin $(git branch-name)
 
     ; commits
     a = add -A
@@ -46,6 +50,9 @@
 
     ; remote
     rv = remote -v
+
+    ; submodule
+    su = submodule update
 
 [core]
     excludesfile = ~/.gitignore

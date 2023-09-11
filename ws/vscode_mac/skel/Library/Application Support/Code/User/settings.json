@@ -36,10 +36,384 @@
   // "python.terminal.activateEnvironment": false,
 
   // vim stuff
+  "vim.leader": "<space>",
+  "vim.easymotion": true,
+  "vim.incsearch": true,
+  "vim.hlsearch": true,
+  "vim.insertModeKeyBindings": [
+    {
+      "before": [
+        "j",
+        "k"
+      ],
+      "after": [
+        "<Esc>"
+      ]
+    },
+  ],
+  "vim.visualModeKeyBindings": [
+    // tabs
+    {
+      "before": [
+        "leader",
+        "l"
+      ],
+      "commands": [
+        "workbench.action.nextEditorInGroup"
+      ],
+    },
+    {
+      "before": [
+        "leader",
+        "h"
+      ],
+      "commands": [
+        "workbench.action.previousEditorInGroup"
+      ],
+    },
+    // nav
+    {
+      "before": [
+        "leader",
+        "o"
+      ],
+      "commands": [
+        "workbench.action.navigateBack"
+      ],
+    },
+    {
+      "before": [
+        "leader",
+        "i"
+      ],
+      "commands": [
+        "workbench.action.navigateForward"
+      ],
+    },
+    // stop leader
+    {
+      "before": [
+        "leader",
+        "leader",
+        "leader",
+        "q"
+      ],
+      "commands": [
+        "noop"
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "leader",
+        "q"
+      ],
+      "commands": [
+        "noop"
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "q"
+      ],
+      "commands": [
+        "noop"
+      ]
+    },
+    // undo redo
+    {
+      "before": [
+        "U"
+      ],
+      "commands": [
+        "redo"
+      ]
+    },
+    {
+      "before": [
+        "u"
+      ],
+      "commands": [
+        "undo"
+      ]
+    },
+    // clear highlight
+    {
+      "before": [
+        "leader",
+        "c"
+      ],
+      "commands": [
+        ":nohl"
+      ]
+    },
+    // files
+    {
+      "before": [
+        "leader",
+        "w"
+      ],
+      "commands": [
+        "workbench.action.closeActiveEditor",
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "s"
+      ],
+      "commands": [
+        "workbench.action.files.save",
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "S"
+      ],
+      "commands": [
+        "workbench.action.files.saveAll",
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "f"
+      ],
+      "commands": [
+        "editor.action.format",
+      ]
+    },
+    // multi cursor
+    {
+      "before": [
+        "leader",
+        "d"
+      ],
+      "after": [
+        "g",
+        "b"
+      ]
+    },
+    // commands
+    {
+      "before": [
+        ":"
+      ],
+      "commands": [
+        "workbench.action.showCommands",
+      ],
+      "silent": true
+    },
+    {
+      "before": [
+        "leader",
+        "p"
+      ],
+      "commands": [
+        "workbench.action.quickOpen"
+      ]
+    },
+    // visual specific
+    {
+      "before": [
+        ">"
+      ],
+      "commands": [
+        "editor.action.indentLines"
+      ]
+    },
+    {
+      "before": [
+        "<"
+      ],
+      "commands": [
+        "editor.action.outdentLines"
+      ]
+    },
+  ],
+  "vim.normalModeKeyBindings": [
+    // tabs
+    {
+      "before": [
+        "leader",
+        "l"
+      ],
+      "commands": [
+        "workbench.action.nextEditorInGroup"
+      ],
+    },
+    {
+      "before": [
+        "leader",
+        "h"
+      ],
+      "commands": [
+        "workbench.action.previousEditorInGroup"
+      ],
+    },
+    // nav
+    {
+      "before": [
+        "leader",
+        "o"
+      ],
+      "commands": [
+        "workbench.action.navigateBack"
+      ],
+    },
+    {
+      "before": [
+        "leader",
+        "i"
+      ],
+      "commands": [
+        "workbench.action.navigateForward"
+      ],
+    },
+    // stop leader
+    {
+      "before": [
+        "leader",
+        "leader",
+        "leader",
+        "q"
+      ],
+      "commands": [
+        "noop"
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "leader",
+        "q"
+      ],
+      "commands": [
+        "noop"
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "q"
+      ],
+      "commands": [
+        "noop"
+      ]
+    },
+    // undo redo
+    {
+      "before": [
+        "U"
+      ],
+      "commands": [
+        "redo"
+      ]
+    },
+    {
+      "before": [
+        "u"
+      ],
+      "commands": [
+        "undo"
+      ]
+    },
+    // clear highlight
+    {
+      "before": [
+        "leader",
+        "c"
+      ],
+      "commands": [
+        ":nohl"
+      ]
+    },
+    // files
+    {
+      "before": [
+        "leader",
+        "W"
+      ],
+      "commands": [
+        "workbench.action.closeOtherEditors",
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "w"
+      ],
+      "commands": [
+        "workbench.action.closeActiveEditor",
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "s"
+      ],
+      "commands": [
+        "workbench.action.files.save",
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "S"
+      ],
+      "commands": [
+        "workbench.action.files.saveAll",
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "f"
+      ],
+      "commands": [
+        "editor.action.format",
+      ]
+    },
+    // multi cursor
+    {
+      "before": [
+        "leader",
+        "d"
+      ],
+      "after": [
+        "g",
+        "b"
+      ]
+    },
+    // commands
+    {
+      "before": [
+        ":"
+      ],
+      "commands": [
+        "workbench.action.showCommands",
+      ],
+      "silent": true
+    },
+    {
+      "before": [
+        "leader",
+        "p"
+      ],
+      "commands": [
+        "workbench.action.quickOpen"
+      ]
+    },
+  ],
+  "vim.useSystemClipboard": true,
+  "vim.visualstar": true,
   "vim.handleKeys": {
     "<C-d>": false,
     "<C-k>": false,
-    "<C-w>": false
+    "<C-w>": false,
+    "<C-f>": false
   },
 
   // git stuff

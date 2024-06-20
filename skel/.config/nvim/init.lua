@@ -84,5 +84,5 @@ vim.keymap.set('n', '<leader>w', ":q<CR>")
 vim.keymap.set('n', '<leader>q', ":qa<CR>")
 
 -- use extras?
--- require('extra')
+-- require('extra.init')
 

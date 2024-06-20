@@ -13,9 +13,10 @@ vim.opt.signcolumn = 'yes'
 
 require('lazy').setup({
   -- git signs
-  {
-    'lewis6991/gitsigns.nvim',
-  },
+  { 'lewis6991/gitsigns.nvim' },
+
+  -- theme
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 
   -- fuzzy search
   -- {

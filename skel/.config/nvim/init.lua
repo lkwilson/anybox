@@ -1,3 +1,4 @@
+-- leader keys
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -54,10 +55,6 @@ vim.keymap.set('n', '<leader>t', function()
   vim.cmd("terminal")
   vim.cmd("startinsert")
 end)
-vim.keymap.set('n', '<leader>nt', function()
-  vim.cmd("split | terminal")
-  vim.cmd("startinsert")
-end)
 vim.api.nvim_create_autocmd("TermClose", {
   pattern = "*",
   callback = function()
@@ -85,4 +82,3 @@ vim.keymap.set('n', '<leader>q', ":qa<CR>")
 
 -- use extras?
 -- require('extra.init')
-

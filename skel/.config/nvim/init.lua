@@ -71,7 +71,7 @@ end
 vim.opt.updatetime = 50
 
 -- mappings
-vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
+vim.keymap.set('n', '<leader>e', vim.cmd.Ex)
 vim.keymap.set('n', '<leader>l', ":vsplit<CR>")
 vim.keymap.set('n', '<leader>h', ":vsplit<CR>")
 vim.keymap.set('n', '<leader>j', ":split<CR>")
@@ -81,4 +81,4 @@ vim.keymap.set('n', '<leader>w', ":q<CR>")
 vim.keymap.set('n', '<leader>q', ":qa<CR>")
 
 -- use extras?
--- require('extra.init')
+-- require('extra')

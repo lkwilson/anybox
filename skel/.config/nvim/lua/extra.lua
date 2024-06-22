@@ -1,22 +1,35 @@
--- [[ Install `lazy.nvim` plugin manager ]]
---    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
-  local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
-  vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
-end ---@diagnostic disable-next-line: undefined-field
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
 vim.opt.rtp:prepend(lazypath)
-
--- custom config
-vim.g.have_nerd_font = false
-vim.opt.signcolumn = 'yes'
 
 require('lazy').setup({
   -- git signs
-  { 'lewis6991/gitsigns.nvim' },
+  {
+    'lewis6991/gitsigns.nvim',
+    config = function()
+      vim.opt.signcolumn = 'yes'
+      require('gitsigns').setup()
+    end,
+  },
 
   -- theme
-  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme('catppuccin')
+    end,
+  },
 
   -- fuzzy search
   -- {
@@ -39,9 +52,6 @@ require('lazy').setup({
   --       end,
   --     },
   --     { 'nvim-telescope/telescope-ui-select.nvim' },
-  --
-  --     -- Useful for getting pretty icons, but requires a Nerd Font.
-  --     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
   --   },
   --   config = function()
   --     -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -268,4 +278,3 @@ require('lazy').setup({
   --   end,
   -- }
 })
-

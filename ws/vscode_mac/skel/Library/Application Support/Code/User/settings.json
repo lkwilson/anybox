@@ -1,5 +1,4 @@
 {
-  "workbench.colorTheme": "Rosé Pine Dawn (no italics)",
   "workbench.startupEditor": "newUntitledFile",
   "editor.renderWhitespace": "trailing",
   "editor.tabSize": 2,
@@ -7,56 +6,29 @@
   // "editor.formatOnSaveMode": "modifications",
   "editor.autoClosingBrackets": "never",
   "editor.autoClosingQuotes": "never",
-  // "editor.guides.bracketPairs": true,
-  // "editor.bracketPairColorization.enabled": true,
-  // "editor.guides.bracketPairsHorizontal": true,
   "search.exclude": {
     "**/node_modules": true,
     "**/__pycache__": true,
   },
-  "diffEditor.ignoreTrimWhitespace": false,
-
+  "editor.folding": false,
+  "files.eol": "\n",
   // terminal stuff
   "terminal.integrated.showExitAlert": false, // hide the annoying "shell exited with non zero" notifications
   "terminal.integrated.inheritEnv": false,
   "terminal.integrated.defaultProfile.osx": "bash",
   "terminal.integrated.tabs.location": "left",
-
   // cpp
   "C_Cpp.intelliSenseEngine": "Tag Parser",
-
-  // python stuff
-  "python.linting.flake8Enabled": true,
-  "python.linting.flake8CategorySeverity.E": "Warning",
-  "python.linting.flake8CategorySeverity.F": "Warning",
-  "python.linting.enabled": true,
-  "python.linting.flake8Args": [
-    "--ignore=E111,E305,E302,E121,E124,E125,E128,E501,E251,E226,E114,E126"
-  ],
-  // "python.terminal.activateEnvironment": false,
-
   // vim stuff
   "vim.leader": "<space>",
-  "vim.easymotion": true,
+  // "vim.easymotion": true,
   "vim.incsearch": true,
   "vim.hlsearch": true,
   "vim.insertModeKeyBindings": [
-    {
-      "before": [
-        "j",
-        "k"
-      ],
-      "after": [
-        "<Esc>"
-      ]
-    },
-  ],
-  "vim.visualModeKeyBindings": [
     // tabs
     {
       "before": [
-        "leader",
-        "l"
+        "<C-l>"
       ],
       "commands": [
         "workbench.action.nextEditorInGroup"
@@ -64,18 +36,33 @@
     },
     {
       "before": [
-        "leader",
-        "h"
+        "<C-h>"
       ],
       "commands": [
         "workbench.action.previousEditorInGroup"
       ],
     },
+    // files
+    {
+      "before": [
+        "<C-w>"
+      ],
+      "commands": [
+        "workbench.action.closeActiveEditor",
+      ]
+    },
+    {
+      "before": [
+        "<C-s>"
+      ],
+      "commands": [
+        "workbench.action.files.save",
+      ]
+    },
     // nav
     {
       "before": [
-        "leader",
-        "o"
+        "<C-o>"
       ],
       "commands": [
         "workbench.action.navigateBack"
@@ -83,76 +70,35 @@
     },
     {
       "before": [
-        "leader",
-        "i"
+        "<C-i>"
       ],
       "commands": [
         "workbench.action.navigateForward"
       ],
     },
-    // stop leader
+  ],
+  "vim.visualModeKeyBindings": [
+    // tabs
     {
       "before": [
-        "leader",
-        "leader",
-        "leader",
-        "q"
+        "<C-l>"
       ],
       "commands": [
-        "noop"
-      ]
+        "workbench.action.nextEditorInGroup"
+      ],
     },
     {
       "before": [
-        "leader",
-        "leader",
-        "q"
+        "<C-h>"
       ],
       "commands": [
-        "noop"
-      ]
-    },
-    {
-      "before": [
-        "leader",
-        "q"
+        "workbench.action.previousEditorInGroup"
       ],
-      "commands": [
-        "noop"
-      ]
-    },
-    // undo redo
-    {
-      "before": [
-        "U"
-      ],
-      "commands": [
-        "redo"
-      ]
-    },
-    {
-      "before": [
-        "u"
-      ],
-      "commands": [
-        "undo"
-      ]
-    },
-    // clear highlight
-    {
-      "before": [
-        "leader",
-        "c"
-      ],
-      "commands": [
-        ":nohl"
-      ]
     },
     // files
     {
       "before": [
-        "leader",
-        "w"
+        "<C-w>"
       ],
       "commands": [
         "workbench.action.closeActiveEditor",
@@ -161,7 +107,15 @@
     {
       "before": [
         "leader",
-        "s"
+        "w"
+      ],
+      "commands": [
+        "workbench.action.closeAllGroups",
+      ]
+    },
+    {
+      "before": [
+        "<C-s>"
       ],
       "commands": [
         "workbench.action.files.save",
@@ -170,12 +124,40 @@
     {
       "before": [
         "leader",
-        "S"
+        "s"
       ],
       "commands": [
         "workbench.action.files.saveAll",
       ]
     },
+    // nav
+    {
+      "before": [
+        "<C-o>"
+      ],
+      "commands": [
+        "workbench.action.navigateBack"
+      ],
+    },
+    {
+      "before": [
+        "<C-i>"
+      ],
+      "commands": [
+        "workbench.action.navigateForward"
+      ],
+    },
+    // clear highlight
+    {
+      "before": [
+        "leader",
+        "leader"
+      ],
+      "commands": [
+        ":nohl"
+      ]
+    },
+    // formatting
     {
       "before": [
         "leader",
@@ -185,37 +167,7 @@
         "editor.action.format",
       ]
     },
-    // multi cursor
-    {
-      "before": [
-        "leader",
-        "d"
-      ],
-      "after": [
-        "g",
-        "b"
-      ]
-    },
-    // commands
-    {
-      "before": [
-        ":"
-      ],
-      "commands": [
-        "workbench.action.showCommands",
-      ],
-      "silent": true
-    },
-    {
-      "before": [
-        "leader",
-        "p"
-      ],
-      "commands": [
-        "workbench.action.quickOpen"
-      ]
-    },
-    // visual specific
+    // indenting
     {
       "before": [
         ">"
@@ -237,8 +189,7 @@
     // tabs
     {
       "before": [
-        "leader",
-        "l"
+        "<C-l>"
       ],
       "commands": [
         "workbench.action.nextEditorInGroup"
@@ -246,104 +197,16 @@
     },
     {
       "before": [
-        "leader",
-        "h"
+        "<C-h>"
       ],
       "commands": [
         "workbench.action.previousEditorInGroup"
       ],
     },
-    // nav
-    {
-      "before": [
-        "leader",
-        "o"
-      ],
-      "commands": [
-        "workbench.action.navigateBack"
-      ],
-    },
-    {
-      "before": [
-        "leader",
-        "i"
-      ],
-      "commands": [
-        "workbench.action.navigateForward"
-      ],
-    },
-    // stop leader
-    {
-      "before": [
-        "leader",
-        "leader",
-        "leader",
-        "q"
-      ],
-      "commands": [
-        "noop"
-      ]
-    },
-    {
-      "before": [
-        "leader",
-        "leader",
-        "q"
-      ],
-      "commands": [
-        "noop"
-      ]
-    },
-    {
-      "before": [
-        "leader",
-        "q"
-      ],
-      "commands": [
-        "noop"
-      ]
-    },
-    // undo redo
-    {
-      "before": [
-        "U"
-      ],
-      "commands": [
-        "redo"
-      ]
-    },
-    {
-      "before": [
-        "u"
-      ],
-      "commands": [
-        "undo"
-      ]
-    },
-    // clear highlight
-    {
-      "before": [
-        "leader",
-        "c"
-      ],
-      "commands": [
-        ":nohl"
-      ]
-    },
     // files
     {
       "before": [
-        "leader",
-        "W"
-      ],
-      "commands": [
-        "workbench.action.closeOtherEditors",
-      ]
-    },
-    {
-      "before": [
-        "leader",
-        "w"
+        "<C-w>"
       ],
       "commands": [
         "workbench.action.closeActiveEditor",
@@ -352,7 +215,15 @@
     {
       "before": [
         "leader",
-        "s"
+        "w"
+      ],
+      "commands": [
+        "workbench.action.closeAllGroups",
+      ]
+    },
+    {
+      "before": [
+        "<C-s>"
       ],
       "commands": [
         "workbench.action.files.save",
@@ -361,12 +232,40 @@
     {
       "before": [
         "leader",
-        "S"
+        "s"
       ],
       "commands": [
         "workbench.action.files.saveAll",
       ]
     },
+    // nav
+    {
+      "before": [
+        "<C-o>"
+      ],
+      "commands": [
+        "workbench.action.navigateBack"
+      ],
+    },
+    {
+      "before": [
+        "<C-i>"
+      ],
+      "commands": [
+        "workbench.action.navigateForward"
+      ],
+    },
+    // clear highlight
+    {
+      "before": [
+        "leader",
+        "leader"
+      ],
+      "commands": [
+        ":nohl"
+      ]
+    },
+    // formatting
     {
       "before": [
         "leader",
@@ -376,34 +275,199 @@
         "editor.action.format",
       ]
     },
-    // multi cursor
+    // indenting
     {
       "before": [
-        "leader",
-        "d"
+        ">"
       ],
-      "after": [
-        "g",
-        "b"
+      "commands": [
+        "editor.action.indentLines"
       ]
     },
-    // commands
     {
       "before": [
-        ":"
+        "<"
       ],
       "commands": [
-        "workbench.action.showCommands",
+        "editor.action.outdentLines"
+      ]
+    },
+  ],
+  "vim.commandLineModeKeyBindings": [
+    // tabs
+    {
+      "before": [
+        "<C-l>"
       ],
-      "silent": true
+      "commands": [
+        "workbench.action.nextEditorInGroup"
+      ],
+    },
+    {
+      "before": [
+        "<C-h>"
+      ],
+      "commands": [
+        "workbench.action.previousEditorInGroup"
+      ],
+    },
+    // files
+    {
+      "before": [
+        "<C-w>"
+      ],
+      "commands": [
+        "workbench.action.closeActiveEditor",
+      ]
+    },
+    {
+      "before": [
+        "<C-s>"
+      ],
+      "commands": [
+        "workbench.action.files.save",
+      ]
+    },
+    // nav
+    {
+      "before": [
+        "<C-o>"
+      ],
+      "commands": [
+        "workbench.action.navigateBack"
+      ],
+    },
+    {
+      "before": [
+        "<C-i>"
+      ],
+      "commands": [
+        "workbench.action.navigateForward"
+      ],
+    },
+  ],
+  "vim.operatorPendingModeKeyBindings": [
+    // tabs
+    {
+      "before": [
+        "<C-l>"
+      ],
+      "commands": [
+        "workbench.action.nextEditorInGroup"
+      ],
+    },
+    {
+      "before": [
+        "<C-h>"
+      ],
+      "commands": [
+        "workbench.action.previousEditorInGroup"
+      ],
+    },
+    // files
+    {
+      "before": [
+        "<C-w>"
+      ],
+      "commands": [
+        "workbench.action.closeActiveEditor",
+      ]
     },
     {
       "before": [
         "leader",
-        "p"
+        "w"
       ],
       "commands": [
-        "workbench.action.quickOpen"
+        "workbench.action.closeAllGroups",
+      ]
+    },
+    {
+      "before": [
+        "<C-s>"
+      ],
+      "commands": [
+        "workbench.action.files.save",
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "s"
+      ],
+      "commands": [
+        "workbench.action.files.saveAll",
+      ]
+    },
+    // undo redo
+    {
+      "before": [
+        "u"
+      ],
+      "commands": [
+        "undo"
+      ]
+    },
+    {
+      "before": [
+        "<C-r>"
+      ],
+      "commands": [
+        "redo"
+      ]
+    },
+    // nav
+    {
+      "before": [
+        "<C-o>"
+      ],
+      "commands": [
+        "workbench.action.navigateBack"
+      ],
+    },
+    {
+      "before": [
+        "<C-i>"
+      ],
+      "commands": [
+        "workbench.action.navigateForward"
+      ],
+    },
+    // clear highlight
+    {
+      "before": [
+        "leader",
+        "leader"
+      ],
+      "commands": [
+        ":nohl"
+      ]
+    },
+    // formatting
+    {
+      "before": [
+        "leader",
+        "f"
+      ],
+      "commands": [
+        "editor.action.format",
+      ]
+    },
+    // indenting
+    {
+      "before": [
+        ">"
+      ],
+      "commands": [
+        "editor.action.indentLines"
+      ]
+    },
+    {
+      "before": [
+        "<"
+      ],
+      "commands": [
+        "editor.action.outdentLines"
       ]
     },
   ],
@@ -412,10 +476,9 @@
   "vim.handleKeys": {
     "<C-d>": false,
     "<C-k>": false,
-    "<C-w>": false,
-    "<C-f>": false
+    "<C-f>": false,
+    "<C-p>": false
   },
-
   // git stuff
   "git.enableStatusBarSync": false,
   "git.showActionButton": {
@@ -423,8 +486,67 @@
     "publish": false,
     "sync": false
   },
-  // "git.showUnpublishedCommitsButton": "never",
-
+  "gitlens.codeLens.authors.enabled": false,
+  "gitlens.codeLens.recentChange.enabled": false,
+  "python.terminal.activateEnvironment": false,
+  "python.analysis.autoImportCompletions": true,
   // spelling
   "cSpell.diagnosticLevel": "Hint",
+  "terminal.integrated.profiles.windows": {
+    "PowerShell": {
+      "source": "PowerShell",
+      "icon": "terminal-powershell"
+    },
+    "Command Prompt": {
+      "path": [
+        "${env:windir}\\Sysnative\\cmd.exe",
+        "${env:windir}\\System32\\cmd.exe"
+      ],
+      "args": [],
+      "icon": "terminal-cmd"
+    },
+    "Git Bash": {
+      "source": "Git Bash"
+    },
+    "Ubuntu-22.04 (WSL)": {
+      "path": "C:\\Windows\\System32\\wsl.exe",
+      "args": [
+        "-d",
+        "Ubuntu-22.04"
+      ]
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "Ubuntu-22.04 (WSL)",
+  "errorLens.enabledDiagnosticLevels": [
+    "error",
+    "warning",
+    "info"
+  ],
+  "cSpell.userWords": [
+    "correlator",
+    "Numerica"
+  ],
+  "extensions.ignoreRecommendations": true,
+  "remote.SSH.remotePlatform": {
+    "x": "linux"
+  },
+  "[python]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4,
+    "editor.defaultFormatter": "ms-python.black-formatter",
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+  },
+  "python.analysis.typeCheckingMode": "basic",
+  "workbench.colorTheme": "Default Light Modern",
+  "diffEditor.ignoreTrimWhitespace": false,
 }

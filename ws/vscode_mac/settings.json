@@ -92,36 +92,6 @@
       "commands": [ "workbench.action.files.saveAll", ]
     },
 
-    // lowercase
-    {
-      "before": [ "leader", "u" ],
-      "commands": [ "editor.action.transformToLowercase" ]
-    },
-    {
-      "before": [ "U" ],
-      "commands": [ "editor.action.transformToUppercase" ]
-    },
-
-    // undo redo
-    {
-      "before": [ "u" ],
-      "commands": [ "undo" ]
-    },
-    {
-      "before": [ "<C-r>" ],
-      "commands": [ "redo" ]
-    },
-
-    // // upper case lower case
-    // {
-    //   "before": [ "<C-u>" ],
-    //   "commands": [ "editor.action.transformToLowercase" ]
-    // },
-    // {
-    //   "before": [ "<C-U>" ],
-    //   "commands": [ "editor.action.transformToUppercase" ]
-    // },
-
     // nav
     {
       "before": [ "<C-o>" ],
@@ -181,16 +151,6 @@
     {
       "before": [ "leader", "s" ],
       "commands": [ "workbench.action.files.saveAll", ]
-    },
-
-    // undo redo
-    {
-      "before": [ "u" ],
-      "commands": [ "undo" ]
-    },
-    {
-      "before": [ "<C-r>" ],
-      "commands": [ "redo" ]
     },
 
     // nav

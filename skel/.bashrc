@@ -3,4 +3,3 @@ for fn in "$HOME/.config/bashrc/"*; do
     . "$fn"
   fi
 done
-

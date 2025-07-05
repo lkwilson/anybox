@@ -33,7 +33,7 @@
 
     ; commits
     a = add -A
-    cm = commit -m
+    cm = "!_gfn() { git commit -m \"$*\"; }; _gfn"
     ca = commit --amend
 
     ; show

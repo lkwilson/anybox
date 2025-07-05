@@ -66,6 +66,7 @@ vim.api.nvim_create_autocmd("TermClose", {
 if os.getenv('COLORTERM') == 'truecolor' then
   vim.opt.termguicolors = true
 end
+vim.opt.background = 'light'
 
 -- keys
 vim.opt.updatetime = 50

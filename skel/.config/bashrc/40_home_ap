@@ -2,16 +2,12 @@
 _ap_file_template() {
     echo "#!/usr/bin/env bash"
     echo
-    echo '# This file is meant to be run with `b`, `t`, and `s`. Do not run directly, but do implement functions _ap_build, _ap_test, and _ap_source.'
+    echo '# This file is meant to be run with `b` and `s`. Do not run directly, but do implement functions _ap_build and _ap_source.'
     echo
-    echo 'unset -f _ap_build _ap_test _ap_source'
+    echo 'unset -f _ap_build _ap_source'
     echo
     echo "_ap_build() {"
     echo '  echo "No build defined"'
-    echo "}"
-    echo
-    echo "_ap_test() {"
-    echo '  echo "No test defined"'
     echo "}"
     echo
     echo "_ap_source() {"
@@ -32,10 +28,10 @@ _ap_do() {
     fi
 
     local OLD_OLDPWD="$OLDPWD"
-    pd "$root" &>/dev/null
+    pushd "$root" &>/dev/null
     . ./.auto_project "$@"
     rc=$?
-    pd &>/dev/null
+    popd &>/dev/null
     OLDPWD="$OLD_OLDPWD"
     return $rc
 }
@@ -71,10 +67,6 @@ apg() {
 
 b() {
     _ap_do _ap_build "$@"
-}
-
-t() {
-    _ap_do _ap_test "$@"
 }
 
 s() {

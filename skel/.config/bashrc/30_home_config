@@ -15,12 +15,12 @@ alias grep="grep --color=auto"
 
 # HISTORY Configuration
 # Don't put duplicate lines or lines starting with space in the history.
-HISTCONTROL=ignoreboth
+HISTCONTROL=
 # append to the history file, don't overwrite it
 shopt -s histappend
 # for setting history length see HISTSIZE and HISTFILESIZE
-HISTSIZE=
-HISTFILESIZE=
+HISTSIZE='-1'
+HISTFILESIZE='-1'
 
 # OTHER Configurations
 # Check the window size after each command and, if necessary, update the values
@@ -29,9 +29,6 @@ shopt -s checkwinsize
 
 # Don't tab complete on empty prompt
 shopt -s no_empty_cmd_completion
-
-# Auto cd into dirs
-shopt -s autocd
 
 # Glob star
 shopt -s globstar
@@ -61,7 +58,6 @@ export VIEWER=less
 
 # Change directory aliases
 alias cdp='cd "$(pwd -P)"'
-alias cdh='cd "$(pwd)"'
 alias ..='cd ..'
 alias ...='..; ..'
 alias ....='...; ..'

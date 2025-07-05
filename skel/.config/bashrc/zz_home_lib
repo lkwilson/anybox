@@ -1,5 +1,5 @@
 # Set usr bin
-usr_bin="$HOME/bin"
+usr_bin="$HOME/.local/bin"
 if [ -d "$usr_bin" ]; then
     PATH="$usr_bin:$PATH"
 fi
@@ -55,15 +55,6 @@ if type git &>/dev/null; then
     setup_git
 fi
 
-# fzf
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
 if type code &>/dev/null; then
     alias ch='code .'
 fi
-
-# Remap capslock to ctrl
-type setxkbmap &>/dev/null && {
-    setxkbmap -option ctrl:nocaps &>/dev/null
-    setxkbmap -o ctrl:nocaps &>/dev/null
-}

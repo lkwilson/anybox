@@ -12,6 +12,8 @@ if ! shopt -oq posix; then
         bash_completion_base=/etc
     elif [ -f /opt/homebrew/etc/bash_completion ]; then
         bash_completion_base=/opt/homebrew/etc
+    elif [ -f /run/current-system/sw/share/bash-completion ]; then
+        bash_completion_base=/run/current-system/sw/share/bash-completion
     fi
     if [ -f $bash_completion_base/bash_completion ]; then
         . $bash_completion_base/bash_completion

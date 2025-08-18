@@ -1,371 +1,212 @@
 {
-  "workbench.startupEditor": "newUntitledFile",
+  "workbench.startupEditor": "none",
   "editor.renderWhitespace": "trailing",
   "editor.tabSize": 2,
   "editor.detectIndentation": false,
-  // "editor.formatOnSaveMode": "modifications",
   "editor.autoClosingBrackets": "never",
   "editor.autoClosingQuotes": "never",
-  "editor.guides.bracketPairs": true,
-  "html.autoCreateQuotes": false,
-  "editor.bracketPairColorization.enabled": true,
-  "editor.guides.bracketPairsHorizontal": true,
   "search.exclude": {
     "**/node_modules": true,
     "**/__pycache__": true,
   },
-	"editor.folding": false,
-
-	"files.eol": "\n",
-
-  // terminal stuff
-  "terminal.integrated.showExitAlert": false, // hide the annoying "shell exited with non zero" notifications
+  "editor.folding": false,
+  "files.eol": "\n",
+  "terminal.integrated.showExitAlert": false,
   "terminal.integrated.inheritEnv": false,
   "terminal.integrated.defaultProfile.osx": "bash",
   "terminal.integrated.tabs.location": "left",
-
-  // cpp
-  "C_Cpp.intelliSenseEngine": "Tag Parser",
-
-  // vim stuff
   "vim.leader": "<space>",
-  // "vim.easymotion": true,
   "vim.incsearch": true,
   "vim.hlsearch": true,
-  "vim.insertModeKeyBindings": [
-    // tabs
-    {
-      "before": [ "<C-l>" ],
-      "commands": [ "workbench.action.nextEditorInGroup" ],
-    },
-    {
-      "before": [ "<C-h>" ],
-      "commands": [ "workbench.action.previousEditorInGroup" ],
-    },
-
-    // files
-    {
-      "before": [ "<C-w>" ],
-      "commands": [ "workbench.action.closeActiveEditor", ]
-    },
-    {
-      "before": [ "<C-s>" ],
-      "commands": [ "workbench.action.files.save", ]
-    },
-
-    // nav
-    {
-      "before": [ "<C-o>" ],
-      "commands": [ "workbench.action.navigateBack" ],
-    },
-    {
-      "before": [ "<C-i>" ],
-      "commands": [ "workbench.action.navigateForward" ],
-    },
-  ],
   "vim.visualModeKeyBindings": [
-    // tabs
     {
-      "before": [ "<C-l>" ],
-      "commands": [ "workbench.action.nextEditorInGroup" ],
+      "before": [
+        "leader",
+        "w"
+      ],
+      "commands": [
+        "workbench.action.closeAllGroups",
+      ]
     },
     {
-      "before": [ "<C-h>" ],
-      "commands": [ "workbench.action.previousEditorInGroup" ],
-    },
-
-    // files
-    {
-      "before": [ "<C-w>" ],
-      "commands": [ "workbench.action.closeActiveEditor", ]
-    },
-    {
-      "before": [ "leader", "w" ],
-      "commands": [ "workbench.action.closeAllGroups", ]
+      "before": [
+        "leader",
+        "s"
+      ],
+      "commands": [
+        "workbench.action.files.saveAll",
+      ]
     },
     {
-      "before": [ "<C-s>" ],
-      "commands": [ "workbench.action.files.save", ]
+      "before": [
+        "leader",
+        "leader"
+      ],
+      "commands": [
+        ":nohl"
+      ]
     },
     {
-      "before": [ "leader", "s" ],
-      "commands": [ "workbench.action.files.saveAll", ]
-    },
-
-    // nav
-    {
-      "before": [ "<C-o>" ],
-      "commands": [ "workbench.action.navigateBack" ],
-    },
-    {
-      "before": [ "<C-i>" ],
-      "commands": [ "workbench.action.navigateForward" ],
-    },
-
-    // clear highlight
-    {
-      "before": [ "leader", "leader" ],
-      "commands": [ ":nohl" ]
-    },
-
-    // formatting
-    {
-      "before": [ "leader", "f" ],
-      "commands": [ "editor.action.format", ]
-    },
-
-    // indenting
-    {
-      "before": [ ">" ],
-      "commands": [ "editor.action.indentLines" ]
+      "before": [
+        "leader",
+        "f"
+      ],
+      "commands": [
+        "editor.action.format",
+      ]
     },
     {
-      "before": [ "<" ],
-      "commands": [ "editor.action.outdentLines" ]
+      "before": [
+        ">"
+      ],
+      "commands": [
+        "editor.action.indentLines"
+      ]
+    },
+    {
+      "before": [
+        "<"
+      ],
+      "commands": [
+        "editor.action.outdentLines"
+      ]
     },
   ],
   "vim.normalModeKeyBindings": [
-    // tabs
-    {
-      "before": [ "<C-l>" ],
-      "commands": [ "workbench.action.nextEditorInGroup" ],
-    },
-    {
-      "before": [ "<C-h>" ],
-      "commands": [ "workbench.action.previousEditorInGroup" ],
-    },
-
-    // files
-    {
-      "before": [ "<C-w>" ],
-      "commands": [ "workbench.action.closeActiveEditor", ]
-    },
-    {
-      "before": [ "leader", "w" ],
-      "commands": [ "workbench.action.closeAllGroups", ]
-    },
-    {
-      "before": [ "<C-s>" ],
-      "commands": [ "workbench.action.files.save", ]
-    },
-    {
-      "before": [ "leader", "s" ],
-      "commands": [ "workbench.action.files.saveAll", ]
-    },
-
-    // nav
-    {
-      "before": [ "<C-o>" ],
-      "commands": [ "workbench.action.navigateBack" ],
-    },
-    {
-      "before": [ "<C-i>" ],
-      "commands": [ "workbench.action.navigateForward" ],
-    },
-
-    // clear highlight
-    {
-      "before": [ "leader", "leader" ],
-      "commands": [ ":nohl" ]
-    },
-
-    // formatting
-    {
-      "before": [ "leader", "f" ],
-      "commands": [ "editor.action.format", ]
-    },
-
-    // indenting
-    {
-      "before": [ ">" ],
-      "commands": [ "editor.action.indentLines" ]
-    },
-    {
-      "before": [ "<" ],
-      "commands": [ "editor.action.outdentLines" ]
-    },
-  ],
-  "vim.commandLineModeKeyBindings": [
-    // tabs
-    {
-      "before": [ "<C-l>" ],
-      "commands": [ "workbench.action.nextEditorInGroup" ],
-    },
-    {
-      "before": [ "<C-h>" ],
-      "commands": [ "workbench.action.previousEditorInGroup" ],
-    },
-
-    // files
-    {
-      "before": [ "<C-w>" ],
-      "commands": [ "workbench.action.closeActiveEditor", ]
-    },
-    {
-      "before": [ "<C-s>" ],
-      "commands": [ "workbench.action.files.save", ]
-    },
-
-    // nav
-    {
-      "before": [ "<C-o>" ],
-      "commands": [ "workbench.action.navigateBack" ],
-    },
-    {
-      "before": [ "<C-i>" ],
-      "commands": [ "workbench.action.navigateForward" ],
-    },
-  ],
-  "vim.operatorPendingModeKeyBindings": [
-    // tabs
-    {
-      "before": [ "<C-l>" ],
-      "commands": [ "workbench.action.nextEditorInGroup" ],
-    },
-    {
-      "before": [ "<C-h>" ],
-      "commands": [ "workbench.action.previousEditorInGroup" ],
-    },
-
-    // files
-    {
-      "before": [ "<C-w>" ],
-      "commands": [ "workbench.action.closeActiveEditor", ]
-    },
-    {
-      "before": [ "leader", "w" ],
-      "commands": [ "workbench.action.closeAllGroups", ]
-    },
-    {
-      "before": [ "<C-s>" ],
-      "commands": [ "workbench.action.files.save", ]
-    },
-    {
-      "before": [ "leader", "s" ],
-      "commands": [ "workbench.action.files.saveAll", ]
-    },
-
-    // undo redo
     {
       "before": [ "u" ],
       "commands": [ "undo" ]
     },
     {
-      "before": [ "<C-r>" ],
-      "commands": [ "redo" ]
-    },
-
-    // nav
-    {
-      "before": [ "<C-o>" ],
-      "commands": [ "workbench.action.navigateBack" ],
-    },
-    {
-      "before": [ "<C-i>" ],
-      "commands": [ "workbench.action.navigateForward" ],
-    },
-
-    // clear highlight
-    {
-      "before": [ "leader", "leader" ],
-      "commands": [ ":nohl" ]
-    },
-
-    // formatting
-    {
-      "before": [ "leader", "f" ],
-      "commands": [ "editor.action.format", ]
-    },
-
-    // indenting
-    {
-      "before": [ ">" ],
-      "commands": [ "editor.action.indentLines" ]
+      "before": [
+        "leader",
+        "w"
+      ],
+      "commands": [
+        "workbench.action.closeAllGroups",
+      ]
     },
     {
-      "before": [ "<" ],
-      "commands": [ "editor.action.outdentLines" ]
+      "before": [
+        "leader",
+        "s"
+      ],
+      "commands": [
+        "workbench.action.files.saveAll",
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "leader"
+      ],
+      "commands": [
+        ":nohl"
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "f"
+      ],
+      "commands": [
+        "editor.action.format",
+      ]
+    },
+    {
+      "before": [
+        ">"
+      ],
+      "commands": [
+        "editor.action.indentLines"
+      ]
+    },
+    {
+      "before": [
+        "<"
+      ],
+      "commands": [
+        "editor.action.outdentLines"
+      ]
+    },
+  ],
+  "vim.operatorPendingModeKeyBindings": [
+    {
+      "before": [ "u" ],
+      "commands": [ "undo" ]
+    },
+    {
+      "before": [
+        "leader",
+        "w"
+      ],
+      "commands": [
+        "workbench.action.closeAllGroups",
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "s"
+      ],
+      "commands": [
+        "workbench.action.files.saveAll",
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "leader"
+      ],
+      "commands": [
+        ":nohl"
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "f"
+      ],
+      "commands": [
+        "editor.action.format",
+      ]
+    },
+    {
+      "before": [
+        ">"
+      ],
+      "commands": [
+        "editor.action.indentLines"
+      ]
+    },
+    {
+      "before": [
+        "<"
+      ],
+      "commands": [
+        "editor.action.outdentLines"
+      ]
     },
   ],
   "vim.useSystemClipboard": true,
   "vim.visualstar": true,
-  "vim.handleKeys": {
-    "<C-d>": false,
-    "<C-k>": false,
-    "<C-f>": false,
-    "<C-p>": false
-  },
-
-  // git stuff
   "git.enableStatusBarSync": false,
   "git.showActionButton": {
     "commit": false,
     "publish": false,
     "sync": false
   },
-	"gitlens.codeLens.authors.enabled": false,
-	"gitlens.codeLens.recentChange.enabled": false,
-
-	"python.terminal.activateEnvironment": false,
-	"python.analysis.autoImportCompletions": true,
-
-  // spelling
+  "gitlens.codeLens.authors.enabled": false,
+  "gitlens.codeLens.recentChange.enabled": false,
+  "python.terminal.activateEnvironment": false,
+  "python.analysis.autoImportCompletions": true,
   "cSpell.diagnosticLevel": "Hint",
-  "terminal.integrated.profiles.windows": {
-    "PowerShell": {
-      "source": "PowerShell",
-      "icon": "terminal-powershell"
-    },
-    "Command Prompt": {
-      "path": [
-        "${env:windir}\\Sysnative\\cmd.exe",
-        "${env:windir}\\System32\\cmd.exe"
-      ],
-      "args": [],
-      "icon": "terminal-cmd"
-    },
-    "Git Bash": {
-      "source": "Git Bash"
-    },
-    "Ubuntu-22.04 (WSL)": {
-      "path": "C:\\Windows\\System32\\wsl.exe",
-      "args": [
-        "-d",
-        "Ubuntu-22.04"
-      ]
-    }
-  },
-  "terminal.integrated.defaultProfile.windows": "Ubuntu-22.04 (WSL)",
   "errorLens.enabledDiagnosticLevels": [
     "error",
     "warning",
     "info"
   ],
-  "cSpell.userWords": [
-    "correlator",
-    "Numerica"
-  ],
-  "extensions.ignoreRecommendations": true,
-  "remote.SSH.remotePlatform": {
-    "x": "linux"
-  },
-  "[python]": {
-    "editor.insertSpaces": true,
-    "editor.tabSize": 4,
-    "editor.defaultFormatter": "ms-python.black-formatter",
-  },
-  "[vue]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true,
-  },
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true,
-  },
-  "python.analysis.typeCheckingMode": "basic",
-  "workbench.colorTheme": "Default Light Modern",
-  "diffEditor.ignoreTrimWhitespace": false,
+  "python.analysis.typeCheckingMode": "standard",
+  "diffEditor.ignoreTrimWhitespace": true,
+  "chat.commandCenter.enabled": false,
 }

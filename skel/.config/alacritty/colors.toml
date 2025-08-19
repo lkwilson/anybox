@@ -1,2 +1,3 @@
+[general]
 import = ["~/.config/alacritty/palette.toml",]
 

@@ -1,4 +1,3 @@
-import = ["~/.config/alacritty/colors.toml",]
 
 [[keyboard.bindings]]
 key = "Tab"
@@ -9,4 +8,7 @@ action = "SelectNextTab"
 key = "Tab"
 mods = "Control|Shift"
 action = "SelectPreviousTab"
+
+[general]
+import = ["~/.config/alacritty/colors.toml",]
 

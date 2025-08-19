@@ -52,6 +52,12 @@ setup_git() {
     PROMPT_COMMAND="_ps1_git_prefix;$PROMPT_COMMAND"
 }
 
+if type xclip &>/dev/null; then
+    alias cb='xclip -selection clipboard'
+elif type pb-copy &>/dev/null; then
+    alias cb='pb-copy'
+fi
+
 # git
 if type git &>/dev/null; then
     setup_git

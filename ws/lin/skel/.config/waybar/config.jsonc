@@ -6,7 +6,6 @@
   "exclusive": true,
   "passthrough": false,
   "gtk-layer-shell": true,
-
   "modules-left": [
     "cpu",
     "memory",
@@ -21,41 +20,41 @@
     "bluetooth",
     "pulseaudio"
   ],
-
   "clock": {
     "timezone": "America/Denver",
     "format": "{:%I:%M  %b %d}"
   },
-
   "cpu": {
     "format": " {usage}%",
     "tooltip": true,
     "justify": "right"
   },
-
   "memory": {
     "format": " {used}",
     "tooltip": true,
     "justify": "right",
     "tooltip-format": "{used} / {total} ({percentage}%)"
   },
-
   "disk": {
     "format": " {percentage_used}%",
     "tooltip": true,
     "justify": "right",
     "tooltip-format": "{used} / {total} ({percentage_used}%)"
   },
-
   "temperature": {
     "format": "{icon} {temperatureC}",
     "justify": "right",
     "tooltip": false,
     "format-icons": {
-      "default": ["", "", "", "", ""]
+      "default": [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
     }
   },
-
   "idle_inhibitor": {
     "format": "{icon}",
     "format-icons": {
@@ -63,27 +62,25 @@
       "deactivated": ""
     }
   },
-
   "bluetooth": {
     "format": " {num_connections}",
     "format-connected": "󰂱 {num_connections}",
     "format-disabled": "󰂲 -",
-    // "format-connected": " {device_alias}",
-    // "format-connected-battery": " {device_alias} {device_battery_percentage}%",
     "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
     "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
     "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
     "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
     "on-click": "blueman-manager"
   },
-
   "pulseaudio": {
     "format": "{icon} {volume}%",
     "format-muted": " {volume}%",
     "format-icons": {
-      "default": ["", ""]
+      "default": [
+        "",
+        ""
+      ]
     },
-        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
   }
 }

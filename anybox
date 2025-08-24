@@ -102,13 +102,13 @@ else
   fi
 fi
 
-if [ "$cmd" == 'see' ]; then
+if [ "$cmd" == 'see' ] || [ "$cmd" == 's' ]; then
   see_cmd "$mod"
-elif [ "$cmd" == 'diff' ]; then
+elif [ "$cmd" == 'diff' ] || [ "$cmd" == 'd' ]; then
   diff_cmd "$mod"
-elif [ "$cmd" == 'install' ]; then
+elif [ "$cmd" == 'install' ] || [ "$cmd" == 'i' ]; then
   install_cmd "$mod"
-elif [ "$cmd" == 'capture' ]; then
+elif [ "$cmd" == 'capture' ] || [ "$cmd" == 'c' ]; then
   capture_cmd "$mod"
 else
   echo "Usage: $0 {see|diff|install|capture} [mod]"

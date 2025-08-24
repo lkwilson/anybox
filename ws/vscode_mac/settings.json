@@ -209,4 +209,7 @@
   "python.analysis.typeCheckingMode": "standard",
   "diffEditor.ignoreTrimWhitespace": true,
   "chat.commandCenter.enabled": false,
+  "window.customMenuBarAltFocus": false,
+  "extensions.ignoreRecommendations": true,
+  "workbench.secondarySideBar.defaultVisibility": "hidden"
 }

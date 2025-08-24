@@ -28,29 +28,32 @@
   },
 
   "cpu": {
-    "format": "{usage}% ",
+    "format": " {usage}%",
     "tooltip": true,
     "justify": "right"
   },
 
   "memory": {
-    "format": "{used} ",
+    "format": " {used}",
     "tooltip": true,
     "justify": "right",
     "tooltip-format": "{used} / {total} ({percentage}%)"
   },
 
   "disk": {
-    "format": "{percentage_used}% ",
+    "format": " {percentage_used}%",
     "tooltip": true,
     "justify": "right",
     "tooltip-format": "{used} / {total} ({percentage_used}%)"
   },
 
   "temperature": {
-    "format": "{temperatureC} ",
+    "format": "{icon} {temperatureC}",
     "justify": "right",
-    "tooltip": false
+    "tooltip": false,
+    "format-icons": {
+      "default": ["", "", "", "", ""]
+    }
   },
 
   "idle_inhibitor": {
@@ -62,9 +65,9 @@
   },
 
   "bluetooth": {
-    "format": "",
-    "format-connected": "󰂱",
-    "format-disabled": "󰂲",
+    "format": " {num_connections}",
+    "format-connected": "󰂱 {num_connections}",
+    "format-disabled": "󰂲 -",
     // "format-connected": " {device_alias}",
     // "format-connected-battery": " {device_alias} {device_battery_percentage}%",
     "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",

@@ -52,10 +52,12 @@ setup_git() {
     PROMPT_COMMAND="_ps1_git_prefix;$PROMPT_COMMAND"
 }
 
-if type xclip &>/dev/null; then
-    alias cb='xclip -selection clipboard'
-elif type pb-copy &>/dev/null; then
-    alias cb='pb-copy'
+# k8s
+if type kubectl &>/dev/null; then
+  alias k=kubectl
+  source <(kubectl completion bash)
+  complete -F __start_kubectl k
+  export KUBECONFIG="$HOME/.kube/config"
 fi
 
 # git

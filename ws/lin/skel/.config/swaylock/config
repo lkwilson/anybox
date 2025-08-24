@@ -1,0 +1,54 @@
+# Swaylock Configuration - Clean Login Style
+# Set your wallpaper path here (adjust to your actual wallpaper location)
+image=~/.wallpaper/sequoia_0001.png
+
+# Fallback color if image not found
+color=1a1a1a
+
+# Password input field styling
+inside-color=ffffff22        # Light transparent background
+line-color=00000000          # No line separator
+ring-color=33ccffaa          # Blue ring around input
+separator-color=00000000     # No separator
+text-color=ffffff            # White text
+
+# When typing (clear state)
+inside-clear-color=ffffff33  # Slightly more opaque when typing
+line-clear-color=00000000
+ring-clear-color=00ff99aa    # Green ring when typing
+text-clear-color=ffffff
+
+# When verifying password
+inside-ver-color=ffff0033    # Yellow tint when verifying
+line-ver-color=00000000
+ring-ver-color=ffff00aa      # Yellow ring
+text-ver-color=ffffff
+
+# When password is wrong
+inside-wrong-color=ff333333  # Red tint when wrong
+line-wrong-color=00000000
+ring-wrong-color=ff3333aa    # Red ring
+text-wrong-color=ffffff
+
+# Clean effects - minimal blur for readability
+effect-blur=3x2
+fade-in=0.3
+
+# Behavior
+show-failed-attempts
+daemonize
+ignore-empty-password
+
+# Input field appearance
+indicator-radius=120         # Larger, more traditional size
+indicator-thickness=3        # Thinner ring for cleaner look
+key-hl-color=00ff99         # Highlight color for keys
+bs-hl-color=ff3333          # Backspace highlight
+
+# Font - clean and readable
+font=JetBrains Mono Nerd Font
+font-size=18
+
+# Disable caps lock text for cleaner look
+caps-lock-key-hl-color=00000000
+caps-lock-bs-hl-color=00000000

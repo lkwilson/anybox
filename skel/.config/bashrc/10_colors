@@ -73,3 +73,7 @@ else
   bc_bits=3
 fi
 export bc_bits
+
+has_true() {
+  printf "\x1b[38;2;255;100;0mis it orange?\x1b[0m\n"
+}

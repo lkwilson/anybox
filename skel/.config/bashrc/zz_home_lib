@@ -54,15 +54,19 @@ setup_git() {
 
 # k8s
 if type kubectl &>/dev/null; then
-  alias k=kubectl
-  source <(kubectl completion bash)
-  complete -F __start_kubectl k
-  export KUBECONFIG="$HOME/.kube/config"
+    alias k=kubectl
+    source <(kubectl completion bash)
+    complete -F __start_kubectl k
+    export KUBECONFIG="$HOME/.kube/config"
 fi
 
 # git
 if type git &>/dev/null; then
     setup_git
+fi
+
+if type nix &>/dev/null; then
+    alias nd='nix develop'
 fi
 
 if type code &>/dev/null; then

@@ -6,16 +6,15 @@
   "exclusive": true,
   "passthrough": false,
   "gtk-layer-shell": true,
-  "modules-left": [
-    "cpu",
-    "memory",
-    "disk",
-    "temperature"
-  ],
+  "modules-left": [],
   "modules-center": [
     "clock"
   ],
   "modules-right": [
+    "cpu",
+    "memory",
+    "disk",
+    "temperature",
     "idle_inhibitor",
     "bluetooth",
     "pulseaudio"

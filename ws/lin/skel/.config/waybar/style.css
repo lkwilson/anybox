@@ -29,11 +29,11 @@ window#waybar {
   border-color: rgba(188, 188, 188, 0.6);
 }
 
-#clock,
-#cpu {
-  border-left: 0px;
+#pulseaudio,
+#idle_inhibitor {
+  padding-right: 16px;
 }
 
 #idle_inhibitor {
-  padding-right: 16px;
+  border-left-style: none;
 }

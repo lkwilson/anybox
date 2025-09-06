@@ -144,7 +144,7 @@ ps1_setup() {
 
     _ps1_next_full_scope=''
     if [ "$_ps1_next_git" != '' ] || [ "$_ps1_next_scope" != '' ]; then
-        _ps1_next_full_scope="($_ps1_bold_green$_ps1_next_git$_ps1_next_scope$_ps1_reset) "
+        _ps1_next_full_scope="($_ps1_bold_cyan$_ps1_next_scope$_ps1_bold_green$_ps1_next_git$_ps1_reset) "
     fi
 
     local _ps1_next_user_host=''

@@ -24,7 +24,7 @@ _ap_do() {
         echo "No project dir found" >&2
         return 1
     else
-        echo "Project dir found: $root"
+        echo "Project dir found: $root" >&2
     fi
 
     local OLD_OLDPWD="$OLDPWD"

@@ -14,11 +14,11 @@
     s = !git f && git st
 
     ; log
-    l = log --decorate --oneline --graph
-    lr = log --decorate --oneline --graph HEAD @{u}
-    lh = !git l --color=always | head
-    la = log --decorate --oneline --graph --all
-    lref = log --decorate --oneline --graph --reflog
+    l = log --decorate --oneline --graph --format='%C(auto)%h <%an@%ar> %d %s'
+    lr = log --decorate --oneline --graph --format='%C(auto)%h <%an@%ar> %d %s' HEAD @{u}
+    lh = !git l --color=always --format='%C(auto)%h <%an@%ar> %d %s' | head
+    la = log --decorate --oneline --graph --format='%C(auto)%h <%an@%ar> %d %s' --all
+    lref = log --decorate --oneline --graph --format='%C(auto)%h <%an@%ar> %d %s' --reflog
 
     ; branch
     c = checkout

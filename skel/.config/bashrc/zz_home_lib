@@ -66,6 +66,11 @@ if type git &>/dev/null; then
 fi
 
 if type nix &>/dev/null; then
+    ne() {
+        if [ "$IN_NIX_SHELL" != "" ]; then
+            exit 0
+        fi
+    }
     alias nd='nix develop'
 fi
 

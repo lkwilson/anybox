@@ -72,6 +72,16 @@ if type nix &>/dev/null; then
         fi
     }
     alias nd='nix develop'
+    alias nds='nix develop .?submodules=1'
+    # Set nix branch PS1
+    _ps1_nix_prefix() {
+        if [ "$IN_NIX_SHELL" != '' ]; then
+            _ps1_scope='*'
+        else
+            _ps1_scope=''
+        fi
+    }
+    PROMPT_COMMAND="_ps1_nix_prefix;$PROMPT_COMMAND"
 fi
 
 if type code &>/dev/null; then

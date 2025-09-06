@@ -12,7 +12,7 @@ function sj() { echo "export ENV0='$(pwd)'" >> ~/.config/bashrc/env; se; }
 function sj1() { echo "export ENV1='$(pwd)'" >> ~/.config/bashrc/env; se; }
 function sj2() { echo "export ENV2='$(pwd)'" >> ~/.config/bashrc/env; se; }
 function sj3() { echo "export ENV3='$(pwd)'" >> ~/.config/bashrc/env; se; }
-function sjr() { echo "export CDPATH='.:$(pwd)'" >> ~/.config/bashrc/env; se; }
+function sjr() { echo "CDPATH='.:$(pwd)'" >> ~/.config/bashrc/env; se; }
 
 _term_start_dir="$PWD"
 jw() {

@@ -83,7 +83,7 @@ _ps1_length() {
         _ps1_length_res=$(( $_ps1_length_res + ${#_ps1_next_scope} ))
         _ps1_scope_len=3
     fi
-    _ps1_length_res=$(( $_ps1_scope_len + $_ps1_length_res ))
+    _ps1_length_res=$(( $_ps1_length_res + $_ps1_scope_len ))
 
     if [ "$_ps1_next_user" != '' ] && [ "$_ps1_next_host" != '' ]; then 
         _ps1_length_res=$(( $_ps1_length_res + 2 + ${#_ps1_next_user} + ${#_ps1_next_host} ))
@@ -142,6 +142,7 @@ ps1_setup() {
         _shorten_ps1
     fi
 
+    _ps1_next_full_scope=''
     if [ "$_ps1_next_git" != '' ] || [ "$_ps1_next_scope" != '' ]; then
         _ps1_next_full_scope="($_ps1_bold_green$_ps1_next_git$_ps1_next_scope$_ps1_reset) "
     fi

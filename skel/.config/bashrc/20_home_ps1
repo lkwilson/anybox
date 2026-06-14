@@ -159,8 +159,7 @@ ps1_setup() {
     [ "${SHLVL:-1}" -gt 1 ] && rhs_lvl="+$(( SHLVL - 1 ))"
     local rhs="$_ps1_user@$_ps1_host$rhs_lvl"
     if [ -n "$COLUMNS" ] && [ "${#rhs}" -lt "$COLUMNS" ]; then
-        printf '\033[%dG\033[1m%s\033[0m\033[2m%s\033[0m\r' \
-            $(( COLUMNS - ${#rhs} + 1 )) "$_ps1_user@$_ps1_host" "$rhs_lvl"
+        printf '\033[%dG\033[2m%s\033[0m\r' $(( COLUMNS - ${#rhs} + 1 )) "$rhs"
     fi
     #PS1="$PS1$_ps1_bold"
     #PS0="$_ps1_reset"

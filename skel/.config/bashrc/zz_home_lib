@@ -102,6 +102,7 @@ if type code &>/dev/null; then
   alias ch='code .'
 fi
 
+# rust
 if [ -r "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
 fi

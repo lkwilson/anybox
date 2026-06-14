@@ -1,9 +1,57 @@
-set completion-ignore-case on
-set show-all-if-ambiguous on
-set completion-map-case on
-set completion-prefix-display-length 1
-set skip-completed-text on
-set bell-style none
-set mark-symlinked-directories on
+# ~/.inputrc — GNU readline config (bash + every other readline app: python, psql, ...)
+
+# editing mode
+
+# vi keybindings on the command line
 set editing-mode vi
-#TAB: menu-complete
+
+# completion: matching
+
+# tab-complete regardless of case
+set completion-ignore-case on
+# treat - and _ as interchangeable while completing
+set completion-map-case on
+# one tab lists matches instead of needing two
+set show-all-if-ambiguous on
+
+# completion: display
+
+# collapse the shared prefix to 1 char in the list
+set completion-prefix-display-length 1
+# don't re-insert text that's already after the cursor
+set skip-completed-text on
+# append an ls -F-style type char (/ * @) to entries
+set visible-stats on
+# color completion entries by type via LS_COLORS
+set colored-stats on
+# also color the matched prefix portion
+set colored-completion-prefix on
+# add trailing / to completed symlinked dirs
+set mark-symlinked-directories on
+
+# vi mode prompt + cursor
+
+# show an insert/command indicator in the prompt
+set show-mode-in-prompt on
+# beam cursor in insert mode (\1..\2 = zero-width markers)
+set vi-ins-mode-string \1\e[6 q\2
+# block cursor in command mode
+set vi-cmd-mode-string \1\e[2 q\2
+
+# input / output
+
+# the three below are the UTF-8 trio: needed so accented/8-bit chars work on
+# old boxes with a stale locale (LANG=C). Modern UTF-8 locales infer them.
+# accept 8-bit input (don't strip the high bit)
+set input-meta on
+# display 8-bit chars directly, not as \nnn escapes
+set output-meta on
+# don't reinterpret high-bit bytes as Alt-chords
+set convert-meta off
+# pasted multiline text won't auto-run; safer paste
+set enable-bracketed-paste on
+
+# misc
+
+# no audible/visible bell
+set bell-style none

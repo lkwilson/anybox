@@ -56,6 +56,11 @@ ps1_init() {
     _ps1_bold="${_ps1_start}${bc_bold}${_ps1_end}"
     _ps1_reset="${_ps1_start}${bc_reset}${_ps1_end}"
 
+    # Right-side escapes. The RHS is printed with printf (not part of PS1), so
+    # these need a real ESC and no \[ \] width markers, but reuse the bc_* codes.
+    _ps1_rhs_dim=$'\033'"[${bc_light}m"
+    _ps1_rhs_off=$'\033'"[${bc_reset}m"
+
     if [ "$USER" == "" ]; then
       _ps1_user="$(whoami)"
     else
@@ -158,8 +163,8 @@ ps1_setup() {
     local rhs_lvl=''
     [ "${SHLVL:-1}" -gt 1 ] && rhs_lvl="+$(( SHLVL - 1 ))"
     local rhs="$_ps1_user@$_ps1_host$rhs_lvl"
-    if [ -n "$COLUMNS" ] && [ "${#rhs}" -lt "$(( COLUMNS / 2 ))" ]; then
-        printf '\033[%dG\033[2m%s\033[0m\r' $(( COLUMNS - ${#rhs} + 1 )) "$rhs"
+    if [ -n "$COLUMNS" ] && [ "${#rhs}" -lt "$(( $COLUMNS / 2 ))" ]; then
+        printf '\033[%dG%s%s%s\r' $(( COLUMNS - ${#rhs} + 1 )) "$_ps1_rhs_dim" "$rhs" "$_ps1_rhs_off"
     fi
     #PS1="$PS1$_ps1_bold"
     #PS0="$_ps1_reset"

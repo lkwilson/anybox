@@ -15,6 +15,7 @@
 __pycache__/
 *.swp
 .*.swp
+.sessions
 
 .DS_Store
 
@@ -27,3 +28,5 @@ cpp.hint
 .syn
 .mypy_cache/
 .auto_project
+
+**/.claude/settings.local.json

@@ -60,6 +60,10 @@ if type kubectl &>/dev/null; then
     export KUBECONFIG="$HOME/.kube/config"
 fi
 
+if type flux &>/dev/null; then
+    . <(flux completion bash)
+fi
+
 # git
 if type git &>/dev/null; then
     setup_git

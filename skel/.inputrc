@@ -31,13 +31,6 @@ set mark-symlinked-directories on
 
 # vi mode prompt + cursor
 
-# show an insert/command indicator in the prompt
-set show-mode-in-prompt on
-# beam cursor in insert mode (\1..\2 = zero-width markers)
-set vi-ins-mode-string \1\e[6 q\2
-# block cursor in command mode
-set vi-cmd-mode-string \1\e[2 q\2
-
 # input / output
 
 # the three below are the UTF-8 trio: needed so accented/8-bit chars work on

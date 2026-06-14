@@ -152,12 +152,15 @@ ps1_setup() {
     # Note we don't export it because we don't want someone like sh to use it
     PS1="$_ps1_reset$_ps1_next_full_scope$_ps1_next_cwd\\$ "
 
-    # right side: who/where (user@host), plus shell depth when nested. Drawn at
-    # the right edge; the \r returns the cursor so PS1 prints over the left.
-    local rhs="$_ps1_user@$_ps1_host"
-    [ "${SHLVL:-1}" -gt 1 ] && rhs="$rhs lvl$SHLVL"
+    # right side: who/where (user@host), plus a faded +N nesting depth when in a
+    # subshell. Drawn at the right edge; the \r returns the cursor so PS1 prints
+    # over the left.
+    local rhs_lvl=''
+    [ "${SHLVL:-1}" -gt 1 ] && rhs_lvl="+$(( SHLVL - 1 ))"
+    local rhs="$_ps1_user@$_ps1_host$rhs_lvl"
     if [ -n "$COLUMNS" ] && [ "${#rhs}" -lt "$COLUMNS" ]; then
-        printf '\033[%dG\033[1m%s\033[0m\r' $(( COLUMNS - ${#rhs} + 1 )) "$rhs"
+        printf '\033[%dG\033[1m%s\033[0m\033[2m%s\033[0m\r' \
+            $(( COLUMNS - ${#rhs} + 1 )) "$_ps1_user@$_ps1_host" "$rhs_lvl"
     fi
     #PS1="$PS1$_ps1_bold"
     #PS0="$_ps1_reset"

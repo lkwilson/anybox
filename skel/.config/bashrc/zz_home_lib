@@ -20,6 +20,7 @@ if ! shopt -oq posix; then
     fi
 fi
 
+# git
 setup_git() {
     function_exists() {
       declare -f -F $1 > /dev/null
@@ -52,6 +53,11 @@ setup_git() {
     PROMPT_COMMAND="_ps1_git_prefix;$PROMPT_COMMAND"
 }
 
+# git
+if type git &>/dev/null; then
+    setup_git
+fi
+
 # k8s
 if type kubectl &>/dev/null; then
     alias k=kubectl
@@ -64,11 +70,7 @@ if type flux &>/dev/null; then
     . <(flux completion bash)
 fi
 
-# git
-if type git &>/dev/null; then
-    setup_git
-fi
-
+# nix
 if type nix &>/dev/null; then
     ne() {
         if [ "$IN_NIX_SHELL" != "" ]; then
@@ -88,6 +90,18 @@ if type nix &>/dev/null; then
     PROMPT_COMMAND="_ps1_nix_prefix;$PROMPT_COMMAND"
 fi
 
+# vs code
+if ! type code &>/dev/null; then
+  mac_vsc_bin="/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+  if [ -d "$mac_vsc_bin" ]; then
+    export PATH="$mac_vsc_bin:$PATH"
+  fi
+fi
+
 if type code &>/dev/null; then
-    alias ch='code .'
+  alias ch='code .'
+fi
+
+if [ -r "$HOME/.cargo/env" ]; then
+  . "$HOME/.cargo/env"
 fi

@@ -106,3 +106,44 @@ fi
 if [ -r "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
 fi
+
+# clip: pipe stdin to the system clipboard, cross-platform and SSH-aware.
+#
+#   some-command | clip
+#
+# Local sessions use the native clipboard tool (macOS pbcopy, WSL clip.exe,
+# Wayland/X11). Over SSH there is no local tool that can reach the machine
+# you're sitting at, so it falls back to an OSC 52 escape sequence: this asks
+# the terminal emulator to set the clipboard, so piping to clip from a remote
+# host copies to your local machine. Needs a terminal that honors OSC 52
+# (kitty, iTerm2, recent tmux/screen, etc.).
+_clip_osc52() {
+  local b64 seq
+  b64=$(base64 | tr -d '\n')
+  seq="\033]52;c;${b64}\a"
+  # tmux/screen need the sequence wrapped in their passthrough envelope.
+  if [ -n "$TMUX" ]; then
+    seq="\033Ptmux;\033${seq}\033\\"
+  elif [ "${TERM%%-*}" = "screen" ]; then
+    seq="\033P${seq}\033\\"
+  fi
+  # Write to the controlling terminal so a redirected stdout still reaches it.
+  printf "%b" "$seq" > /dev/tty
+}
+clip() {
+  if [ -n "$SSH_CONNECTION" ] || [ -n "$SSH_TTY" ]; then
+    _clip_osc52
+  elif type pbcopy &>/dev/null; then
+    pbcopy                       # macOS
+  elif type clip.exe &>/dev/null; then
+    clip.exe                     # WSL
+  elif type wl-copy &>/dev/null; then
+    wl-copy                      # Wayland
+  elif type xclip &>/dev/null; then
+    xclip -selection clipboard   # X11
+  elif type xsel &>/dev/null; then
+    xsel --clipboard --input     # X11
+  else
+    _clip_osc52                  # last resort: terminal escape
+  fi
+}

@@ -60,5 +60,3 @@ export VIEWER=less
 alias cdp='cd "$(pwd -P)"'
 alias ..='cd ..'
 alias ...='..; ..'
-alias ....='...; ..'
-alias .....='....; ..'

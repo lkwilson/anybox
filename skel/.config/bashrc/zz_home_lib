@@ -90,7 +90,7 @@ if type nix &>/dev/null; then
     PROMPT_COMMAND="_ps1_nix_prefix;$PROMPT_COMMAND"
 fi
 
-# vs code
+# hop
 if ! type hop &>/dev/null; then
   alias h=hop
 fi

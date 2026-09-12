@@ -91,6 +91,11 @@ if type nix &>/dev/null; then
 fi
 
 # vs code
+if ! type hop &>/dev/null; then
+  alias h=hop
+fi
+
+# vs code
 if ! type code &>/dev/null; then
   mac_vsc_bin="/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
   if [ -d "$mac_vsc_bin" ]; then

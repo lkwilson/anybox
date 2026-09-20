@@ -117,6 +117,10 @@ if [ -r "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
 fi
 
+if type nvim >&/dev/null; then
+  alias vh='nvim .'
+fi
+
 if type tmux >&/dev/null; then
   # this runs tmux but uses a session name derived from path. it will attach to
   # existing ones or make a new one

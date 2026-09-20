@@ -11,37 +11,45 @@ The directory string is hashed as-is, so paths that resolve to the same
 location but have a different `$PWD` spelling (such as a symlinked path)
 receive different IDs.
 
+`th` allows you to open tmux in the `ws` socket. If you're in a session within
+the `ws` socket, then, it will automatically switch to the session, creating it
+if needed. This is similar to vs code's auto open and switch to existing
+instance behavior.
+
+`tt` doesn't require `th`, and from tmux sessions, it can create a nested tmux
+session with extra `C-l/h` bindings for quickly switching between windows,
+useful for using nvim with a terminal split, especially within `ws` sockets.
+
 ## `th`: normal tmux workspace
 
 Outside tmux, `th` runs:
 
 ```sh
-tmux -L default new-session -A -s "$workspace_id"
+tmux -L ws new-session -A -s "$workspace_id"
 ```
 
-Every `th` operation explicitly targets tmux's `default` server. `-A` means
-attach when the named session already exists; otherwise, create it.
+The canonical workspace is a **session** named `$workspace_id` in tmux's
+`ws` server: `ws:$workspace_id`. `ws` is a dedicated server socket, separate
+from tmux's ordinary `default` server. `tt` uses a different named server
+socket only as an isolated staging environment.
 
-Inside tmux, `th` instead creates the named session detached when necessary,
-switches the current client to it, then closes the pane from which it was run.
-If that pane was the window's only pane, tmux also removes the now-empty window.
-Running `th` while already in the destination session is a no-op. This avoids
-nesting a tmux client inside another tmux client.
+### Starting-position contract
 
-Inside a `tt` server, its socket is not named `default`. In that case `th`
-creates the workspace detached on tmux's explicit `default` socket and returns
-to the inner shell; it neither switches the inner client nor closes its pane.
-This supports the staging flow: create an inner window, `cd` to a project, run
-`th`, then detach or exit the inner tmux and select the staged default-server
-workspace with `C-b w`. If the inner session has other windows, `exit` closes
-only the staging window; use `C-b C-b d` to send `C-b d` to, and detach from,
-the inner tmux.
+| Starting position | `th` behavior |
+| --- | --- |
+| Not in tmux | Attach to `ws:$workspace_id`, creating it when absent. |
+| In `ws`, already in session `$workspace_id` | Do nothing. |
+| In `ws`, in any other session | Create `ws:$workspace_id` detached when absent, then switch to it. To get back, you run `C-b w` and pick your old session. |
+| In any non-`ws` tmux server, including `tt` | Create `ws:$workspace_id` detached when absent, then remain in the current server. A caller attached to `ws` can use `C-b w` to go to it. |
 
-Tmux documents `default` as the name of its default socket, and `-L default`
-selects it regardless of the inner `$TMUX` value. This works for the default
-server on the same host and user (using the same `TMUX_TMPDIR`, if set). It
-intentionally does not target an outer server started with a custom `-L` name
-or a custom `-S` socket path.
+### Multiple terminals
+
+Multiple terminals may attach to the same `ws:$workspace_id` session; it
+does not create a second server or prevent concurrent clients. They share the
+same panes, windows, and programs, so two people—or two terminals—typing into
+the same pane will affect the same process. Separate workspace sessions remain
+independent, and switching sessions in one terminal switches only that tmux
+client.
 
 ## `tt`: isolated inner workspace
 

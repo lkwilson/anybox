@@ -32,3 +32,9 @@ The Neovim configuration is a minimal set of overrides on top of LazyVim.
 When changing `skel/.config/nvim/`, update `docs/nvim.md` in the same change:
 keep the stock LazyVim workflow brief and document only behavior that this
 configuration overrides or otherwise deviates from it.
+
+## tmux
+
+When changing `skel/.config/tmux/` or tmux-related shell commands in
+`skel/.config/bashrc/zz_home_lib`, update and verify `docs/tmux.md` in the
+same change.

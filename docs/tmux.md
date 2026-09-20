@@ -7,23 +7,39 @@ stable workspace ID from the current directory:
 ws-<first 12 characters of shasum($PWD)>
 ```
 
-Running either helper again from the same `$PWD` reconnects to its existing
-workspace. A different directory gets a different workspace. The directory
-string is hashed as-is, so paths that resolve to the same location but have a
-different `$PWD` spelling (such as a symlinked path) receive different IDs.
+The directory string is hashed as-is, so paths that resolve to the same
+location but have a different `$PWD` spelling (such as a symlinked path)
+receive different IDs.
 
 ## `th`: normal tmux workspace
 
-`th` runs:
+Outside tmux, `th` runs:
 
 ```sh
 tmux new-session -A -s "$workspace_id"
 ```
 
 It uses tmux's default server. `-A` means attach when the named session already
-exists; otherwise, create it. Use `th` for a reusable, per-directory session
-that participates in your regular tmux server alongside other normal tmux
-sessions.
+exists; otherwise, create it.
+
+Inside tmux, `th` instead creates the named session detached when necessary,
+switches the current client to it, then closes the pane from which it was run.
+If that pane was the window's only pane, tmux also removes the now-empty window.
+Running `th` while already in the destination session is a no-op. This avoids
+nesting a tmux client inside another tmux client.
+
+`th` always uses the tmux server identified by its current `$TMUX` environment.
+Therefore, from a regular tmux session it navigates regular-server workspaces;
+> this is not what i want. tt should call back into default socket. is that
+> fixed for every tmux install?
+from inside `tt`, it creates and switches sessions inside that private inner
+server.
+
+## `thb`: create without switching
+
+`thb` creates the same named workspace only when it is absent, and otherwise
+does nothing. It does not attach or switch clients. Use `C-b s` to choose the
+session directly, or `C-b w` to browse its windows.
 
 ## `tt`: isolated inner workspace
 

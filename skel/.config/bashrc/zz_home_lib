@@ -122,16 +122,32 @@ if type nvim >&/dev/null; then
 fi
 
 if type tmux >&/dev/null; then
-  # this runs tmux but uses a session name derived from path. it will attach to
-  # existing ones or make a new one
+  # This uses a session name derived from path. Outside tmux, it attaches to an
+  # existing workspace or makes a new one. Inside tmux, it switches the current
+  # client to that workspace and closes the pane it came from.
   th() {
     workspace_id="ws-$(printf %s "$PWD" | shasum | cut -c1-12)"
-    tmux new-session -A -s "$workspace_id"
+    if [ -n "$TMUX" ]; then
+      current_session=$(tmux display-message -p '#{session_name}')
+      if [ "$current_session" = "$workspace_id" ]; then
+        return
+      fi
+
+      current_pane=$(tmux display-message -p '#{pane_id}')
+      tmux has-session -t "=$workspace_id" 2>/dev/null ||
+        tmux new-session -d -s "$workspace_id"
+      tmux switch-client -t "=$workspace_id" &&
+        tmux kill-pane -t "$current_pane"
+    else
+      tmux new-session -A -s "$workspace_id"
+    fi
   }
-  # th but in the background. Use C-b w to activate it
+  # Create th's workspace in the background if it is not already present. Use
+  # C-b s or C-b w to activate it.
   thb() {
     workspace_id="ws-$(printf %s "$PWD" | shasum | cut -c1-12)"
-    tmux new-session -Ad -s "$workspace_id"
+    tmux has-session -t "=$workspace_id" 2>/dev/null ||
+      tmux new-session -d -s "$workspace_id"
   }
   # this creates a new tmux server and creates a session within it. it is also
   # scoped to the current directory. it also uses a custom config to allow ctrl

@@ -21,15 +21,11 @@ instance behavior.
 session with extra `C-l/h` bindings for quickly switching between windows,
 useful for using nvim with a terminal split, especially within `ws` sockets.
 
-`ta` attaches to the first session it finds among the named tmux server sockets
-(in shell glob order, then tmux session-list order). It refuses to run when
-already inside tmux, preventing accidental nesting. If there are no sessions,
-it prints an error and exits unsuccessfully.
-
-`trm` lists the sessions on each named tmux server. `trm -f` also attempts to
-close servers with no sessions using `kill-server`. A convenient cleanup pass
-is to use `ta` to inspect and kill unwanted sessions, exit its client, then run
-`trm -f` to remove the now-empty server sockets.
+`ta` attaches to the first session it finds among the named tmux server sockets:
+it tries `default`, then `ws`, then every socket in shell glob order (and uses
+tmux session-list order within each server). It refuses to run when already
+inside tmux, preventing accidental nesting. If there are no sessions, it prints
+an error and exits unsuccessfully.
 
 ## `th`: normal tmux workspace
 

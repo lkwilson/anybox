@@ -27,7 +27,7 @@ All keys are for Normal mode. `<leader>` is `Space`.
 | Explorer, file picker, and grep settings | Hidden and ignored files are always included; stock toggles: `H` / `I` in explorer, `<M-h>` / `<M-i>` in picker |
 | Completion settings | Completion opens only with `<C-Space>`; stock opens it while typing |
 | `s` | Neovim one-character substitute; stock starts a Flash jump |
-| Format settings | Format-on-save is off; format manually with `<leader>cf` |
-| `gq` | Wrap selected prose at 80 columns without an external formatter |
+| Format settings | Format-on-save is off; the editor never auto-wraps while typing, even past 80 columns; format manually with `<leader>cf` |
+| `gq` | Explicitly wrap selected prose at 80 columns without an external formatter |
 | Markdown settings | Markup is always shown; stock uses `<leader>uc` to turn concealment off |
 | Auto-pairs | Disabled; typing `"` inserts one quote, while stock automatically inserts the closing quote |

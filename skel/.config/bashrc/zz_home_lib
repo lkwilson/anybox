@@ -95,6 +95,7 @@ if type hop &>/dev/null; then
   alias h=hop
 fi
 
+# jlog
 if type jlog &>/dev/null; then
   alias lg=jlog
   alias lgs='jlog sync && jlog commit'
@@ -115,6 +116,22 @@ fi
 # rust
 if [ -r "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
+fi
+
+if type tmux >&/dev/null; then
+  # this runs tmux but uses a session name derived from path. it will attach to
+  # existing ones or make a new one
+  th() {
+    workspace_id="ws-$(printf %s "$PWD" | shasum | cut -c1-12)"
+    tmux new-session -A -s "$workspace_id"
+  }
+  # this creates a new tmux server and creates a session within it. it is also
+  # scoped to the current directory. it also uses a custom config to allow ctrl
+  # j/k bindings to move between windows.
+  tt() {
+    workspace_id="ws-$(printf %s "$PWD" | shasum | cut -c1-12)"
+    tmux -L "$workspace_id" -f "$HOME/.config/tmux/tmux-inner.conf" new-session -A -s ws
+  }
 fi
 
 # clip: pipe stdin to the system clipboard, cross-platform and SSH-aware.

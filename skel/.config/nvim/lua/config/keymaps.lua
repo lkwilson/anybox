@@ -4,9 +4,3 @@
 
 vim.keymap.set("n", "<C-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })
 vim.keymap.set("n", "<C-h>", "<cmd>bprevious<cr>", { desc = "Previous buffer" })
-
-vim.keymap.set("n", "<C-w>", "<leader>bd", { desc = "Delete current buffer", remap = true })
-
-vim.keymap.set("n", "<leader>w", function()
-	Snacks.bufdelete.all()
-end, { desc = "Delete all buffers" })

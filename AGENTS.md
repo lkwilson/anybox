@@ -24,3 +24,11 @@ arguments target `./ws/<module>/skel`.
 ## Reference
 
 - [tmux workspace helpers](docs/tmux.md)
+- [Neovim](docs/nvim.md)
+
+## Neovim
+
+The Neovim configuration is a minimal set of overrides on top of LazyVim.
+When changing `skel/.config/nvim/`, update `docs/nvim.md` in the same change:
+keep the stock LazyVim workflow brief and document only behavior that this
+configuration overrides or otherwise deviates from it.

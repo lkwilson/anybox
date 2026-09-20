@@ -30,3 +30,4 @@ All keys are for Normal mode. `<leader>` is `Space`.
 | Format settings | Format-on-save is off; format manually with `<leader>cf` |
 | `gq` | Wrap selected prose at 80 columns without an external formatter |
 | Markdown settings | Markup is always shown; stock uses `<leader>uc` to turn concealment off |
+| Auto-pairs | Disabled; typing `"` inserts one quote, while stock automatically inserts the closing quote |

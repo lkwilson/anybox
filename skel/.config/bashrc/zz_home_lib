@@ -123,31 +123,36 @@ fi
 
 if type tmux >&/dev/null; then
   # This uses a session name derived from path. Outside tmux, it attaches to an
-  # existing workspace or makes a new one. Inside tmux, it switches the current
-  # client to that workspace and closes the pane it came from.
+  # existing workspace or makes a new one. From tt, it creates the workspace on
+  # the default server without leaving the inner session. Inside the default
+  # server, it switches the current client to that workspace and closes the
+  # pane it came from.
   th() {
     workspace_id="ws-$(printf %s "$PWD" | shasum | cut -c1-12)"
     if [ -n "$TMUX" ]; then
-      current_session=$(tmux display-message -p '#{session_name}')
+      case "$TMUX" in
+        */default,*)
+          ;;
+        *)
+          tmux -L default has-session -t "=$workspace_id" 2>/dev/null ||
+            tmux -L default new-session -d -s "$workspace_id"
+          return
+          ;;
+      esac
+
+      current_session=$(tmux -L default display-message -p '#{session_name}')
       if [ "$current_session" = "$workspace_id" ]; then
         return
       fi
 
-      current_pane=$(tmux display-message -p '#{pane_id}')
-      tmux has-session -t "=$workspace_id" 2>/dev/null ||
-        tmux new-session -d -s "$workspace_id"
-      tmux switch-client -t "=$workspace_id" &&
-        tmux kill-pane -t "$current_pane"
+      current_pane=$(tmux -L default display-message -p '#{pane_id}')
+      tmux -L default has-session -t "=$workspace_id" 2>/dev/null ||
+        tmux -L default new-session -d -s "$workspace_id"
+      tmux -L default switch-client -t "=$workspace_id" &&
+        tmux -L default kill-pane -t "$current_pane"
     else
-      tmux new-session -A -s "$workspace_id"
+      tmux -L default new-session -A -s "$workspace_id"
     fi
-  }
-  # Create th's workspace in the background if it is not already present. Use
-  # C-b s or C-b w to activate it.
-  thb() {
-    workspace_id="ws-$(printf %s "$PWD" | shasum | cut -c1-12)"
-    tmux has-session -t "=$workspace_id" 2>/dev/null ||
-      tmux new-session -d -s "$workspace_id"
   }
   # this creates a new tmux server and creates a session within it. it is also
   # scoped to the current directory. it also uses a custom config to allow ctrl

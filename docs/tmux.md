@@ -16,11 +16,11 @@ receive different IDs.
 Outside tmux, `th` runs:
 
 ```sh
-tmux new-session -A -s "$workspace_id"
+tmux -L default new-session -A -s "$workspace_id"
 ```
 
-It uses tmux's default server. `-A` means attach when the named session already
-exists; otherwise, create it.
+Every `th` operation explicitly targets tmux's `default` server. `-A` means
+attach when the named session already exists; otherwise, create it.
 
 Inside tmux, `th` instead creates the named session detached when necessary,
 switches the current client to it, then closes the pane from which it was run.
@@ -28,18 +28,20 @@ If that pane was the window's only pane, tmux also removes the now-empty window.
 Running `th` while already in the destination session is a no-op. This avoids
 nesting a tmux client inside another tmux client.
 
-`th` always uses the tmux server identified by its current `$TMUX` environment.
-Therefore, from a regular tmux session it navigates regular-server workspaces;
-> this is not what i want. tt should call back into default socket. is that
-> fixed for every tmux install?
-from inside `tt`, it creates and switches sessions inside that private inner
-server.
+Inside a `tt` server, its socket is not named `default`. In that case `th`
+creates the workspace detached on tmux's explicit `default` socket and returns
+to the inner shell; it neither switches the inner client nor closes its pane.
+This supports the staging flow: create an inner window, `cd` to a project, run
+`th`, then detach or exit the inner tmux and select the staged default-server
+workspace with `C-b w`. If the inner session has other windows, `exit` closes
+only the staging window; use `C-b C-b d` to send `C-b d` to, and detach from,
+the inner tmux.
 
-## `thb`: create without switching
-
-`thb` creates the same named workspace only when it is absent, and otherwise
-does nothing. It does not attach or switch clients. Use `C-b s` to choose the
-session directly, or `C-b w` to browse its windows.
+Tmux documents `default` as the name of its default socket, and `-L default`
+selects it regardless of the inner `$TMUX` value. This works for the default
+server on the same host and user (using the same `TMUX_TMPDIR`, if set). It
+intentionally does not target an outer server started with a custom `-L` name
+or a custom `-S` socket path.
 
 ## `tt`: isolated inner workspace
 

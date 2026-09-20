@@ -5,14 +5,6 @@ capture live updates and apply new changes.
 
 # Usage
 
-## See
-
-idk i never use this
-
-```bash
-./ab s[ee]
-```
-
 ## diff
 
 show the active diff between this and live. Run this to understand what we're
@@ -20,6 +12,14 @@ about to change.
 
 ```bash
 ./ab d[iff]
+```
+
+## see
+
+like diff but only shows levels (so diff -q)
+
+```bash
+./ab s[ee]
 ```
 
 ## install

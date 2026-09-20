@@ -20,3 +20,7 @@ target.
 
 Run `./ab` from this repository root. It defaults to `./skel`; optional module
 arguments target `./ws/<module>/skel`.
+
+## Reference
+
+- [tmux workspace helpers](docs/tmux.md)

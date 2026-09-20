@@ -2,6 +2,10 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 
+-- Disable LazyVim's formatter when writing a buffer. Manual formatting remains
+-- available through the usual formatting keymap.
+vim.g.autoformat = false
+
 -- Keep `gq` useful for prose: wrap an explicitly selected paragraph at 80
 -- columns using Neovim's built-in formatter. LazyVim normally routes `gq`
 -- through its formatter integration, which is not a paragraph wrapper.

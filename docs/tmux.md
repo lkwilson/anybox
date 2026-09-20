@@ -20,6 +20,9 @@ instance behavior.
 session with extra `C-l/h` bindings for quickly switching between windows,
 useful for using nvim with a terminal split, especially within `ws` sockets.
 
+`trm` lists the sessions on each named tmux server. `trm -f` also attempts to
+close servers with no sessions using `kill-server`.
+
 ## `th`: normal tmux workspace
 
 Outside tmux, `th` runs:

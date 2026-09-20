@@ -1,6 +1,7 @@
 # anybox
 
-Basically a dot files repo. Make changes here, and use ./ab to show the detla, capture live updates and apply new changes.
+Basically a dot files repo. Make changes here, and use ./ab to show the detla,
+capture live updates and apply new changes.
 
 # Usage
 
@@ -14,7 +15,8 @@ idk i never use this
 
 ## diff
 
-show the active diff between this and live. Run this to understand what we're about to change.
+show the active diff between this and live. Run this to understand what we're
+about to change.
 
 ```bash
 ./ab d[iff]
@@ -30,8 +32,8 @@ the actual install. this is destructive, so use it carefully (ie run diff first)
 
 ## capture
 
-for all local files, go grab production and copy it here. useful for editing live and then
-capturing it here for update
+for all local files, go grab production and copy it here. useful for editing
+live and then capturing it here for update
 
 ```bash
 ./ab c[apture]

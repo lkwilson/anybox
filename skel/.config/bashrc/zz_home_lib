@@ -128,6 +128,11 @@ if type tmux >&/dev/null; then
     workspace_id="ws-$(printf %s "$PWD" | shasum | cut -c1-12)"
     tmux new-session -A -s "$workspace_id"
   }
+  # th but in the background. Use C-b w to activate it
+  thb() {
+    workspace_id="ws-$(printf %s "$PWD" | shasum | cut -c1-12)"
+    tmux new-session -Ad -s "$workspace_id"
+  }
   # this creates a new tmux server and creates a session within it. it is also
   # scoped to the current directory. it also uses a custom config to allow ctrl
   # j/k bindings to move between windows.

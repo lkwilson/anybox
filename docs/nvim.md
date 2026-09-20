@@ -17,8 +17,7 @@ All keys are for Normal mode. `<leader>` is `Space`.
 | `<leader>qs` / `<leader>ql` | Restore this project's session / the last session |
 | `s` | Jump with Flash |
 | `<leader>uc` | Show Markdown markup by turning concealment off |
-
-how to grep? <leader>sg?
+| `<leader>sg` | Grep the project root |
 
 ## This configuration: delta
 

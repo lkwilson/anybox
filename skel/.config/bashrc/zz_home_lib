@@ -122,41 +122,6 @@ if type nvim >&/dev/null; then
 fi
 
 if type tmux >&/dev/null; then
-  # list sessions, -f to cleanup
-  trm() {
-    local _socket_dir _socket _server _sessions _force
-    case "$#" in
-      0) _force='no' ;;
-      1)
-        if [ "$1" = '-f' ]; then
-          _force='yes'
-        else
-          echo "trm: expected no arguments or -f" >&2
-          return 2
-        fi
-        ;;
-      *)
-        echo "trm: expected no arguments or -f" >&2
-        return 2
-        ;;
-    esac
-
-    _socket_dir="${TMUX_TMPDIR:-/tmp}/tmux-$(id -u)"
-
-    for _socket in "$_socket_dir"/*; do
-      [ -S "$_socket" ] || continue
-      _server=${_socket##*/}
-
-      if _sessions=$(tmux -L "$_server" list-sessions 2>/dev/null); then
-        printf '== %s ==\n%s\n' "$_server" "$_sessions"
-      elif [ "$_force" = 'yes' ] && tmux -L "$_server" kill-server 2>/dev/null; then
-        printf '== %s ==\n(no sessions; server closed)\n' "$_server"
-      else
-        printf '== %s ==\n(no sessions)\n' "$_server"
-      fi
-    done
-  }
-
   # attach to the first session found on any named tmux server
   ta() {
     local _socket_dir _socket _server _session
@@ -167,7 +132,7 @@ if type tmux >&/dev/null; then
 
     _socket_dir="${TMUX_TMPDIR:-/tmp}/tmux-$(id -u)"
 
-    for _socket in "$_socket_dir"/*; do
+    for _socket in "$_socket_dir"/default "$_socket_dir"/ws "$_socket_dir"/*; do
       [ -S "$_socket" ] || continue
       _server=${_socket##*/}
       _session=$(tmux -L "$_server" list-sessions -F '#{session_name}' 2>/dev/null | head -n 1)

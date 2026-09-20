@@ -11,5 +11,5 @@ res=$(echo "$url" | curl -k -K - 2>/dev/null)
 
 # handle res
 if [ "$res" != "OK" ]; then
-    echo "[$(date)]: Error with duckdns script: $res" >> ~/error.log
+  echo "[$(date)]: Error with duckdns script: $res" >>~/error.log
 fi

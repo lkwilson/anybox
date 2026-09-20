@@ -18,6 +18,7 @@ All keys are for Normal mode. `<leader>` is `Space`.
 | `s` | Jump with Flash |
 | `<leader>uc` | Show Markdown markup by turning concealment off |
 | `<leader>sg` | Grep the project root |
+| `:set filetype=bash` | Set the current buffer's filetype |
 
 ## This configuration: delta
 

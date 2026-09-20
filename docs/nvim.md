@@ -1,30 +1,33 @@
 # Neovim
 
-All keys below are for Normal mode. `<leader>` is `Space`.
+All keys are for Normal mode. `<leader>` is `Space`.
 
-## Defaults
+## Stock LazyVim
 
 | Keys | Action |
 | --- | --- |
-| `<leader>e` | Toggle file explorer |
-| `<leader>cf` | Format current buffer manually |
+| `<leader>e` | Open the file explorer |
+| `H` / `I` in the explorer | Show hidden / ignored files |
+| `?` in the explorer | Show explorer help |
+| `[b` / `]b` | Previous / next buffer |
+| `<leader>bd` / `<leader>bo` | Close current buffer / all other buffers |
+| `<C-w>` then a command | Window commands, e.g. `<C-w>h` moves left |
+| `<leader>cf` | Format now |
 | `<leader>uf` | Toggle format-on-save |
-| `<leader>uc` | Toggle concealment (for example, Markdown markup) |
-| `<leader>qs` | Restore the current directory's session |
-| `<leader>ql` | Restore the last session |
-| `<C-w>` | Window-command prefix |
+| `<leader>qs` / `<leader>ql` | Restore this project's session / the last session |
+| `s` | Jump with Flash |
+| `<leader>uc` | Show Markdown markup by turning concealment off |
 
-In the explorer, `<M-p>` toggles its preview pane and `?` shows its help.
+how to grep? <leader>sg?
 
-## Overrides
+## This configuration: delta
 
-| Keys | Action |
+| Keys / setting | Effect compared with stock LazyVim |
 | --- | --- |
-| `<C-h>` | Previous buffer |
-| `<C-l>` | Next buffer |
-| `<leader>bd` | Close current buffer (`:bd`) |
-| `<C-w>` | Close current buffer (alias for `<leader>bd`) |
-| `<leader>w` | Close all buffers |
-
-- Format-on-save is disabled by default.
-- `gq` wraps selected prose at 80 columns; it does not invoke an external formatter.
+| `<C-h>` / `<C-l>` | Previous / next buffer; stock uses `[b` / `]b` |
+| Explorer, file picker, and grep settings | Hidden and ignored files are always included; stock toggles: `H` / `I` in explorer, `<M-h>` / `<M-i>` in picker |
+| Completion settings | Completion opens only with `<C-Space>`; stock opens it while typing |
+| `s` | Neovim one-character substitute; stock starts a Flash jump |
+| Format settings | Format-on-save is off; format manually with `<leader>cf` |
+| `gq` | Wrap selected prose at 80 columns without an external formatter |
+| Markdown settings | Markup is always shown; stock uses `<leader>uc` to turn concealment off |

@@ -157,6 +157,30 @@ if type tmux >&/dev/null; then
     done
   }
 
+  # attach to the first session found on any named tmux server
+  ta() {
+    local _socket_dir _socket _server _session
+    if [ -n "$TMUX" ]; then
+      echo 'ta: already inside tmux; detach first' >&2
+      return 1
+    fi
+
+    _socket_dir="${TMUX_TMPDIR:-/tmp}/tmux-$(id -u)"
+
+    for _socket in "$_socket_dir"/*; do
+      [ -S "$_socket" ] || continue
+      _server=${_socket##*/}
+      _session=$(tmux -L "$_server" list-sessions -F '#{session_name}' 2>/dev/null | head -n 1)
+      [ -n "$_session" ] || continue
+
+      tmux -L "$_server" attach-session -t "=$_session"
+      return $?
+    done
+
+    echo 'ta: no tmux sessions found' >&2
+    return 1
+  }
+
   # workspace manager
   th() {
     local _workspace_id _tmux_ws _current_session

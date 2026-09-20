@@ -42,6 +42,8 @@ socket only as an isolated staging environment.
 | In `ws`, in any other session | Create `ws:$workspace_id` detached when absent, then switch to it. To get back, you run `C-b w` and pick your old session. |
 | In any non-`ws` tmux server, including `tt` | Create `ws:$workspace_id` detached when absent, then remain in the current server. A caller attached to `ws` can use `C-b w` to go to it. |
 
+`thn` runs `th` and exits the current shell only after `th` succeeds.
+
 ### Multiple terminals
 
 Multiple terminals may attach to the same `ws:$workspace_id` session; it

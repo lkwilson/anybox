@@ -122,47 +122,64 @@ if type nvim >&/dev/null; then
 fi
 
 if type tmux >&/dev/null; then
-  # This uses a session name derived from path. Outside tmux, it attaches to an
-  # existing workspace or makes a new one. From a non-ws server, it creates the
-  # workspace on the ws server without leaving the current session. Inside the
-  # ws server, it switches the current client to that workspace and closes the
-  # pane it came from.
+  # workspace manager
   th() {
-    workspace_id="ws-$(printf %s "$PWD" | shasum | cut -c1-12)"
-    if [ -n "$TMUX" ]; then
+    local _workspace_id _tmux_ws _current_session
+    _workspace_id="ws-$(printf %s "$PWD" | shasum | cut -c1-12)"
+    if [ "$TMUX" == '' ]; then
+      _tmux_ws=''
+    else
       case "$TMUX" in
-        */ws,*)
-          ;;
-        *)
-          if ! tmux -L ws has-session -t "=$workspace_id" 2>/dev/null; then
-            tmux -L ws new-session -d -s "$workspace_id" || return
-          fi
-          printf 'th: current tmux server is not ws; %s is ready in ws\n' \
-            "$workspace_id" >&2
-          return
-          ;;
+        */ws,*) _tmux_ws='ws' ;;
+        *) _tmux_ws='not-ws' ;;
       esac
+    fi
 
-      current_session=$(tmux -L ws display-message -p '#{session_name}')
-      if [ "$current_session" = "$workspace_id" ]; then
-        return
+    if [ "$_tmux_ws" == '' ]; then
+      tmux -L ws new-session -A -s "$_workspace_id"
+    elif [ "$_tmux_ws" != 'ws' ]; then
+      if ! tmux -L ws has-session -t "=$_workspace_id" 2>/dev/null; then
+        if tmux -L ws new-session -d -s "$_workspace_id" 2>/dev/null; then
+          echo "Session created: $_workspace_id"
+          echo "Not in ws, unable to switch to session"
+        else
+          echo "Failed to create session: $_workspace_id"
+          return 1
+        fi
+      else
+        echo "Session already exists: $_workspace_id"
+        echo "Not in ws, unable to switch to session"
+      fi
+    else
+      _current_session=$(tmux -L ws display-message -p '#{session_name}')
+      if [ "$_current_session" = "$_workspace_id" ]; then
+        echo "Already in session"
+        return 0
       fi
 
-      current_pane=$(tmux -L ws display-message -p '#{pane_id}')
-      tmux -L ws has-session -t "=$workspace_id" 2>/dev/null ||
-        tmux -L ws new-session -d -s "$workspace_id"
-      tmux -L ws switch-client -t "=$workspace_id" &&
-        tmux -L ws kill-pane -t "$current_pane"
-    else
-      tmux -L ws new-session -A -s "$workspace_id"
+      if ! tmux -L ws has-session -t "=$_workspace_id" 2>/dev/null; then
+        if tmux -L ws new-session -d -s "$_workspace_id" 2>/dev/null; then
+          echo "Session created: $_workspace_id"
+          echo "Switching to session"
+        else
+          echo "Failed to create session: $_workspace_id"
+          return 1
+        fi
+      fi
+      tmux -L ws switch-client -t "=$_workspace_id"
     fi
   }
-  # this creates a new tmux server and creates a session within it. it is also
-  # scoped to the current directory. it also uses a custom config to allow ctrl
-  # j/k bindings to move between windows.
+
+  # th but closes terminal
+  thn() {
+    th && exit
+  }
+
+  # nested tmux helper
   tt() {
-    workspace_id="ws-$(printf %s "$PWD" | shasum | cut -c1-12)"
-    tmux -L "$workspace_id" -f "$HOME/.config/tmux/tmux-inner.conf" new-session -A -s ws
+    local _workspace_id
+    _workspace_id="ws-$(printf %s "$PWD" | shasum | cut -c1-12)"
+    tmux -L "$_workspace_id" -f "$HOME/.config/tmux/tmux-inner.conf" new-session -A -s ws
   }
 fi
 

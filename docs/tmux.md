@@ -1,88 +1,95 @@
 # tmux workspace helpers
 
-The Bash library defines `ta`, `th`, and `tt` when `tmux` is installed. `th`
-and `tt` derive a
-stable workspace ID from the current directory:
+The Bash library defines `ta`, `th`, and `tt` when `tmux` is installed.
+Workspace IDs are stable hashes of the current directory:
 
 ```text
 ws-<first 12 characters of shasum($PWD)>
 ```
 
-The directory string is hashed as-is, so paths that resolve to the same
-location but have a different `$PWD` spelling (such as a symlinked path)
-receive different IDs.
+The directory string is hashed as-is. Paths that resolve to the same location
+but spell `$PWD` differently, such as a symlinked path, receive different IDs.
 
-`th` allows you to open tmux in the `ws` socket. If you're in a session within
-the `ws` socket, then, it will automatically switch to the session, creating it
-if needed. This is similar to vs code's auto open and switch to existing
-instance behavior.
+## Server layout
 
-`tt` doesn't require `th`, and from tmux sessions, it can create a nested tmux
-session with extra `C-l/h` bindings for quickly switching between windows,
-useful for using nvim with a terminal split, especially within `ws` sockets.
+Normal workspaces are sessions in tmux's ordinary `default` server:
 
-`ta` attaches to the first session it finds among the named tmux server sockets:
-it tries `default`, then `ws`, then every socket in shell glob order (and uses
-tmux session-list order within each server). It refuses to run when already
-inside tmux, preventing accidental nesting. If there are no sessions, it prints
-an error and exits unsuccessfully.
-
-## `th`: normal tmux workspace
-
-Outside tmux, `th` runs:
-
-```sh
-tmux -L ws new-session -A -s "$workspace_id"
+```text
+default:ws-<directory-hash>
 ```
 
-The canonical workspace is a **session** named `$workspace_id` in tmux's
-`ws` server: `ws:$workspace_id`. `ws` is a dedicated server socket, separate
-from tmux's ordinary `default` server. `tt` uses a different named server
-socket only as an isolated staging environment.
+Nested workspaces are sessions in one separate `ws` server:
 
-### Starting-position contract
+```text
+ws:ws-tt-<directory-hash>
+```
+
+The separate `ws` server is what makes `tt` a real nested tmux: running a
+session command against the default server from a default-server pane would
+only control the outer tmux, not open an inner client.
+
+## `ta`: attach
+
+`ta` refuses to run inside tmux. Outside tmux, it attaches to a session in the
+default server; if that fails, it tries the `ws` server:
+
+```sh
+tmux attach || tmux -L ws attach
+```
+
+## `th`: normal workspace
+
+`th` opens the normal workspace for `$PWD` in the default server.
 
 | Starting position | `th` behavior |
 | --- | --- |
-| Not in tmux | Attach to `ws:$workspace_id`, creating it when absent. |
-| In `ws`, already in session `$workspace_id` | Do nothing. |
-| In `ws`, in any other session | Create `ws:$workspace_id` detached when absent, then switch to it. To get back, you run `C-b w` and pick your old session. |
-| In any non-`ws` tmux server, including `tt` | Create `ws:$workspace_id` detached when absent, then remain in the current server. A caller attached to `ws` can use `C-b w` to go to it. |
+| Not in tmux | Attach to `default:ws-<hash>`, creating it when absent. |
+| In `default`, already in that session | Do nothing. |
+| In `default`, in another session | Create `default:ws-<hash>` detached when absent, then switch this client to it. |
+| In another server, including `ws` from `tt` | Create `default:ws-<hash>` detached when absent, then remain in the current server. |
 
-`thn` runs `th` and exits the current shell only after `th` succeeds.
+Multiple terminals may attach to the same normal workspace session. They share
+its panes, windows, and programs; distinct workspace sessions remain
+independent.
 
-### Multiple terminals
+## `tt`: nested workspace
 
-Multiple terminals may attach to the same `ws:$workspace_id` session; it
-does not create a second server or prevent concurrent clients. They share the
-same panes, windows, and programs, so two people—or two terminals—typing into
-the same pane will affect the same process. Separate workspace sessions remain
-independent, and switching sessions in one terminal switches only that tmux
-client.
-
-## `tt`: isolated inner workspace
-
-`tt` runs:
+`tt` opens an isolated nested tmux client for `$PWD`:
 
 ```sh
-tmux -L "$workspace_id" -f "$HOME/.config/tmux/tmux-inner.conf" \
-  new-session -A -s ws
+tmux -L ws -f "$HOME/.config/tmux/tmux-inner.conf" \
+  new-session -A -s "ws-tt-<directory-hash>"
 ```
 
-`-L` gives tmux a separate server socket named for the directory-derived ID, so
-this workspace is isolated from the default server and from `tt` workspaces for
-other directories. Within that private server the session is always named
-`ws`; `-A` still reattaches when it already exists.
-
-The inner configuration loads `tmux-core.conf`, which enables mouse support and
-prefix (`C-b`) pane navigation with `h`, `j`, `k`, and `l`. It also adds
-prefix-free window cycling:
+All nested workspaces share the `ws` server but have separate sessions, so their
+windows and panes remain independent. The inner configuration enables mouse
+support and prefix (`C-b`) pane navigation with `h`, `j`, `k`, and `l`. It also
+provides prefix-free window cycling:
 
 | Keys | Action |
 | --- | --- |
 | `C-h` | Previous window |
 | `C-l` | Next window |
 
-This separation makes `tt` useful as an inner tmux instance, including when it
-is launched from another tmux session, without sharing that outer server's
-sessions or socket.
+## Mouse and clipboard
+
+Mouse support is enabled so the wheel enters tmux copy mode for scrollback.
+This configuration uses tmux's default emacs-style copy-mode bindings:
+
+```text
+C-b [  enter copy mode
+Space  begin selection
+Enter  copy and exit
+```
+
+The outer/default server uses `set-clipboard on`, allowing it to forward a
+nested `tt` server's OSC 52 clipboard request to Kitty. The nested `ws` server
+uses `set-clipboard external`, so its copy-mode selections can be forwarded
+without allowing programs in its panes to request clipboard writes directly.
+Both servers enable `allow-passthrough on`, which lets the Bash `clip` helper's
+tmux-wrapped OSC 52 sequence reach Kitty, including over SSH.
+
+Kitty accepts clipboard writes and is configured with `no-append`, so each copy
+replaces the system clipboard rather than appending to it. Because the outer
+server accepts clipboard requests, commands run in it—including remote commands
+over SSH—can write the local clipboard.

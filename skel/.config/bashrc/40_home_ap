@@ -40,7 +40,6 @@ _ap_do() {
 ap_init() {
     echo "Initializing auto project. Edit .auto_project"
     _ap_file_template >> .auto_project
-    chmod u+x .auto_project
 }
 
 ap() {

@@ -10,5 +10,4 @@ fi
 
 if [ $TERM == 'xterm-kitty' ]; then
   export COLORTERM='truecolor'
-  export TERM='xterm-256color'
 fi

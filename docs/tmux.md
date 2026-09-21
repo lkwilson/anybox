@@ -28,6 +28,12 @@ The separate `ws` server is what makes `tt` a real nested tmux: running a
 session command against the default server from a default-server pane would
 only control the outer tmux, not open an inner client.
 
+The default server also provides this prefix-free binding:
+
+| Keys | Action |
+| --- | --- |
+| `C-_` (usually `C-/`) | Toggle between pane 0 zoomed and the two-pane layout, focusing pane 1 when restoring. |
+
 ## `ta`: attach
 
 `ta` refuses to run inside tmux. Outside tmux, it attaches to a session in the
@@ -48,9 +54,8 @@ tmux attach || tmux -L ws attach
 | In `default`, in another session | Create `default:ws-<hash>` detached when absent, then switch this client to it. |
 | In another server, including `ws` from `tt` | Create `default:ws-<hash>` detached when absent, then remain in the current server. |
 
-Multiple terminals may attach to the same normal workspace session. They share
-its panes, windows, and programs; distinct workspace sessions remain
-independent.
+Each workspace is its own session, and you can run multiple terminals or switch
+between them from one terminal.
 
 ## `tt`: nested workspace
 
@@ -70,6 +75,10 @@ provides prefix-free window cycling:
 | --- | --- |
 | `C-h` | Previous window |
 | `C-l` | Next window |
+
+These are generally for running terminals in a split pane, while nvim runs in
+the primary. `C-/` is used to toggle the terminal, and `C-h/l` switches between
+terminals.
 
 ## Mouse and clipboard
 

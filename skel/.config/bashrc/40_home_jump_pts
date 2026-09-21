@@ -1,13 +1,14 @@
-# pushd alias
-unset -f j sj j1 j2 j3 sj1 sj2 sj3 jw
-
 # env jump points
-# functions so that env vars are resolved when run
-function se() { . ~/.config/bashrc/env; }
-function j() { cd "$ENV0"; "$@"; }
-function sj() { echo "export ENV0='$(pwd)'" >> ~/.config/bashrc/env; se; }
-function sjr() { echo "CDPATH='.:$(pwd)'" >> ~/.config/bashrc/env; se; }
 
+# main env
+function j() { cd "$ENV0"; }
+# set main
+function sj() { echo "export ENV0='$(pwd)'" >> ~/.config/bashrc/env; . ~/.config/bashrc/env; }
+
+# mostly for bootstrapping, add to custom bashrc plugin
+function sjr() { echo "CDPATH='.:$(pwd)'" >> ~/.config/bashrc/env; . ~/.config/bashrc/env; }
+
+# got to tmux / vs code proj root
 _term_start_dir="$PWD"
 jw() {
   cd "$_term_start_dir"

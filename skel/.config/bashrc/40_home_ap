@@ -4,10 +4,14 @@ _ap_file_template() {
     echo
     echo '# This file is meant to be run with `b`. Do not run directly, but do implement functions _ap_build and _ap_source.'
     echo
-    echo 'unset -f _ap_build'
+    echo 'unset -f _ap_build _ap_source'
     echo
     echo "_ap_build() {"
     echo '  echo "No build defined"'
+    echo "}"
+    echo
+    echo "_ap_source() {"
+    echo '  echo "No source defined"'
     echo "}"
     echo
     echo '"$@"'
@@ -53,4 +57,8 @@ ap() {
 
 b() {
     _ap_do _ap_build "$@"
+}
+
+s() {
+    _ap_do _ap_source "$@"
 }

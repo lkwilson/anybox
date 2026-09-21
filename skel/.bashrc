@@ -3,3 +3,6 @@ for fn in "$HOME/.config/bashrc/"*; do
     . "$fn"
   fi
 done
+
+# don't load any auto added stuff
+return

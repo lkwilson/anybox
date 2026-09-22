@@ -16,4 +16,8 @@ elif [ "$TERM" == 'xterm-256color' ]; then
   # this is presumptutous, but since tahoe supports truecolor now, there are
   # really not many left that do not.
   export COLORTERM='truecolor'
+elif [ "$TERM" == 'tmux-256color' ]; then
+  # this is presumptutous, but since tahoe supports truecolor now, there are
+  # really not many left that do not.
+  export COLORTERM='truecolor'
 fi

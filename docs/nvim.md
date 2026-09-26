@@ -31,7 +31,7 @@ Keys are for Normal mode unless noted. `<leader>` is `Space`.
 | Explorer, file picker, and grep settings | Include hidden files and files excluded by ignore rules by default; toggle with `H` / `I` in explorer, `<M-h>` / `<M-i>` in picker. This can include generated files and dependencies. |
 | Completion settings (Insert mode) | Open the menu manually with `<C-Space>`; no preselection or inserted previews. Select with `<C-n>` / `<C-p>`, accept with Enter or `<C-y>`. Space does not accept. Command-line completion remains stock. |
 | Format settings | Format-on-save is off to avoid unrelated changes when editing existing files. `<leader>cf` explicitly formats; `gq` retains stock formatter integration. |
-| Theme | Code 2026 (`dark-2026`) replaces stock Tokyo Night. |
+| Theme | Kanagawa Wave (`kanagawa-wave`) replaces stock Tokyo Night, selected through LazyVim's colorscheme option. |
 | Auto-pairs | Disabled; typing `"` inserts one quote, while stock automatically inserts the closing quote |
 
 There is no global wrapping override. `gw` uses the buffer's `textwidth`;

@@ -1,61 +1,129 @@
 # Neovim
 
-Keys are for Normal mode unless noted. `<leader>` is `Space`.
+LazyVim with the Kanagawa Wave theme. Formatting on save is off by default;
+other editing behavior uses LazyVim defaults. This repo shows hidden files
+through its project settings.
+Keys below are for Normal mode unless noted. `Space` is the leader key;
+uppercase letters mean Shift plus that letter. "Stock" means LazyVim, which
+assigns some keys differently from bare Neovim.
 
-## Stock LazyVim
+## Find files and move around
 
-| Keys | Action |
+| Keys | Meaning / context |
 | --- | --- |
-| `<leader>e` | Open the file explorer |
-| `H` / `I` in the explorer | Toggle hidden / ignored files |
-| `?` in the explorer | Show explorer help |
-| `H` / `L` (Shift-H / Shift-L), or `[b` / `]b` | Previous / next buffer |
-| `<leader>bd` / `<leader>bo` | Close current buffer / all other buffers |
-| `<C-w>` then a command | Window commands, e.g. `<C-w>h` moves left |
-| `<C-h>` / `<C-j>` / `<C-k>` / `<C-l>` | Move between windows |
-| `<leader>cf` | Format now |
-| `<leader>uf` | Toggle format-on-save |
-| `gwap`, or Visual selection then `gw` | Wrap prose using Neovim's built-in formatter, bypassing external formatters |
-| `<leader>qs` / `<leader>ql` | Restore this project's session / the last session |
-| `s` | Jump with Flash |
-| `cl` | Change one character (the built-in equivalent of `s`) |
-| `<leader>uc` | Show Markdown markup by turning concealment off |
-| `<leader>sg` | Grep the project root |
-| `<leader><leader>` | Find files in the project root |
-| `:set filetype=bash` | Set the current buffer's filetype |
+| `Space Space` | Find a file in the project root. |
+| `Space s g` | Grep the project root. |
+| `Space e` | Open the file explorer. |
+| `H` / `I` in explorer | Toggle hidden / ignored files. These are separate filters. |
+| `Alt-h` / `Alt-i` in picker | Toggle hidden / ignored files in file search or grep. |
+| `?` in explorer | Show explorer help. |
+| `H` / `L` | Previous / next buffer (Shift-H / Shift-L); `[b` / `]b` also work. |
+| `Space b d` / `Space b o` | Close this buffer / all other buffers. |
+| `Ctrl-h` / `Ctrl-j` / `Ctrl-k` / `Ctrl-l` | Move between windows: left / down / up / right. Use `H` / `L` for buffers. |
+| `gd` | Go to definition through the attached language server. |
+| `Ctrl-o` | Go back in the jump list after navigating. |
+| `Space q s` / `Space q l` | Restore this project's session / the last session. |
 
-## This configuration: delta
+Hidden files have dot-prefixed names, even when Git tracks them. Ignored files
+match ignore rules. Toggle either filter again to hide those files. Picker
+toggles work in the search input and in Normal mode; they are not saved as
+per-repository preferences. In Windows Terminal, use left Alt without Shift.
 
-| Keys / setting | Effect compared with stock LazyVim |
+## Edit and format
+
+| Keys | Meaning / alternative |
 | --- | --- |
-| File visibility | Explorer and file picker include hidden and ignored files. Grep includes hidden files but excludes ignored files by default. See visibility toggles below. |
-| Completion settings (Insert mode) | Open the menu manually with `<C-Space>`; no preselection or inserted previews. Select with `<C-n>` / `<C-p>`, accept with Enter or `<C-y>`. Space does not accept. Command-line completion remains stock. |
-| Format settings | Format-on-save is off to avoid unrelated changes when editing existing files. `<leader>cf` explicitly formats; `gq` retains stock formatter integration. |
-| Theme | Kanagawa Wave (`kanagawa-wave`) replaces stock Tokyo Night, selected through LazyVim's colorscheme option. |
+| `s` | Stock: Flash jump. Type search text, then its label. For one-character substitute, use `cl`. |
+| `cl` | Change one character, then enter Insert mode: `c` (change) + `l` (right). Same edit as bare Neovim's `s`. |
+| `gq{motion}` | Stock: use the configured formatter. For prose wrapping, use `gw{motion}` instead. |
+| `gwap` | Wrap a paragraph: `gw` (built-in formatting) + `ap` (a paragraph). Visual selection then `gw` wraps selected prose. |
+| `Ctrl-Space` (Insert) | Open completion manually; stock also opens it while typing. |
+| `Ctrl-n` / `Ctrl-p` (Insert) | Select next / previous completion. |
+| Enter / `Ctrl-y` (Insert) | Accept a completion. Stock preselects an item, so Enter can accept immediately. |
+| `Ctrl-e` (Insert) | Cancel completion and undo its inserted preview. Space is not an accept key. |
+| `Space c f` | Format the buffer now, or the selection in Visual mode. |
+| `Space u F` | Toggle format-on-save for this buffer. |
+| `Space u f` | Toggle format-on-save globally for this session. Stock starts on; this config starts off. |
+| `:LazyFormatInfo` | Show the current buffer's formatters and whether autoformat is enabled. |
+| `Space u c` | Toggle concealment. Turn it off to show Markdown markup such as backticks and link targets. |
+| `:set filetype=bash` | Set the buffer's filetype. |
 
-There is no global wrapping override. `gw` uses the buffer's `textwidth`;
-when it is zero, the target is the window width capped at 79 columns.
-For an explicit 80-column prose wrap, use `:setlocal textwidth=80` first.
-Filetype settings and EditorConfig may set a different width or enable wrapping.
+Enable formatting on save with `Space u F` for a buffer or `Space u f` for the
+session. It runs when a formatter is available and can change the whole file.
+Buffer settings override the global setting. Use `:LazyFormatInfo` to check
+whether it is enabled for the current buffer.
 
-## Finding hidden or ignored files
+Prose wrapping uses Neovim's built-in formatter and the buffer's `textwidth`.
+Set an explicit width with `:setlocal textwidth=80`. At zero, the target is the
+window width capped at 79 columns. Filetype settings and EditorConfig can
+affect wrapping while typing.
 
-Hidden means a dot-prefixed name, even if Git tracks it. Ignored means excluded
-by ignore rules. The two filters are independent.
+## Set file visibility for a repository
 
-| Where | Toggle hidden | Toggle ignored |
-| --- | --- | --- |
-| Explorer (`<leader>e`) | `H` (Shift-H) | `I` (Shift-I) |
-| File picker (`<leader><leader>`) or grep (`<leader>sg`) | `Alt-h` | `Alt-i` |
+Copy this repo's [.lazy.lua](../.lazy.lua) to another repository root and edit
+the `explorer`, `files`, and `grep` sections independently:
 
-Picker shortcuts work while typing in the search input and in Normal mode.
-On macOS, Alt is Option; the terminal must send it as Alt/Meta.
-For a missing result, toggle the relevant filter and search again. These are
-interactive toggles, not saved per-repository preferences.
+| Setting | Effect |
+| --- | --- |
+| `hidden = true` / `false` | Show / hide dotfiles and dot-prefixed directories. |
+| `ignored = true` / `false` | Show / hide files excluded by ignore rules. |
+| `exclude = { "build", "dist", "*.min.js" }` | Omit matching paths from that source. Use glob patterns without a leading `!`. |
 
-For a recurring project exception, lazy.nvim also supports a `.lazy.lua` file
-containing plugin specs, merged after the main config. It searches upward from
-Neovim's startup working directory and loads the nearest file after a trust
-prompt. Start Neovim inside that repository; changing directories later does
-not automatically switch project specs. Prefer the visibility toggles for
-occasional exceptions. See [lazy.nvim configuration](https://lazy.folke.io/configuration).
+To browse build output without searching its contents, leave `build` out of
+the explorer/file-picker exclusions and put it in `grep.exclude`. If Git
+ignores that directory, also set `ignored = true` for the sources that should
+show it. A bare name such as `build` can match directories at any depth.
+Exclusions still apply when you toggle hidden or ignored files on; remove
+the exclusion to see those results. Grep also skips Git's internal `.git`
+directory by default.
+
+This repo's template shows hidden files, respects ignore rules, and leaves
+the exclusion lists empty with commented examples for you to customize.
+
+Start Neovim from inside the repository and allow `.lazy.lua` at the trust
+prompt. Restart after editing it. lazy.nvim loads the nearest file found
+above the startup working directory; its settings apply to that session.
+Changing directories does not switch project settings, so start a separate
+session for another repo. See [lazy.nvim project settings](https://lazy.folke.io/configuration).
+
+For other commands, press `Space` and wait for the key hints, or consult the
+[LazyVim keymap reference](https://www.lazyvim.org/keymaps).
+
+### `.lazy.lua`
+```
+-- Project file visibility. Copy this file to another repo and edit each source.
+-- hidden: true shows dotfiles; false hides them.
+-- ignored: true shows files excluded by ignore rules; false hides them.
+-- exclude: omit matching files/directories, even when hidden/ignored are shown.
+return {
+  {
+    "folke/snacks.nvim",
+    opts = {
+      picker = {
+        sources = {
+          explorer = {
+            hidden = true,
+            ignored = false,
+            exclude = {}, -- e.g. { ".git", "node_modules" }
+          },
+          files = {
+            hidden = true,
+            ignored = false,
+            exclude = {}, -- e.g. { "build", "dist" }
+          },
+          grep = {
+            hidden = true,
+            ignored = false,
+            exclude = {
+              -- "build",
+              -- "dist",
+              -- "node_modules",
+              -- "*.min.js",
+            },
+          },
+        },
+      },
+    },
+  },
+}
+```

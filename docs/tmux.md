@@ -83,6 +83,9 @@ terminals.
 ## Mouse and clipboard
 
 Mouse support is enabled so the wheel enters tmux copy mode for scrollback.
+The shared configuration sets `escape-time` to `0`, so tmux does not delay a
+standalone Escape key while waiting to see whether it starts a terminal escape
+sequence.
 This configuration uses tmux's default emacs-style copy-mode bindings:
 
 ```text

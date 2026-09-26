@@ -1,11 +1,9 @@
 [user]
     name = Lucas Wilson
-    email = lkwilson96@gmail.com
+    email = lukey.dubs@gmail.com
 
 [alias]
     ; helpers
-    list-aliases = "!git config -l | grep alias | cut -c 7-"
-    root = rev-parse --show-toplevel
     branch-name = rev-parse --abbrev-ref HEAD
 
     ; git everything
@@ -36,29 +34,19 @@
     cm = "!_gfn() { git commit -m \"$*\"; }; _gfn"
     ca = commit --amend
 
-    ; show
-    ss = show --stat
-
     ; diff
     d = diff
     dc = diff --cached
     ds = diff --stat
     dr = diff @{u}
-    drc = diff --cached @{u}
-    drs = diff --stat @{u}
-    drcs = diff --stat --cached @{u}
 
     ; remote
     rv = remote -v
 
-    ; submodule
-    su = submodule update
-
 [core]
-    autocrlf = false
-
-[pull]
-    ff = only
+    ; Normalize new text to LF on add; preserve existing CRLF during normal adds.
+    ; Leave checkout endings unchanged, including on Windows.
+    autocrlf = input
 
 [init]
     defaultBranch = main

@@ -7,7 +7,7 @@ Keys are for Normal mode unless noted. `<leader>` is `Space`.
 | Keys | Action |
 | --- | --- |
 | `<leader>e` | Open the file explorer |
-| `H` / `I` in the explorer | Show hidden / ignored files |
+| `H` / `I` in the explorer | Toggle hidden / ignored files |
 | `?` in the explorer | Show explorer help |
 | `H` / `L` (Shift-H / Shift-L), or `[b` / `]b` | Previous / next buffer |
 | `<leader>bd` / `<leader>bo` | Close current buffer / all other buffers |
@@ -28,13 +28,34 @@ Keys are for Normal mode unless noted. `<leader>` is `Space`.
 
 | Keys / setting | Effect compared with stock LazyVim |
 | --- | --- |
-| Explorer, file picker, and grep settings | Include hidden files and files excluded by ignore rules by default; toggle with `H` / `I` in explorer, `<M-h>` / `<M-i>` in picker. This can include generated files and dependencies. |
+| File visibility | Explorer and file picker include hidden and ignored files. Grep includes hidden files but excludes ignored files by default. See visibility toggles below. |
 | Completion settings (Insert mode) | Open the menu manually with `<C-Space>`; no preselection or inserted previews. Select with `<C-n>` / `<C-p>`, accept with Enter or `<C-y>`. Space does not accept. Command-line completion remains stock. |
 | Format settings | Format-on-save is off to avoid unrelated changes when editing existing files. `<leader>cf` explicitly formats; `gq` retains stock formatter integration. |
 | Theme | Kanagawa Wave (`kanagawa-wave`) replaces stock Tokyo Night, selected through LazyVim's colorscheme option. |
-| Auto-pairs | Disabled; typing `"` inserts one quote, while stock automatically inserts the closing quote |
 
 There is no global wrapping override. `gw` uses the buffer's `textwidth`;
 when it is zero, the target is the window width capped at 79 columns.
 For an explicit 80-column prose wrap, use `:setlocal textwidth=80` first.
 Filetype settings and EditorConfig may set a different width or enable wrapping.
+
+## Finding hidden or ignored files
+
+Hidden means a dot-prefixed name, even if Git tracks it. Ignored means excluded
+by ignore rules. The two filters are independent.
+
+| Where | Toggle hidden | Toggle ignored |
+| --- | --- | --- |
+| Explorer (`<leader>e`) | `H` (Shift-H) | `I` (Shift-I) |
+| File picker (`<leader><leader>`) or grep (`<leader>sg`) | `Alt-h` | `Alt-i` |
+
+Picker shortcuts work while typing in the search input and in Normal mode.
+On macOS, Alt is Option; the terminal must send it as Alt/Meta.
+For a missing result, toggle the relevant filter and search again. These are
+interactive toggles, not saved per-repository preferences.
+
+For a recurring project exception, lazy.nvim also supports a `.lazy.lua` file
+containing plugin specs, merged after the main config. It searches upward from
+Neovim's startup working directory and loads the nearest file after a trust
+prompt. Start Neovim inside that repository; changing directories later does
+not automatically switch project specs. Prefer the visibility toggles for
+occasional exceptions. See [lazy.nvim configuration](https://lazy.folke.io/configuration).

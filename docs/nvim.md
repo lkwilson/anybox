@@ -1,8 +1,7 @@
 # Neovim
 
 LazyVim with the Kanagawa Wave theme. Formatting on save is off by default;
-other editing behavior uses LazyVim defaults. This repo shows hidden files
-through its project settings.
+other editing behavior uses LazyVim defaults.
 Keys below are for Normal mode unless noted. `Space` is the leader key;
 uppercase letters mean Shift plus that letter. "Stock" means LazyVim, which
 assigns some keys differently from bare Neovim.
@@ -60,7 +59,8 @@ affect wrapping while typing.
 
 ## Set file visibility for a repository
 
-Copy this repo's [.lazy.lua](../.lazy.lua) to another repository root and edit
+Save the [template below](#project-visibility-template) as `.lazy.lua` at a
+repository root and edit
 the `explorer`, `files`, and `grep` sections independently:
 
 | Setting | Effect |
@@ -77,8 +77,10 @@ Exclusions still apply when you toggle hidden or ignored files on; remove
 the exclusion to see those results. Grep also skips Git's internal `.git`
 directory by default.
 
-This repo's template shows hidden files, respects ignore rules, and leaves
-the exclusion lists empty with commented examples for you to customize.
+The template shows hidden files, respects ignore rules, and leaves the
+exclusion lists empty with commented examples for you to customize.
+To show everything except Git metadata, set `hidden = true`, `ignored = true`,
+and `exclude = { ".git" }` in each source.
 
 Start Neovim from inside the repository and allow `.lazy.lua` at the trust
 prompt. Restart after editing it. lazy.nvim loads the nearest file found
@@ -89,8 +91,11 @@ session for another repo. See [lazy.nvim project settings](https://lazy.folke.io
 For other commands, press `Space` and wait for the key hints, or consult the
 [LazyVim keymap reference](https://www.lazyvim.org/keymaps).
 
-### `.lazy.lua`
-```
+### Project visibility template
+
+Save this as `.lazy.lua` at a repository root:
+
+```lua
 -- Project file visibility. Copy this file to another repo and edit each source.
 -- hidden: true shows dotfiles; false hides them.
 -- ignored: true shows files excluded by ignore rules; false hides them.
@@ -127,3 +132,17 @@ return {
   },
 }
 ```
+
+## Occasional plain Vim use
+
+Run `command vim` to bypass this shell config's `vim` alias to Neovim.
+For two-space indentation in the current buffer:
+
+```vim
+:setlocal expandtab tabstop=2 softtabstop=2 shiftwidth=2
+```
+
+`expandtab` inserts spaces when you press Tab; `softtabstop` controls Tab and
+Backspace while editing, `shiftwidth` controls indentation, and `tabstop`
+controls the displayed width of existing tab characters. This does not
+convert existing tabs in the file. Makefile recipe indentation needs real tabs.

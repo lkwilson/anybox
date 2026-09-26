@@ -55,7 +55,6 @@
     su = submodule update
 
 [core]
-    excludesfile = ~/.gitignore
     autocrlf = false
 
 [pull]

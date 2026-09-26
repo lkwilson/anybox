@@ -1,5 +1,19 @@
 # PoE Hat Fan Speeds
 
+under, `[all]`
+
+```
+dtoverlay=rpi-poe-plus
+dtparam=poe_fan_temp0=55000
+dtparam=poe_fan_temp0_hyst=5000
+dtparam=poe_fan_temp1=60000
+dtparam=poe_fan_temp1_hyst=5000
+dtparam=poe_fan_temp2=65000
+dtparam=poe_fan_temp2_hyst=5000
+dtparam=poe_fan_temp3=70000
+dtparam=poe_fan_temp3_hyst=5000
+```
+
 Here's one way
 
 ```

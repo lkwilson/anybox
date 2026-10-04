@@ -1,7 +1,9 @@
 # Neovim
 
-LazyVim with the Kanagawa Wave theme. Formatting on save is off by default;
-other editing behavior uses LazyVim defaults.
+LazyVim with the Kanagawa Wave theme. The Blink completion and Conform
+formatting plugins are disabled; native completion and LSP formatting remain
+available. Formatting on save starts off. Concealment is off, so Markdown
+markup remains visible.
 Keys below are for Normal mode unless noted. `Space` is the leader key;
 uppercase letters mean Shift plus that letter. "Stock" means LazyVim, which
 assigns some keys differently from bare Neovim.
@@ -34,28 +36,18 @@ per-repository preferences. In Windows Terminal, use left Alt without Shift.
 | --- | --- |
 | `s` | Stock: Flash jump. Type search text, then its label. For one-character substitute, use `cl`. |
 | `cl` | Change one character, then enter Insert mode: `c` (change) + `l` (right). Same edit as bare Neovim's `s`. |
-| `gq{motion}` | Stock: use the configured formatter. For prose wrapping, use `gw{motion}` instead. |
-| `gwap` | Wrap a paragraph: `gw` (built-in formatting) + `ap` (a paragraph). Visual selection then `gw` wraps selected prose. |
-| `Ctrl-Space` (Insert) | Open completion manually; stock also opens it while typing. |
-| `Ctrl-n` / `Ctrl-p` (Insert) | Select next / previous completion. |
-| Enter / `Ctrl-y` (Insert) | Accept a completion. Stock preselects an item, so Enter can accept immediately. |
-| `Ctrl-e` (Insert) | Cancel completion and undo its inserted preview. Space is not an accept key. |
-| `Space c f` | Format the buffer now, or the selection in Visual mode. |
-| `Space u F` | Toggle format-on-save for this buffer. |
-| `Space u f` | Toggle format-on-save globally for this session. Stock starts on; this config starts off. |
-| `:LazyFormatInfo` | Show the current buffer's formatters and whether autoformat is enabled. |
-| `Space u c` | Toggle concealment. Turn it off to show Markdown markup such as backticks and link targets. |
+| `gq{motion}` | Format text using the buffer's formatting settings. |
+| `gwap` | Wrap a paragraph with Neovim's built-in formatter; Visual selection then `gw` wraps selected text. |
+| `Ctrl-n` / `Ctrl-p` (Insert) | Native keyword completion, next / previous match. |
+| `Space c f` | Stock: request formatting using an available formatter, including LSP. |
+| `Space u c` | Toggle concealment. It starts off, keeping Markdown markup visible. |
 | `:set filetype=bash` | Set the buffer's filetype. |
 
-Enable formatting on save with `Space u F` for a buffer or `Space u f` for the
-session. It runs when a formatter is available and can change the whole file.
-Buffer settings override the global setting. Use `:LazyFormatInfo` to check
-whether it is enabled for the current buffer.
-
-Prose wrapping uses Neovim's built-in formatter and the buffer's `textwidth`.
-Set an explicit width with `:setlocal textwidth=80`. At zero, the target is the
-window width capped at 79 columns. Filetype settings and EditorConfig can
-affect wrapping while typing.
+This configuration does not override `formatexpr`, `formatprg`, `textwidth`,
+or `formatoptions`; LazyVim, filetype settings, and LSP can still configure
+formatting behavior. For built-in prose wrapping at a chosen width, use
+`:setlocal textwidth=80` followed by `gwap`. Tree-sitter, LSP, and linting
+remain enabled.
 
 ## Set file visibility for a repository
 

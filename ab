@@ -70,6 +70,17 @@ capture_cmd() {
   done
   if [ "$1" == skel ]; then
     cp -r ~/.config/bashrc/* "$1/.config/bashrc/"
+    rm -f "$1/.config/bashrc/env"
+
+    for nvim_file in ~/.config/nvim/lua/config/*.lua ~/.config/nvim/lua/plugins/*.lua; do
+      [ -f "$nvim_file" ] || continue
+      [ "$(basename "$nvim_file")" == lazy.lua ] && continue
+      target="$1/.config/nvim/${nvim_file#*/.config/nvim/}"
+      mkdir -p "$(dirname "$target")"
+      cp -v "$nvim_file" "$target"
+    done
+
+    rm -f "$1/.config/nvim/lua/config/lazy.lua"
   fi
 }
 

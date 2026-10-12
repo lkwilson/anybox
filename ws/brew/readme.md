@@ -25,11 +25,12 @@ brew install \
   git-filter-repo \
   jq \
   lazygit \
+  luarocks \
   neovim \
   perl \
   ripgrep \
-  luarocks \
   swig \
+  unbound \
   yq
 ```
 
@@ -139,6 +140,5 @@ brew install \
   gnu-tar \
   rsync \
   tmux \
-  vim \
-  unbound
+  vim
 ```

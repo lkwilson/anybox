@@ -115,6 +115,12 @@ fi
 # rust
 if [ -r "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
+elif type brew &>/dev/null; then
+  rustup_prefix="$(brew --prefix rustup 2>/dev/null)"
+  if [ -n "$rustup_prefix" ] && [ -d "$rustup_prefix/bin" ]; then
+    PATH="$rustup_prefix/bin:$PATH"
+  fi
+  unset rustup_prefix
 fi
 
 if type tmux >&/dev/null; then

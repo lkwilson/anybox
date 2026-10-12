@@ -58,6 +58,22 @@ brew install \
   yq
 ```
 
+## Initialize Rust and Cargo
+
+Homebrew installs `rustup`, but Cargo and the other Rust commands are exposed
+through Homebrew's rustup proxy directory. Add it to your shell `PATH`, then
+select the stable toolchain (this downloads Rust and Cargo on first use):
+
+```sh
+export PATH="$(brew --prefix rustup)/bin:$PATH"
+rustup default stable
+```
+
+Put the `export PATH=...` line in your shell startup configuration to keep it
+available in new terminals. Verify setup with `rustc --version` and
+`cargo --version`. The repository's Bash config already loads `~/.cargo/env`
+when present.
+
 ## macOS tools
 
 ```sh

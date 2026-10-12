@@ -1,12 +1,13 @@
 # Homebrew packages
 
-Starting inventory captured from the current Homebrew installation. Formula
-packages installed as dependencies are omitted; Homebrew manages those as needed.
+Current inventory of formulae installed on request and installed casks. Formula
+packages installed only as dependencies are omitted; Homebrew manages those as
+needed. `npm` is included with `node`, while `rustup` manages Rust toolchains.
 
 ## Shared tools
 
-These are general command-line, development, media, or cluster tools that can
-be useful on both macOS and Linux.
+General command-line, development, media, or cluster tools that are useful on
+macOS and Linux.
 
 ```sh
 brew install \
@@ -30,6 +31,7 @@ brew install \
   helm \
   htop \
   jpeg-xl \
+  jq \
   kubernetes-cli \
   kubeseal \
   lazygit \
@@ -42,6 +44,7 @@ brew install \
   perl \
   ripgrep \
   rsync \
+  rustup \
   srt \
   swig \
   tea \
@@ -62,17 +65,19 @@ brew install iproute2mac
 brew install --cask linearmouse
 ```
 
-`kitty` is also installed as a cask; it is a terminal emulator available on
-multiple platforms, so it is listed separately from macOS-only tools.
-
-```sh
-brew install --cask kitty
-```
-
 ## Linux tools
 
-No Linux-specific packages were identified in the current inventory. The shared
-tools above can also be installed with Homebrew on Linux where supported.
+No Linux-specific packages were identified in the current inventory. Shared tools
+above can also be installed with Homebrew on Linux where supported.
+
+## Cross-platform casks
+
+```sh
+brew install --cask \
+  claude-code \
+  codex \
+  kitty
+```
 
 ## Project-specific dependencies
 

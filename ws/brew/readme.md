@@ -5,6 +5,14 @@ packages installed only as dependencies are omitted; Homebrew manages those as
 needed. `npm` is included with `node`, `redis-cli` with `redis`, while `rustup`
 manages Rust toolchains.
 
+## Update casks
+
+```sh
+brew update
+brew outdated --cask
+brew upgrade --cask
+```
+
 ## Dev tools
 
 The baseline developer tools to have on both macOS and Linux.
@@ -13,7 +21,6 @@ The baseline developer tools to have on both macOS and Linux.
 brew install \
   fd \
   fzf \
-  gh \
   git \
   git-filter-repo \
   jq \
@@ -21,8 +28,30 @@ brew install \
   neovim \
   perl \
   ripgrep \
-  tea \
+  luarocks \
+  swig \
   yq
+```
+
+### Extra
+
+```sh
+brew install \
+  btop \
+  fastfetch \
+  gnupg \
+  htop
+```
+
+### Optional
+
+```sh
+brew install \
+  tea \
+  gh \
+  nmap \
+  redis \
+  restic
 ```
 
 ## Language toolchains and runtimes
@@ -51,59 +80,33 @@ available in new terminals. Verify setup with `rustc --version` and
 `cargo --version`. The repository's Bash config already loads `~/.cargo/env`
 when present.
 
-## Other shared tools
+## Kubernetes tools
 
-These command-line, media, and cluster tools are useful on both macOS and Linux.
+```sh
+brew install \
+  argocd \
+  derailed/k9s/k9s \
+  fluxcd/tap/flux \
+  helm \
+  kubernetes-cli \
+  kustomize \
+  kubeseal
+```
+
+## Media and document tools
 
 ```sh
 brew install \
   aom \
-  argocd \
-  btop \
-  derailed/k9s/k9s \
-  fastfetch \
   ffmpeg \
-  fluxcd/tap/flux \
-  gnupg \
-  helm \
-  htop \
   jpeg-xl \
-  kubernetes-cli \
-  kustomize \
-  kubeseal \
   libass \
   librist \
-  luarocks \
-  nmap \
-  redis \
-  restic \
   srt \
-  swig \
-  tesseract \
-  unbound
+  tesseract
 ```
 
-## System-dependent tools
-
-These utilities are common across platforms, but their source or behavior can
-depend on the operating system. On macOS, install the Homebrew versions below
-when needed. On Linux, the distribution packages are usually the natural choice;
-Homebrew on Linux is optional.
-
-```sh
-brew install \
-  bash \
-  bash-completion \
-  coreutils \
-  gnu-tar \
-  rsync \
-  tmux \
-  vim \
-  watch \
-  wget
-```
-
-## macOS tools
+## macOS
 
 These are Mac-specific utilities or applications in this inventory.
 
@@ -118,24 +121,20 @@ brew install --cask \
   codex
 ```
 
-## Linux tools
+### Extras
 
-No Linux-only packages are listed in this Homebrew inventory. Use the Linux
-distribution's package manager for system-dependent tools above, and install
-shared tools with Homebrew on Linux where that is preferred and supported.
-
-## Update casks
-
-```sh
-brew update
-brew outdated --cask
-brew upgrade --cask
-```
-
-## Project-specific dependencies
+Linux utilities and system tools that may need explicit installation on macOS.
 
 ```sh
 brew install \
-  openssl@1.1 \
-  openssl@4
+  bash \
+  bash-completion \
+  coreutils \
+  gnu-tar \
+  rsync \
+  tmux \
+  vim \
+  watch \
+  wget \
+  unbound
 ```

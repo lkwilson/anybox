@@ -54,6 +54,12 @@ brew install \
   restic
 ```
 
+```sh
+brew install --cask \
+  claude-code \
+  codex
+```
+
 ## Language toolchains and runtimes
 
 `rustup` manages Rust and Cargo, `uv` manages Python tooling, and `node` includes
@@ -116,9 +122,7 @@ brew install \
 brew install --cask \
   karabiner-elements \
   linearmouse \
-  kitty \
-  claude-code \
-  codex
+  kitty
 ```
 
 ### Extras

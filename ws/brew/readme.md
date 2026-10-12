@@ -5,19 +5,17 @@ packages installed only as dependencies are omitted; Homebrew manages those as
 needed. `npm` is included with `node`, `redis-cli` with `redis`, while `rustup`
 manages Rust toolchains.
 
-## Shared tools
+## Shared Homebrew formulae
 
-General command-line, development, media, or cluster tools that are useful on
-macOS and Linux.
+Command-line, development, media, and cluster tools that are useful on both
+macOS and Linux. This is the portable tool set; it does not imply every package
+is installed on every machine.
 
 ```sh
 brew install \
   aom \
   argocd \
-  bash \
-  bash-completion \
   btop \
-  coreutils \
   derailed/k9s/k9s \
   fastfetch \
   fd \
@@ -27,7 +25,6 @@ brew install \
   gh \
   git \
   git-filter-repo \
-  gnu-tar \
   gnupg \
   helm \
   htop \
@@ -47,18 +44,13 @@ brew install \
   redis \
   restic \
   ripgrep \
-  rsync \
   rustup \
   srt \
   swig \
   tea \
   tesseract \
-  tmux \
   unbound \
   uv \
-  vim \
-  watch \
-  wget \
   yq
 ```
 
@@ -78,37 +70,48 @@ available in new terminals. Verify setup with `rustc --version` and
 `cargo --version`. The repository's Bash config already loads `~/.cargo/env`
 when present.
 
-## macOS tools
+## System-dependent tools
+
+These utilities are common across platforms, but their source or behavior can
+depend on the operating system. On macOS, install the Homebrew versions below
+when needed. On Linux, the distribution packages are usually the natural choice;
+Homebrew on Linux is optional.
 
 ```sh
-brew install iproute2mac
-brew install --cask \
-  karabiner-elements \
-  linearmouse
+brew install \
+  bash \
+  bash-completion \
+  coreutils \
+  gnu-tar \
+  rsync \
+  tmux \
+  vim \
+  watch \
+  wget
 ```
 
-Karabiner-Elements also installs Karabiner-EventViewer. Back up
-`~/.config/karabiner` before migrating an existing install. Avoid
-`brew uninstall --cask --zap karabiner-elements`, which removes that settings
-directory.
+## macOS tools
+
+These are Mac-specific utilities or applications in this inventory.
+
+```sh
+brew install \
+  iproute2mac
+brew install --cask \
+  karabiner-elements \
+  linearmouse \
+  kitty \
+  claude-code \
+  codex
+```
 
 ## Linux tools
 
-No Linux-specific packages were identified in the current inventory. Shared tools
-above can also be installed with Homebrew on Linux where supported.
-
-## Cross-platform casks
-
-```sh
-brew install --cask \
-  claude-code \
-  codex \
-  kitty
-```
+No Linux-only packages are listed in this Homebrew inventory. Use the Linux
+distribution's package manager for system-dependent tools above, and install
+shared tools with Homebrew on Linux where that is preferred and supported.
 
 ## Update casks
-
-Refresh Homebrew's package data, see outdated casks, and update regular casks:
 
 ```sh
 brew update
@@ -116,18 +119,10 @@ brew outdated --cask
 brew upgrade --cask
 ```
 
-Casks marked as auto-updating are skipped by the regular upgrade command. To
-include those, such as LinearMouse, use:
-
-```sh
-brew outdated --cask --greedy-auto-updates
-brew upgrade --cask --greedy-auto-updates
-```
-
 ## Project-specific dependencies
 
-OpenSSL 1.1 appears to be for a project rather than a general-purpose tool.
-
 ```sh
-brew install openssl@1.1
+brew install \
+  openssl@1.1 \
+  openssl@4
 ```

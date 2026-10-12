@@ -78,8 +78,15 @@ when present.
 
 ```sh
 brew install iproute2mac
-brew install --cask linearmouse
+brew install --cask \
+  karabiner-elements \
+  linearmouse
 ```
+
+Karabiner-Elements also installs Karabiner-EventViewer. Back up
+`~/.config/karabiner` before migrating an existing install. Avoid
+`brew uninstall --cask --zap karabiner-elements`, which removes that settings
+directory.
 
 ## Linux tools
 

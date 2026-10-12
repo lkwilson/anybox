@@ -37,6 +37,7 @@ brew install \
 
 ```sh
 brew install \
+  bash-completion@2 \
   btop \
   fastfetch \
   gnupg \
@@ -135,7 +136,6 @@ Linux utilities and system tools that may need explicit installation on macOS.
 ```sh
 brew install \
   bash \
-  bash-completion@2 \
   coreutils \
   gnu-tar \
   rsync \

@@ -40,7 +40,9 @@ brew install \
   btop \
   fastfetch \
   gnupg \
-  htop
+  htop \
+  watch \
+  wget
 ```
 
 ### Optional
@@ -138,7 +140,5 @@ brew install \
   rsync \
   tmux \
   vim \
-  watch \
-  wget \
   unbound
 ```

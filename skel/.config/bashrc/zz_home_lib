@@ -121,6 +121,7 @@ elif type brew &>/dev/null; then
     PATH="$rustup_prefix/bin:$PATH"
   fi
   unset rustup_prefix
+  export PATH="$HOME/.cargo/bin:$PATH"
 fi
 
 if type tmux >&/dev/null; then

@@ -8,6 +8,17 @@ if [ -r "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
 fi
 
+if type brew &>/dev/null; then
+  HOMEBREW_PREFIX="$(brew --prefix)"
+  if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
+    source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
+  else
+    for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*; do
+      [[ -r "${COMPLETION}" ]] && source "${COMPLETION}"
+    done
+  fi
+fi
+
 if [ "$TERM" == 'xterm-kitty' ]; then
   # if you get unrecognized terminal, run kitty ssh x, and it'll install it on
   # that machine

@@ -135,7 +135,7 @@ Linux utilities and system tools that may need explicit installation on macOS.
 ```sh
 brew install \
   bash \
-  bash-completion \
+  bash-completion@2 \
   coreutils \
   gnu-tar \
   rsync \

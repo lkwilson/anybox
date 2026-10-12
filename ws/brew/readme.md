@@ -19,6 +19,7 @@ The baseline developer tools to have on both macOS and Linux.
 
 ```sh
 brew install \
+  ast-grep \
   fd \
   fzf \
   git \
@@ -141,4 +142,12 @@ brew install \
   rsync \
   tmux \
   vim
+```
+
+## WSL
+
+`wslview` is provided by Ubuntu's `wslu` package, rather than Homebrew:
+
+```sh
+sudo apt install wslu
 ```

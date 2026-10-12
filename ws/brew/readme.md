@@ -92,13 +92,13 @@ when present.
 
 ```sh
 brew install \
-  argocd \
-  derailed/k9s/k9s \
+  k9s \
   fluxcd/tap/flux \
   helm \
   kubernetes-cli \
-  kustomize \
-  kubeseal
+  kustomize
+  # argocd \
+  # kubeseal
 ```
 
 ## Media and document tools

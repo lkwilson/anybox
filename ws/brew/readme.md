@@ -5,60 +5,41 @@ packages installed only as dependencies are omitted; Homebrew manages those as
 needed. `npm` is included with `node`, `redis-cli` with `redis`, while `rustup`
 manages Rust toolchains.
 
-## Shared Homebrew formulae
+## Dev tools
 
-Command-line, development, media, and cluster tools that are useful on both
-macOS and Linux. This is the portable tool set; it does not imply every package
-is installed on every machine.
+The baseline developer tools to have on both macOS and Linux.
 
 ```sh
 brew install \
-  aom \
-  argocd \
-  btop \
-  derailed/k9s/k9s \
-  fastfetch \
   fd \
-  ffmpeg \
-  fluxcd/tap/flux \
   fzf \
   gh \
   git \
   git-filter-repo \
-  gnupg \
-  helm \
-  htop \
-  jpeg-xl \
   jq \
-  kubernetes-cli \
-  kustomize \
-  kubeseal \
   lazygit \
-  libass \
-  librist \
-  luarocks \
   neovim \
-  nmap \
-  node \
   perl \
-  redis \
-  restic \
   ripgrep \
-  rustup \
-  srt \
-  swig \
   tea \
-  tesseract \
-  unbound \
-  uv \
   yq
 ```
 
-## Initialize Rust and Cargo
+## Language toolchains and runtimes
 
-Homebrew installs `rustup`, but Cargo and the other Rust commands are exposed
-through Homebrew's rustup proxy directory. Add it to your shell `PATH`, then
-select the stable toolchain (this downloads Rust and Cargo on first use):
+`rustup` manages Rust and Cargo, `uv` manages Python tooling, and `node` includes
+`npm`.
+
+```sh
+brew install \
+  node \
+  rustup \
+  uv
+```
+
+Homebrew exposes Rust commands through the rustup proxy directory. Add it to
+your shell `PATH`, then select the stable toolchain (this downloads Rust and
+Cargo on first use):
 
 ```sh
 export PATH="$(brew --prefix rustup)/bin:$PATH"
@@ -69,6 +50,38 @@ Put the `export PATH=...` line in your shell startup configuration to keep it
 available in new terminals. Verify setup with `rustc --version` and
 `cargo --version`. The repository's Bash config already loads `~/.cargo/env`
 when present.
+
+## Other shared tools
+
+These command-line, media, and cluster tools are useful on both macOS and Linux.
+
+```sh
+brew install \
+  aom \
+  argocd \
+  btop \
+  derailed/k9s/k9s \
+  fastfetch \
+  ffmpeg \
+  fluxcd/tap/flux \
+  gnupg \
+  helm \
+  htop \
+  jpeg-xl \
+  kubernetes-cli \
+  kustomize \
+  kubeseal \
+  libass \
+  librist \
+  luarocks \
+  nmap \
+  redis \
+  restic \
+  srt \
+  swig \
+  tesseract \
+  unbound
+```
 
 ## System-dependent tools
 

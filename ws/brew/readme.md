@@ -1,10 +1,12 @@
 # Homebrew packages
 
-Starting inventory captured from the current Homebrew installation. This lists
-formulae installed on request and installed casks; formula dependencies are
-managed by Homebrew and are not listed separately.
+Starting inventory captured from the current Homebrew installation. Formula
+packages installed as dependencies are omitted; Homebrew manages those as needed.
 
-## Formulae
+## Shared tools
+
+These are general command-line, development, media, or cluster tools that can
+be useful on both macOS and Linux.
 
 ```sh
 brew install \
@@ -27,7 +29,6 @@ brew install \
   gnupg \
   helm \
   htop \
-  iproute2mac \
   jpeg-xl \
   kubernetes-cli \
   kubeseal \
@@ -38,7 +39,6 @@ brew install \
   neovim \
   nmap \
   node \
-  openssl@1.1 \
   perl \
   ripgrep \
   rsync \
@@ -55,10 +55,29 @@ brew install \
   yq
 ```
 
-## Casks
+## macOS tools
 
 ```sh
-brew install --cask \
-  kitty \
-  linearmouse
+brew install iproute2mac
+brew install --cask linearmouse
+```
+
+`kitty` is also installed as a cask; it is a terminal emulator available on
+multiple platforms, so it is listed separately from macOS-only tools.
+
+```sh
+brew install --cask kitty
+```
+
+## Linux tools
+
+No Linux-specific packages were identified in the current inventory. The shared
+tools above can also be installed with Homebrew on Linux where supported.
+
+## Project-specific dependencies
+
+OpenSSL 1.1 appears to be for a project rather than a general-purpose tool.
+
+```sh
+brew install openssl@1.1
 ```

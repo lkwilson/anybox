@@ -102,6 +102,24 @@ brew install --cask \
   kitty
 ```
 
+## Update casks
+
+Refresh Homebrew's package data, see outdated casks, and update regular casks:
+
+```sh
+brew update
+brew outdated --cask
+brew upgrade --cask
+```
+
+Casks marked as auto-updating are skipped by the regular upgrade command. To
+include those, such as LinearMouse, use:
+
+```sh
+brew outdated --cask --greedy-auto-updates
+brew upgrade --cask --greedy-auto-updates
+```
+
 ## Project-specific dependencies
 
 OpenSSL 1.1 appears to be for a project rather than a general-purpose tool.

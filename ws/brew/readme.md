@@ -30,7 +30,6 @@ brew install \
   perl \
   ripgrep \
   swig \
-  unbound \
   yq
 ```
 
@@ -54,6 +53,7 @@ brew install \
   gh \
   nmap \
   redis \
+  unbound \
   restic
 ```
 

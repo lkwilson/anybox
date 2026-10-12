@@ -94,10 +94,9 @@ Space  begin selection
 Enter  copy and exit
 ```
 
-The outer/default server uses `set-clipboard on`, allowing it to forward a
-nested `tt` server's OSC 52 clipboard request to Kitty. The nested `ws` server
-uses `set-clipboard external`, so its copy-mode selections can be forwarded
-without allowing programs in its panes to request clipboard writes directly.
+The outer/default and nested `ws` servers use `set-clipboard on`, allowing
+clipboard requests from pane applications to reach Kitty. This lets Neovim's
+OSC 52 provider copy yanks to the local clipboard when Neovim runs over SSH.
 Both servers enable `allow-passthrough on`, which lets the Bash `clip` helper's
 tmux-wrapped OSC 52 sequence reach Kitty, including over SSH.
 

@@ -4,7 +4,8 @@ LazyVim with the Kanagawa Wave theme. The Blink completion and Conform
 formatting plugins are disabled; native completion and LSP formatting remain
 available. Formatting on save starts off. Concealment is off, so Markdown
 markup remains visible. The buffer tab bar stays visible even with only one
-buffer open.
+buffer open. Yanked text uses the system clipboard through OSC 52, which lets
+Neovim running over SSH copy to the local terminal clipboard.
 Keys below are for Normal mode unless noted. `Space` is the leader key;
 uppercase letters mean Shift plus that letter. "Stock" means LazyVim, which
 assigns some keys differently from bare Neovim.

@@ -2,7 +2,8 @@
 
 Current inventory of formulae installed on request and installed casks. Formula
 packages installed only as dependencies are omitted; Homebrew manages those as
-needed. `npm` is included with `node`, while `rustup` manages Rust toolchains.
+needed. `npm` is included with `node`, `redis-cli` with `redis`, while `rustup`
+manages Rust toolchains.
 
 ## Shared tools
 
@@ -33,6 +34,7 @@ brew install \
   jpeg-xl \
   jq \
   kubernetes-cli \
+  kustomize \
   kubeseal \
   lazygit \
   libass \
@@ -42,6 +44,8 @@ brew install \
   nmap \
   node \
   perl \
+  redis \
+  restic \
   ripgrep \
   rsync \
   rustup \

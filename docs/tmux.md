@@ -1,10 +1,10 @@
 # tmux workspace helpers
 
-The Bash library defines `ta`, `th`, and `tt` when `tmux` is installed.
-Workspace IDs are stable hashes of the current directory:
+The Bash library defines `t` and `tt` when `tmux` is installed.
+Nested workspace IDs are stable hashes of the current directory:
 
 ```text
-ws-<first 12 characters of shasum($PWD)>
+ws-tt-<first 12 characters of shasum($PWD)>
 ```
 
 The directory string is hashed as-is. Paths that resolve to the same location
@@ -12,11 +12,7 @@ but spell `$PWD` differently, such as a symlinked path, receive different IDs.
 
 ## Server layout
 
-Normal workspaces are sessions in tmux's ordinary `default` server:
-
-```text
-default:ws-<directory-hash>
-```
+Normal workspaces are windows in tmux's ordinary `default` server.
 
 Nested workspaces are sessions in one separate `ws` server:
 
@@ -28,34 +24,31 @@ The separate `ws` server is what makes `tt` a real nested tmux: running a
 session command against the default server from a default-server pane would
 only control the outer tmux, not open an inner client.
 
-The default server also provides this prefix-free binding:
+The default server also provides these prefix-free bindings:
 
 | Keys | Action |
 | --- | --- |
+| `C-j` / `C-k` | Next / previous outer window |
 | `C-_` (usually `C-/`) | Toggle between pane 0 zoomed and the two-pane layout, focusing pane 1 when restoring. |
 
-## `ta`: attach
+## `t`: attach or start
 
-`ta` refuses to run inside tmux. Outside tmux, it attaches to a session in the
-default server; if that fails, it tries the `ws` server:
+`t` is an alias for `tmux attach || tmux`. Use it outside tmux to attach to an
+existing session or start one if attaching fails.
 
-```sh
-tmux attach || tmux -L ws attach
-```
+## `jt` and `jw`: shell home
 
-## `th`: normal workspace
+Each Bash shell saves its starting directory in `_term_start_dir`. `jt` resets
+that variable to `$PWD`; `jw` changes back to it. These work inside and outside
+tmux, with no workspace lookup or pane metadata.
 
-`th` opens the normal workspace for `$PWD` in the default server.
+A typical workspace starts with `C-b c`, then `cd ~/src/project; jt`.
+Use `C-b w` to choose an outer window.
 
-| Starting position | `th` behavior |
-| --- | --- |
-| Not in tmux | Attach to `default:ws-<hash>`, creating it when absent. |
-| In `default`, already in that session | Do nothing. |
-| In `default`, in another session | Create `default:ws-<hash>` detached when absent, then switch this client to it. |
-| In another server, including `ws` from `tt` | Create `default:ws-<hash>` detached when absent, then remain in the current server. |
-
-Each workspace is its own session, and you can run multiple terminals or switch
-between them from one terminal.
+In both configs, `C-b c`, `C-b "`, and `C-b %` create windows or splits in the
+active pane's current directory. The new shell saves that starting directory
+as its own `jw` home; it does not copy the parent shell's saved home. Run `jw`
+before splitting if you want the saved home rather than a directory you visited.
 
 ## `tt`: nested workspace
 
@@ -78,7 +71,11 @@ provides prefix-free window cycling:
 
 These are generally for running terminals in a split pane, while nvim runs in
 the primary. `C-/` is used to toggle the terminal, and `C-h/l` switches between
-terminals.
+terminals. Outer tmux leaves `C-h/l` to applications and handles `C-j/k` even
+while inside `tt`. Use Enter to submit shell commands instead of `C-j`.
+Use `C-b C-b c` to create an inner terminal; doubled prefixes also reach inner
+pane bindings. `tmux.conf` and `tmux-inner.conf` both load `tmux-core.conf` for
+the shared settings. Use `C-w h/j/k/l` to navigate Neovim splits.
 
 ## Mouse and clipboard
 

@@ -125,62 +125,7 @@ elif type brew &>/dev/null; then
 fi
 
 if type tmux >&/dev/null; then
-  # attach to the first session found on any named tmux server
-  ta() {
-    if [ "$TMUX" != '' ]; then
-      echo "ta: Already in tmux"
-      return 1
-    fi
-    tmux attach || tmux -L ws attach
-  }
-
-  # workspace manager
-  th() {
-    local _workspace_id _tmux_default _current_session
-    _workspace_id="ws-$(printf %s "$PWD" | shasum | cut -c1-12)"
-    if [ "$TMUX" == '' ]; then
-      _tmux_default=''
-    else
-      case "$TMUX" in
-        */default,*) _tmux_default='yes' ;;
-        *) _tmux_default='no' ;;
-      esac
-    fi
-
-    if [ "$_tmux_default" == '' ]; then
-      tmux new-session -A -s "$_workspace_id"
-    elif [ "$_tmux_default" != 'yes' ]; then
-      if ! tmux -L default has-session -t "=$_workspace_id" 2>/dev/null; then
-        if tmux -L default new-session -d -s "$_workspace_id" 2>/dev/null; then
-          echo "Session created: $_workspace_id"
-          echo "Not in default, unable to switch to session"
-        else
-          echo "Failed to create session: $_workspace_id"
-          return 1
-        fi
-      else
-        echo "Session already exists: $_workspace_id"
-        echo "Not in default, unable to switch to session"
-      fi
-    else
-      _current_session=$(tmux display-message -p '#{session_name}')
-      if [ "$_current_session" = "$_workspace_id" ]; then
-        echo "Already in session"
-        return 0
-      fi
-
-      if ! tmux has-session -t "=$_workspace_id" 2>/dev/null; then
-        if tmux new-session -d -s "$_workspace_id" 2>/dev/null; then
-          echo "Session created: $_workspace_id"
-          echo "Switching to session"
-        else
-          echo "Failed to create session: $_workspace_id"
-          return 1
-        fi
-      fi
-      tmux switch-client -t "=$_workspace_id"
-    fi
-  }
+  alias t='tmux attach || tmux'
 
   # nested tmux helper
   tt() {

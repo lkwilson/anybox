@@ -82,6 +82,34 @@ Use `C-b C-b c` to create an inner terminal; doubled prefixes also reach inner
 pane bindings. `tmux.conf` and `tmux-inner.conf` both load `tmux-core.conf` for
 the shared settings. Use `C-w h/j/k/l` to navigate Neovim splits.
 
+## Status bar and window chooser
+
+Both servers use a midnight palette with cyan active-window tabs and pane
+borders. Tabs show each window's active pane directory, shortening long names
+to the first 20 characters plus an ellipsis.
+The right side shows the active pane's path (keeping the last 48 characters
+when long) and the clock; the hostname appears at widths of 110 columns or
+more. Paths refresh every two seconds. The outer bar shows the session name;
+the inner bar uses `TERM` instead of its workspace hash. Activating the prefix
+changes the left badge to `PREFIX`, and zoomed windows show `[Z]`.
+
+`C-b w` opens the zoomed window chooser with full directory paths alongside
+window names. Expand a window to see each pane's path and command. Window
+names are preserved; only their status-bar display changes. For the inner
+chooser, use `C-b C-b w`. Paths come from tmux's `pane_current_path` on the
+machine running that server; an outer pane running SSH or nested tmux does
+not automatically follow the remote or inner shell's directory.
+
+The theme uses built-in formats, 256-colour styling, and ordinary characters,
+with no plugins, external status commands, or special fonts.
+All shared visual settings live in `tmux-style.conf`, included at the bottom
+of `tmux.conf` and `tmux-inner.conf`; the inner config then overrides just its
+left badge. Functional overrides stay in `tmux-core.conf` and the respective
+server configs. The path-aware `C-b w` binding is in the core, independent of
+the theme. To use tmux's default appearance on a fresh server, omit the style
+include (and the inner badge override); reloading alone does not reset options
+already set in a running server.
+
 ## Mouse and clipboard
 
 Mouse support is enabled so the wheel enters tmux copy mode for scrollback.

@@ -13,8 +13,3 @@ _term_start_dir="$PWD"
 jw() {
   cd "$_term_start_dir"
 }
-
-# Set this shell's home to here.
-jt() {
-  _term_start_dir="$PWD"
-}

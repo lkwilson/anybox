@@ -36,19 +36,24 @@ The default server also provides these prefix-free bindings:
 `t` is an alias for `tmux attach || tmux`. Use it outside tmux to attach to an
 existing session or start one if attaching fails.
 
-## `jt` and `jw`: shell home
+## `jw`: shell home
 
-Each Bash shell saves its starting directory in `_term_start_dir`. `jt` resets
-that variable to `$PWD`; `jw` changes back to it. These work inside and outside
-tmux, with no workspace lookup or pane metadata.
+Each Bash shell saves its starting directory in `_term_start_dir`; `jw` changes
+back to it, inside or outside tmux.
 
-A typical workspace starts with `C-b c`, then `cd ~/src/project; jt`.
-Use `C-b w` to choose an outer window.
+A typical workspace starts with `C-b c`, then `cd ~/src/project` and `C-b R`.
+Capital `R` restarts the pane's original command in its current directory,
+killing whatever is running there. At a shell prompt, this starts a fresh shell
+whose `jw` home is the new directory. Inside `tt`, use `C-b C-b R`.
+Lowercase `C-b r` retains its default redraw behavior. Use `C-b w` to choose
+an outer window.
 
-In both configs, `C-b c`, `C-b "`, and `C-b %` create windows or splits in the
+In the outer config, `C-b c`, `C-b "`, and `C-b %` create windows or splits in the
 active pane's current directory. The new shell saves that starting directory
 as its own `jw` home; it does not copy the parent shell's saved home. Run `jw`
 before splitting if you want the saved home rather than a directory you visited.
+Inner `tt` windows and splits keep tmux's default bindings and start in their
+session's directory, where that `tt` session was originally created.
 
 ## `tt`: nested workspace
 

@@ -84,8 +84,9 @@ the shared settings. Use `C-w h/j/k/l` to navigate Neovim splits.
 
 ## Status bar and window chooser
 
-Both servers use a midnight palette with cyan active-window tabs and pane
-borders. Tabs show each window's active pane directory, shortening long names
+Both servers use Kanagawa Dragon in dark mode and Lotus in light mode, with
+green active-window tabs and pane borders. Tabs show each window's active
+pane directory, shortening long names
 to the first 20 characters plus an ellipsis.
 The right side shows the active pane's path (keeping the last 48 characters
 when long) and the clock; the hostname appears at widths of 110 columns or
@@ -100,8 +101,15 @@ chooser, use `C-b C-b w`. Paths come from tmux's `pane_current_path` on the
 machine running that server; an outer pane running SSH or nested tmux does
 not automatically follow the remote or inner shell's directory.
 
-The theme uses built-in formats, 256-colour styling, and ordinary characters,
-with no plugins, external status commands, or special fonts.
+The theme requires tmux 3.8 and uses its native `theme detect` setting and
+named theme colours. Kitty follows macOS appearance and tmux follows the
+client's reported light/dark mode; unknown appearance falls back to Dragon.
+Both palettes use colours from [Kanagawa](https://github.com/rebelot/kanagawa.nvim).
+There are no plugins, polling scripts, external status commands, or special
+fonts. `tmux set -s theme dark` / `tmux set -s theme light` force a palette
+when detection is unavailable; `tmux set -s theme detect` restores detection.
+For the nested server, add `-L ws` after `tmux` in these commands.
+
 All shared visual settings live in `tmux-style.conf`, included at the bottom
 of `tmux.conf` and `tmux-inner.conf`; the inner config then overrides just its
 left badge. Functional overrides stay in `tmux-core.conf` and the respective

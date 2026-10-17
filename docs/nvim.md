@@ -1,6 +1,14 @@
 # Neovim
 
-LazyVim with the Kanagawa Wave theme. The Blink completion and Conform
+LazyVim with Kanagawa Dragon for dark terminals and Lotus for light terminals.
+The generic `kanagawa` colorscheme follows Neovim's detected `background`,
+including terminal background updates; no forced `background` setting or
+theme polling plugin is used. Kitty's automatic themes follow macOS appearance;
+inside tmux this requires the terminal's background reports to reach Neovim.
+Use `:set background=dark` or `:set background=light` to select a variant
+manually if a terminal does not report its appearance.
+
+The Blink completion and Conform
 formatting plugins are disabled; native completion and LSP formatting remain
 available. Formatting on save starts off. Concealment is off, so Markdown
 markup remains visible. The buffer tab bar stays visible even with only one

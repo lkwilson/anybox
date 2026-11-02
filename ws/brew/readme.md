@@ -34,6 +34,29 @@ brew install \
   yq
 ```
 
+### Linux-only dev tools
+
+```sh
+brew install \
+  bubblewrap
+```
+
+#### Ubuntu 24.04 Codex sandbox
+
+Codex needs Bubblewrap to create user and network namespaces. On Ubuntu 24.04,
+install Ubuntu's package and load its AppArmor profile:
+
+```sh
+sudo apt install bubblewrap apparmor-profiles apparmor-utils
+sudo install -m 0644 \
+  /usr/share/apparmor/extra-profiles/bwrap-userns-restrict \
+  /etc/apparmor.d/bwrap-userns-restrict
+sudo apparmor_parser -r /etc/apparmor.d/bwrap-userns-restrict
+```
+
+Keep `/usr/bin` before Homebrew's bin directory on `PATH` when starting Codex,
+so it uses Ubuntu's `bwrap` and not Homebrew's copy.
+
 ### Extra
 
 ```sh

@@ -24,11 +24,10 @@ The separate `ws` server is what makes `tt` a real nested tmux: running a
 session command against the default server from a default-server pane would
 only control the outer tmux, not open an inner client.
 
-The default server also provides these prefix-free bindings:
+The default server also provides this prefix-free binding:
 
 | Keys | Action |
 | --- | --- |
-| `C-j` / `C-k` | Next / previous outer window |
 | `C-_` (usually `C-/`) | Toggle between pane 0 zoomed and the two-pane layout, focusing pane 1 when restoring. |
 
 ## `t`: attach or start
@@ -76,8 +75,7 @@ provides prefix-free window cycling:
 
 These are generally for running terminals in a split pane, while nvim runs in
 the primary. `C-/` is used to toggle the terminal, and `C-h/l` switches between
-terminals. Outer tmux leaves `C-h/l` to applications and handles `C-j/k` even
-while inside `tt`. Use Enter to submit shell commands instead of `C-j`.
+terminals. Use Enter to submit shell commands.
 Use `C-b C-b c` to create an inner terminal; doubled prefixes also reach inner
 pane bindings. `tmux.conf` and `tmux-inner.conf` both load `tmux-core.conf` for
 the shared settings. Use `C-w h/j/k/l` to navigate Neovim splits.

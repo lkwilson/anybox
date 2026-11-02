@@ -41,6 +41,31 @@ brew install \
   bubblewrap
 ```
 
+#### Debian Codex sandbox
+
+On Debian (including the Raspberry Pi at `cm7.lan`), use the distribution
+package instead of Homebrew's Bubblewrap:
+
+```sh
+sudo apt update
+sudo apt install bubblewrap
+```
+
+Debian normally needs no additional AppArmor setup. Keep `/usr/bin` before
+Homebrew's bin directory on `PATH` when starting Codex; `command -v bwrap`
+should return `/usr/bin/bwrap`.
+
+As your normal user, check that Bubblewrap can create user and network
+namespaces:
+
+```sh
+/usr/bin/bwrap --unshare-user --unshare-net --ro-bind / / /bin/true
+```
+
+No output and exit status `0` means the basic namespace check passed. Restart
+Codex after installation. If the check fails, inspect the error before
+changing kernel or AppArmor settings.
+
 #### Ubuntu 24.04 Codex sandbox
 
 Codex needs Bubblewrap to create user and network namespaces. On Ubuntu 24.04,

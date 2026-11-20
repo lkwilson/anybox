@@ -12,8 +12,16 @@ The Blink completion and Conform
 formatting plugins are disabled; native completion and LSP formatting remain
 available. Formatting on save starts off. Concealment is off, so Markdown
 markup remains visible. The buffer tab bar stays visible even with only one
-buffer open. Yanked text uses the system clipboard through OSC 52, which lets
-Neovim running over SSH copy to the local terminal clipboard.
+buffer open. Local sessions use Neovim's native clipboard provider (on macOS,
+`pbcopy` / `pbpaste`), including inside tmux. Yanks copy to the system clipboard,
+and `p` / `P` read it without a Kitty permission prompt.
+
+Over SSH (`SSH_TTY` or `SSH_CONNECTION` is set), yanks use OSC 52 to copy to
+the local terminal clipboard. Clipboard reads use this Neovim session's last
+copied text, preserving characterwise, linewise, and blockwise selections;
+they never query the terminal, avoiding Kitty read prompts and OSC 52 timeouts
+through tmux. To paste text copied in another application over SSH, use Kitty's
+paste shortcut (`Cmd-V` on macOS or `Ctrl-Shift-V`), entering Insert mode first.
 Keys below are for Normal mode unless noted. `Space` is the leader key;
 uppercase letters mean Shift plus that letter. "Stock" means LazyVim, which
 assigns some keys differently from bare Neovim.
